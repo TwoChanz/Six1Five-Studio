@@ -97,70 +97,52 @@ export default function AboutSection() {
               </div>
             </div>
 
-            {/* Service Area with Glowing Location Pin and Tennessee Background */}
-            <div className="relative">
-              {/* Large Tennessee state outline background */}
-              <div className="absolute -left-16 -top-8 w-80 h-32 opacity-10 pointer-events-none">
+            {/* Service Area with Enhanced Tennessee Background */}
+            <div className="relative overflow-hidden">
+              {/* Tennessee state outline background - responsive */}
+              <div className="absolute -left-4 -top-4 w-full max-w-sm h-16 opacity-[0.08] pointer-events-none">
                 <svg 
-                  width="320" 
-                  height="128" 
-                  viewBox="0 0 320 128" 
+                  width="100%" 
+                  height="100%" 
+                  viewBox="0 0 400 64" 
                   fill="none" 
                   className="w-full h-full text-[hsl(24,95%,53%)]"
+                  style={{ aspectRatio: '6.25/1', objectFit: 'contain' }}
                 >
-                  {/* Tennessee state outline */}
+                  {/* Full Tennessee state outline - horizontal orientation */}
                   <path 
-                    d="M20 60 L25 45 Q30 35, 40 38 L55 35 Q70 32, 85 35 L100 33 Q120 30, 140 33 L160 31 Q180 28, 200 31 L220 33 Q240 36, 260 40 L280 45 Q300 50, 305 60 Q300 75, 285 85 L270 90 Q250 95, 230 92 L210 95 Q190 98, 170 95 L150 97 Q130 100, 110 97 L90 95 Q70 92, 50 88 L30 85 Q20 75, 20 60 Z" 
+                    d="M20 32 L30 18 Q40 12, 55 16 L75 14 Q95 10, 115 14 L135 12 Q155 8, 175 12 L195 10 Q215 6, 235 10 L255 12 Q275 16, 295 20 L315 24 Q335 28, 350 32 Q360 40, 355 48 L345 52 Q325 56, 305 52 L285 54 Q265 58, 245 54 L225 56 Q205 60, 185 56 L165 58 Q145 62, 125 58 L105 56 Q85 52, 65 48 L45 44 Q25 40, 20 32 Z" 
                     stroke="currentColor" 
                     strokeWidth="1" 
                     fill="none" 
-                    strokeDasharray="4,3"
+                    strokeDasharray="6,4"
                   />
-                  {/* Nashville metro area highlight */}
-                  <circle cx="160" cy="65" r="25" stroke="currentColor" strokeWidth="0.5" fill="none" opacity="0.4" strokeDasharray="2,4"/>
                 </svg>
               </div>
               
-              {/* Foreground content with glowing location pin */}
+              {/* Foreground content with enhanced glowing location pin */}
               <div className="relative z-10 flex items-center space-x-3 text-[hsl(24,95%,53%)] font-semibold">
                 <div className="relative">
-                  {/* Glowing effect with custom animation */}
+                  {/* Enhanced glowing effect with blur */}
                   <div 
-                    className="absolute inset-0 w-5 h-5 bg-[hsl(24,95%,53%)] rounded-full" 
+                    className="absolute inset-0 w-5 h-5 bg-[hsl(24,95%,53%)] rounded-full blur-sm" 
                     style={{
                       animation: 'location-glow 2s ease-in-out infinite'
                     }}
                   ></div>
-                  {/* Location pin */}
-                  <MapPin className="relative w-5 h-5 drop-shadow-lg" />
+                  {/* Secondary glow layer */}
+                  <div 
+                    className="absolute inset-0 w-5 h-5 bg-[hsl(24,95%,53%)] rounded-full opacity-40" 
+                    style={{
+                      animation: 'location-glow 2s ease-in-out infinite 0.5s'
+                    }}
+                  ></div>
+                  {/* Location pin with enhanced shadow */}
+                  <MapPin className="relative w-5 h-5 drop-shadow-lg filter drop-shadow-[0_0_8px_rgba(255,133,27,0.4)]" />
                 </div>
                 
-                {/* Text with subtle map overlay */}
-                <div className="relative">
-                  {/* Subtle Tennessee state outline behind text */}
-                  <div className="absolute -left-4 -top-2 w-48 h-8 opacity-8 pointer-events-none">
-                    <svg 
-                      width="192" 
-                      height="32" 
-                      viewBox="0 0 192 32" 
-                      fill="none" 
-                      className="w-full h-full text-[hsl(24,95%,53%)]"
-                    >
-                      {/* Tennessee state outline - elongated horizontal shape */}
-                      <path 
-                        d="M4 16 L8 12 Q12 10, 18 11 L28 10 Q40 8, 52 10 L64 9 Q76 7, 88 9 L100 8 Q112 6, 124 8 L136 9 Q148 11, 160 13 L172 15 Q184 17, 188 20 Q186 24, 180 26 L168 28 Q156 30, 144 28 L132 29 Q120 31, 108 29 L96 30 Q84 32, 72 30 L60 29 Q48 27, 36 25 L24 23 Q12 21, 8 18 L4 16 Z" 
-                        stroke="currentColor" 
-                        strokeWidth="0.5" 
-                        fill="none" 
-                        opacity="0.6"
-                        strokeDasharray="2,1"
-                      />
-                      {/* Nashville location marker */}
-                      <circle cx="96" cy="20" r="1" fill="currentColor" opacity="0.4"/>
-                    </svg>
-                  </div>
-                  <span className="relative z-10">Service Area: Nashville Region</span>
-                </div>
+                {/* Service area text with maintained branding */}
+                <span className="relative z-10">Service Area: Nashville Region</span>
               </div>
             </div>
           </div>
