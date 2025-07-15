@@ -26,7 +26,8 @@ This is a full-stack web application for Six1Five Studio, a reality capture comp
 - Added punchy opening line: "From farm foundations to digital replicas—bringing real-world sites into stunning 3D"
 - Integrated Matthew Byrd quote about reality capture as contextual authority
 - Created interactive tech tags with hover tooltips for tools (RealityCapture, CloudCompare, LiDAR, etc.)
-- Streamlined professional background presentation with focused messaging
+- Refined professional background to focus on Reality Capture-relevant AEC and agricultural experience
+- Removed unrelated professional roles, emphasizing field conditions and site planning expertise
 - Added visual service area indicator with map icon
 
 **Sketchfab Integration (January 15, 2025)**
@@ -38,6 +39,7 @@ This is a full-stack web application for Six1Five Studio, a reality capture comp
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+Profile Focus: Include only Reality Capture-relevant background and AEC/agricultural experience that directly supports aerial imagery and 3D mapping expertise. Avoid unrelated professional roles.
 
 ## System Architecture
 

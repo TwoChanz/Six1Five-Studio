@@ -56,7 +56,7 @@ export default function AboutSection() {
             </div>
 
             <p className="text-gray-400 mb-6">
-              I'm <span className="text-[hsl(199,89%,48%)] font-semibold">Chandler Hopkins</span>, Operations Shift Leader at Estes Express Lines with an MTSU Construction Management background. I combine practical logistics experience with cutting-edge reality capture technologies to deliver precise digital twins for AEC, real estate, and historic preservation projects.
+              I'm <span className="text-[hsl(199,89%,48%)] font-semibold">Chandler Hopkins</span>, founder of Six1Five Studio with an MTSU Construction Management degree. My hands-on experience in agricultural operations and AEC workflows provides deep insight into field conditions, site planning, and the practical challenges that make aerial documentation and 3D mapping essential for modern project management.
             </p>
 
             {/* Interactive Tech Tags */}
