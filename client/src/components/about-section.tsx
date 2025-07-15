@@ -134,7 +134,33 @@ export default function AboutSection() {
                   {/* Location pin */}
                   <MapPin className="relative w-5 h-5 drop-shadow-lg" />
                 </div>
-                <span>Service Area: Nashville Region</span>
+                
+                {/* Text with subtle map overlay */}
+                <div className="relative">
+                  {/* Subtle Nashville metro outline behind text */}
+                  <div className="absolute -left-4 -top-2 w-48 h-8 opacity-8 pointer-events-none">
+                    <svg 
+                      width="192" 
+                      height="32" 
+                      viewBox="0 0 192 32" 
+                      fill="none" 
+                      className="w-full h-full text-[hsl(24,95%,53%)]"
+                    >
+                      {/* Simplified Nashville metro area outline */}
+                      <path 
+                        d="M8 16 Q12 12, 20 14 L35 12 Q50 10, 65 12 L80 11 Q95 9, 110 11 L125 12 Q140 14, 155 16 Q170 18, 184 20 Q180 24, 170 26 L155 28 Q140 30, 125 28 L110 29 Q95 31, 80 29 L65 30 Q50 32, 35 30 L20 28 Q12 26, 8 20 Q6 18, 8 16 Z" 
+                        stroke="currentColor" 
+                        strokeWidth="0.5" 
+                        fill="none" 
+                        opacity="0.6"
+                        strokeDasharray="2,1"
+                      />
+                      {/* Nashville center point */}
+                      <circle cx="96" cy="20" r="1" fill="currentColor" opacity="0.4"/>
+                    </svg>
+                  </div>
+                  <span className="relative z-10">Service Area: Nashville Region</span>
+                </div>
               </div>
             </div>
           </div>
