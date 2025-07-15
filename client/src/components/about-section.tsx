@@ -97,10 +97,36 @@ export default function AboutSection() {
               </div>
             </div>
 
-            {/* Service Area with Map Icon */}
-            <div className="flex items-center space-x-3 text-[hsl(24,95%,53%)] font-semibold">
-              <MapPin className="w-5 h-5" />
-              <span>📍 Service Area: Nashville Region</span>
+            {/* Service Area with Map Icon and Background SVG */}
+            <div className="relative flex items-center space-x-3 text-[hsl(24,95%,53%)] font-semibold">
+              {/* Background Nashville outline */}
+              <div className="absolute -left-8 -top-4 w-32 h-20 opacity-15 pointer-events-none">
+                <svg 
+                  width="120" 
+                  height="80" 
+                  viewBox="0 0 120 80" 
+                  fill="none" 
+                  className="w-full h-full text-[hsl(24,95%,53%)]"
+                >
+                  {/* Nashville region outline - simplified Tennessee shape focused on Middle Tennessee */}
+                  <path 
+                    d="M10 35 Q15 25, 25 28 L35 25 Q45 22, 55 25 L65 23 Q75 20, 85 25 L95 28 Q105 32, 110 40 Q108 50, 100 55 L90 58 Q80 60, 70 58 L60 60 Q50 62, 40 58 L30 55 Q20 52, 15 45 Q8 40, 10 35 Z" 
+                    stroke="currentColor" 
+                    strokeWidth="1.5" 
+                    fill="none" 
+                    strokeDasharray="3,2"
+                  />
+                  {/* Nashville city marker */}
+                  <circle cx="60" cy="45" r="2" fill="currentColor" opacity="0.6"/>
+                  {/* Regional coverage indication */}
+                  <circle cx="60" cy="45" r="15" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.3" strokeDasharray="2,3"/>
+                </svg>
+              </div>
+              {/* Foreground content */}
+              <div className="relative z-10 flex items-center space-x-3">
+                <MapPin className="w-5 h-5" />
+                <span>📍 Service Area: Nashville Region</span>
+              </div>
             </div>
           </div>
           <div className="relative">
