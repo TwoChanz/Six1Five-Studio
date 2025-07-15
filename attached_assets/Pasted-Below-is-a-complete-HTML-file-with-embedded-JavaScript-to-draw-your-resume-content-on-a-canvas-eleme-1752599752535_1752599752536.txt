@@ -1,0 +1,159 @@
+Below is a complete HTML file with embedded JavaScript to draw your resume content on a canvas element:
+
+✅ resume.html (Canvas-based Resume)
+html
+Copy
+Edit
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chandler Hopkins – Resume</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #0e1a2b;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="resumeCanvas"></canvas>
+
+  <script>
+    const canvas = document.getElementById('resumeCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Resize canvas to full screen
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      drawResume();
+    }
+
+    window.addEventListener('resize', resizeCanvas, false);
+    resizeCanvas();
+
+    function drawResume() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const padX = 40;
+      const padY = 50;
+      let y = padY;
+
+      ctx.font = 'bold 28px Arial';
+      ctx.fillStyle = '#fca311';
+      ctx.fillText('Chandler Hopkins', padX, y);
+      ctx.font = '18px Arial';
+      ctx.fillStyle = '#ffffff';
+      y += 30;
+      ctx.fillText('Founder | Reality Capture Specialist | AEC Technologist', padX, y);
+
+      y += 30;
+      ctx.fillStyle = '#00bcd4';
+      ctx.fillText('Nashville, TN | chandler@six1fivestudio.com', padX, y);
+
+      y += 40;
+      ctx.font = 'bold 22px Arial';
+      ctx.fillStyle = '#fca311';
+      ctx.fillText('🧭 Summary', padX, y);
+
+      y += 30;
+      ctx.font = '16px Arial';
+      ctx.fillStyle = '#ffffff';
+      const summary = [
+        'Multidisciplinary Reality Capture professional combining a background in construction, agriculture,',
+        'and site operations with a forward-thinking approach to digital transformation in AEC.',
+        'Founder of Six1Five Studio, providing high-fidelity 3D models, photogrammetry, LiDAR, and BIM-ready',
+        'assets for construction monitoring, digital twins, historic preservation, and more.'
+      ];
+      summary.forEach(line => {
+        ctx.fillText(line, padX, y);
+        y += 22;
+      });
+
+      y += 20;
+      ctx.font = 'italic 14px Arial';
+      ctx.fillStyle = '#00ff88';
+      ctx.fillText('“From farm foundations to digital replicas—bringing real‑world sites into stunning 3D.”', padX, y);
+
+      y += 40;
+      ctx.font = 'bold 22px Arial';
+      ctx.fillStyle = '#fca311';
+      ctx.fillText('🔧 Core Technologies & Skills', padX, y);
+
+      y += 30;
+      ctx.font = '16px Arial';
+      ctx.fillStyle = '#ffffff';
+      const skills = [
+        'RealityCapture · Metashape · COLMAP · OpenSplat',
+        'LiDAR: CloudCompare · FARO SCENE · Luma AI',
+        'Gaussian Splatting · NeRFs · Photogrammetry',
+        'Autodesk Construction Cloud · Revit',
+        'Drone Deploy · ArcGIS · Sketchfab',
+        'Python · OpenCV · PyTorch · Supabase · React'
+      ];
+      skills.forEach(line => {
+        ctx.fillText('• ' + line, padX + 10, y);
+        y += 22;
+      });
+
+      y += 30;
+      ctx.font = 'bold 22px Arial';
+      ctx.fillStyle = '#fca311';
+      ctx.fillText('🛠️ Project Experience', padX, y);
+
+      y += 30;
+      ctx.font = 'bold 18px Arial';
+      ctx.fillStyle = '#00bcd4';
+      ctx.fillText('Six1Five Studio – Reality Capture Founder', padX, y);
+
+      y += 22;
+      ctx.font = '16px Arial';
+      ctx.fillStyle = '#ffffff';
+      ctx.fillText('Nashville, TN – 2023–Present', padX, y);
+
+      y += 22;
+      ctx.fillText('• Captured & processed 3D scans of stadiums, towers, boats, and industrial sites.', padX + 10, y);
+      y += 20;
+      ctx.fillText('• Developed NeRF-based deliverables using Luma AI and Gaussian Splatting.', padX + 10, y);
+      y += 20;
+      ctx.fillText('• Provided BIM consulting & scan-to-model capture for construction firms.', padX + 10, y);
+
+      y += 30;
+      ctx.font = 'bold 18px Arial';
+      ctx.fillStyle = '#00bcd4';
+      ctx.fillText('Legacy Cabinet Coatings – Crew Lead', padX, y);
+
+      y += 22;
+      ctx.font = '16px Arial';
+      ctx.fillStyle = '#ffffff';
+      ctx.fillText('Murfreesboro, TN – 2021–2022', padX, y);
+
+      y += 22;
+      ctx.fillText('• Managed 3-person crew refinishing full kitchens in 3-day cycles.', padX + 10, y);
+      y += 20;
+      ctx.fillText('• Coordinated client walk-throughs, prep, paint, and logistics.', padX + 10, y);
+
+      y += 40;
+      ctx.font = 'bold 22px Arial';
+      ctx.fillStyle = '#fca311';
+      ctx.fillText('🎓 Education', padX, y);
+      y += 30;
+      ctx.font = '16px Arial';
+      ctx.fillStyle = '#ffffff';
+      ctx.fillText('B.S. in Construction Management (CIM Track) – Middle Tennessee State University', padX, y);
+      y += 22;
+      ctx.fillText('Expected 2025', padX + 10, y);
+
+      y += 40;
+      ctx.font = 'bold 22px Arial';
+      ctx.fillStyle = '#fca311';
+      ctx.fillText('📍 Service Area: Greater Nashville, TN', padX, y);
+    }
+  </script>
+</body>
+</html>

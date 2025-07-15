@@ -188,7 +188,9 @@ export default function AboutSection() {
                     Read Digital Blueprint →
                   </a>
                   <a 
-                    href="#" 
+                    href="/resume.html" 
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-orange-400 hover:text-white transition-colors text-sm font-bold"
                   >
                     Download Resume →
