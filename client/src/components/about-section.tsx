@@ -139,12 +139,18 @@ export default function AboutSection() {
             </div>
           </div>
           <div className="relative">
-            <div className="bg-gray-800 rounded-xl p-6 scanline-effect">
-              <img 
-                src={profileImage}
-                alt="Chandler Hopkins, Founder of Six1Five Studio" 
-                className="rounded-lg w-full h-auto object-cover aspect-square" 
-              />
+            <div className="bg-gray-800 rounded-xl p-6 scanline-effect shadow-2xl">
+              {/* Profile image with gradient frame and margin */}
+              <div className="relative p-4 rounded-xl bg-gradient-to-br from-[hsl(24,95%,53%)] via-[hsl(199,89%,48%)] to-[hsl(218,11%,15%)] shadow-lg">
+                <div className="bg-gray-900 rounded-lg p-3 shadow-inner">
+                  <img 
+                    src={profileImage}
+                    alt="Chandler Hopkins, Founder of Six1Five Studio" 
+                    className="rounded-md w-full h-auto object-cover aspect-square shadow-md" 
+                  />
+                </div>
+              </div>
+              
               <div className="mt-4 text-center">
                 <h4 className="font-semibold text-white">Chandler Hopkins</h4>
                 <p className="text-sm text-gray-400">Founder & Reality Capture Specialist</p>
