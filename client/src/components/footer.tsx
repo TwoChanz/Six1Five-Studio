@@ -1,4 +1,4 @@
-import { Linkedin, Twitter, Instagram } from "lucide-react";
+import { Linkedin, ExternalLink, Instagram } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -16,11 +16,22 @@ export default function Footer() {
               Reality Capture specialists transforming physical spaces into digital assets for AEC, real estate, and historic preservation.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-[hsl(24,95%,53%)] transition-colors">
+              <a 
+                href="https://www.linkedin.com/in/chandler-hopkins-924005112/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-[hsl(24,95%,53%)] transition-colors"
+              >
                 <Linkedin className="w-6 h-6" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-[hsl(199,89%,48%)] transition-colors">
-                <Twitter className="w-6 h-6" />
+              <a 
+                href="https://sketchfab.com/six1fivemedia" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-[hsl(199,89%,48%)] transition-colors"
+                title="View 3D Models on Sketchfab"
+              >
+                <ExternalLink className="w-6 h-6" />
               </a>
               <a href="#" className="text-gray-400 hover:text-[hsl(158,64%,52%)] transition-colors">
                 <Instagram className="w-6 h-6" />

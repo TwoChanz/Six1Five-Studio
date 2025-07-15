@@ -6,6 +6,13 @@ This is a full-stack web application for Six1Five Studio, a reality capture comp
 
 ## Recent Changes
 
+**Professional Profile Integration (January 15, 2025)**
+- Enhanced About section with authentic professional background and expertise
+- Integrated real profile image of Chandler Hopkins
+- Added LinkedIn profile link throughout the site
+- Expanded core expertise and service offerings details
+- Updated social media links to include Sketchfab portfolio
+
 **Database Integration (January 15, 2025)**
 - Added PostgreSQL database with Drizzle ORM for persistent data storage
 - Migrated from in-memory storage to DatabaseStorage class
