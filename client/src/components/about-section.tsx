@@ -147,33 +147,35 @@ export default function AboutSection() {
               </div>
             </div>
           </div>
-          <div className="relative">
-            <div className="bg-gray-800 rounded-xl p-6 shadow-2xl">
-              {/* Profile image with gradient frame and margin */}
-              <div className="relative p-4 rounded-xl bg-gradient-to-br from-[hsl(24,95%,53%)] via-[hsl(199,89%,48%)] to-[hsl(218,11%,15%)] shadow-lg">
-                <div className="bg-gray-900 rounded-xl p-3 shadow-inner overflow-hidden">
-                  <div className="relative rounded-xl overflow-hidden">
+          <div className="relative max-w-xs sm:max-w-sm mx-auto lg:mx-0">
+            <div className="bg-gray-800 rounded-xl p-4 shadow-2xl">
+              {/* Profile image with gradient frame */}
+              <div className="relative p-4 rounded-xl bg-gradient-to-br from-orange-400 via-sky-400 to-cyan-400 shadow-lg">
+                <div className="bg-gray-900 rounded-xl p-4 overflow-hidden">
+                  <div className="relative aspect-square rounded-xl overflow-hidden">
                     <img 
                       src={profileImage}
                       alt="Chandler Hopkins, Founder of Six1Five Studio" 
-                      className="w-full h-auto object-cover aspect-square shadow-md transform scale-95 object-top" 
-                      style={{ objectPosition: 'center top' }}
+                      className="w-full h-full object-cover object-top transform scale-95" 
                     />
                     {/* Subtle vignette overlay */}
-                    <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-black/20 rounded-xl"></div>
+                    <div className="absolute inset-0 bg-gradient-radial from-transparent to-black/20"></div>
                   </div>
                 </div>
               </div>
               
-              <div className="mt-4 text-center">
-                <h4 className="font-semibold text-white">Chandler Hopkins</h4>
+              {/* Profile information and links */}
+              <div className="mt-4 text-center space-y-2">
+                <h4 className="font-semibold text-white text-lg">Chandler Hopkins</h4>
                 <p className="text-sm text-gray-400">Founder & Reality Capture Specialist</p>
-                <div className="flex flex-col gap-1 mt-2">
+                
+                {/* Action links */}
+                <div className="flex flex-col gap-2 mt-4 pt-2">
                   <a 
                     href="https://www.linkedin.com/in/chandler-hopkins-924005112/" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-[hsl(199,89%,48%)] hover:text-white transition-colors text-sm"
+                    className="text-sky-400 hover:text-white transition-colors text-sm font-medium"
                   >
                     Connect on LinkedIn →
                   </a>
@@ -181,13 +183,13 @@ export default function AboutSection() {
                     href="https://digitalblueprint.substack.com/" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-[hsl(158,64%,52%)] hover:text-white transition-colors text-sm"
+                    className="text-cyan-400 hover:text-white transition-colors text-sm font-medium"
                   >
                     Read Digital Blueprint →
                   </a>
                   <a 
                     href="#" 
-                    className="text-[hsl(24,95%,53%)] hover:text-white transition-colors text-sm"
+                    className="text-orange-400 hover:text-white transition-colors text-sm font-bold"
                   >
                     Download Resume →
                   </a>
