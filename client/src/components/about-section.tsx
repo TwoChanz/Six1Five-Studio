@@ -97,35 +97,44 @@ export default function AboutSection() {
               </div>
             </div>
 
-            {/* Service Area with Map Icon and Background SVG */}
-            <div className="relative flex items-center space-x-3 text-[hsl(24,95%,53%)] font-semibold">
-              {/* Background Nashville outline */}
-              <div className="absolute -left-8 -top-4 w-32 h-20 opacity-15 pointer-events-none">
+            {/* Service Area with Glowing Location Pin and Tennessee Background */}
+            <div className="relative">
+              {/* Large Tennessee state outline background */}
+              <div className="absolute -left-16 -top-8 w-80 h-32 opacity-10 pointer-events-none">
                 <svg 
-                  width="120" 
-                  height="80" 
-                  viewBox="0 0 120 80" 
+                  width="320" 
+                  height="128" 
+                  viewBox="0 0 320 128" 
                   fill="none" 
                   className="w-full h-full text-[hsl(24,95%,53%)]"
                 >
-                  {/* Nashville region outline - simplified Tennessee shape focused on Middle Tennessee */}
+                  {/* Tennessee state outline */}
                   <path 
-                    d="M10 35 Q15 25, 25 28 L35 25 Q45 22, 55 25 L65 23 Q75 20, 85 25 L95 28 Q105 32, 110 40 Q108 50, 100 55 L90 58 Q80 60, 70 58 L60 60 Q50 62, 40 58 L30 55 Q20 52, 15 45 Q8 40, 10 35 Z" 
+                    d="M20 60 L25 45 Q30 35, 40 38 L55 35 Q70 32, 85 35 L100 33 Q120 30, 140 33 L160 31 Q180 28, 200 31 L220 33 Q240 36, 260 40 L280 45 Q300 50, 305 60 Q300 75, 285 85 L270 90 Q250 95, 230 92 L210 95 Q190 98, 170 95 L150 97 Q130 100, 110 97 L90 95 Q70 92, 50 88 L30 85 Q20 75, 20 60 Z" 
                     stroke="currentColor" 
-                    strokeWidth="1.5" 
+                    strokeWidth="1" 
                     fill="none" 
-                    strokeDasharray="3,2"
+                    strokeDasharray="4,3"
                   />
-                  {/* Nashville city marker */}
-                  <circle cx="60" cy="45" r="2" fill="currentColor" opacity="0.6"/>
-                  {/* Regional coverage indication */}
-                  <circle cx="60" cy="45" r="15" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.3" strokeDasharray="2,3"/>
+                  {/* Nashville metro area highlight */}
+                  <circle cx="160" cy="65" r="25" stroke="currentColor" strokeWidth="0.5" fill="none" opacity="0.4" strokeDasharray="2,4"/>
                 </svg>
               </div>
-              {/* Foreground content */}
-              <div className="relative z-10 flex items-center space-x-3">
-                <MapPin className="w-5 h-5" />
-                <span>📍 Service Area: Nashville Region</span>
+              
+              {/* Foreground content with glowing location pin */}
+              <div className="relative z-10 flex items-center space-x-3 text-[hsl(24,95%,53%)] font-semibold">
+                <div className="relative">
+                  {/* Glowing effect with custom animation */}
+                  <div 
+                    className="absolute inset-0 w-5 h-5 bg-[hsl(24,95%,53%)] rounded-full" 
+                    style={{
+                      animation: 'location-glow 2s ease-in-out infinite'
+                    }}
+                  ></div>
+                  {/* Location pin */}
+                  <MapPin className="relative w-5 h-5 drop-shadow-lg" />
+                </div>
+                <span>Service Area: Nashville Region</span>
               </div>
             </div>
           </div>

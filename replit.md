@@ -28,7 +28,8 @@ This is a full-stack web application for Six1Five Studio, a reality capture comp
 - Created interactive tech tags with hover tooltips for tools (RealityCapture, CloudCompare, LiDAR, etc.)
 - Refined professional background to focus on Reality Capture-relevant AEC and agricultural experience
 - Removed unrelated professional roles, emphasizing field conditions and site planning expertise
-- Added visual service area indicator with map icon
+- Added large Tennessee state outline SVG background with Nashville metro area highlight
+- Implemented glowing location pin with custom CSS animation for service area indicator
 
 **Sketchfab Integration (January 15, 2025)**
 - Integrated real Sketchfab 3D model viewer in hero section featuring "Watchtower | Shooting House" model
