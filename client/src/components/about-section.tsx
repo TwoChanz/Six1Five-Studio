@@ -1,5 +1,34 @@
-import { MapPin, Award, Settings } from "lucide-react";
+import { MapPin, Award, Settings, Info, CheckCircle } from "lucide-react";
+import { useState } from "react";
 import profileImage from "@assets/2025-07-15_10.39.28_1752594500456.png";
+
+interface TechTagProps {
+  name: string;
+  tooltip: string;
+}
+
+function TechTag({ name, tooltip }: TechTagProps) {
+  const [showTooltip, setShowTooltip] = useState(false);
+
+  return (
+    <div 
+      className="relative inline-block"
+      onMouseEnter={() => setShowTooltip(true)}
+      onMouseLeave={() => setShowTooltip(false)}
+    >
+      <span className="inline-flex items-center px-3 py-1 bg-gray-700 hover:bg-gray-600 text-[hsl(158,64%,52%)] rounded-md text-sm cursor-pointer transition-colors border border-gray-600 hover:border-[hsl(158,64%,52%)]">
+        <CheckCircle className="w-3 h-3 mr-1" />
+        {name}
+      </span>
+      {showTooltip && (
+        <div className="absolute z-10 bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 text-white text-xs rounded-lg shadow-lg border border-gray-600 whitespace-nowrap">
+          {tooltip}
+          <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function AboutSection() {
   return (
@@ -7,43 +36,68 @@ export default function AboutSection() {
       <div className="container mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
-            <h2 className="text-4xl font-bold mb-8">
+            <h2 className="text-4xl font-bold mb-6">
               Meet the <span className="text-[hsl(24,95%,53%)]">Scanner</span>
             </h2>
-            <p className="text-xl text-gray-300 mb-6">
-              I'm <span className="text-[hsl(199,89%,48%)] font-semibold">Chandler Hopkins</span> — a Reality Capture specialist and founder of Six1Five Studio. With a Construction Management degree from MTSU and hands-on experience in AEC workflows, I specialize in photogrammetry, LiDAR scanning, and 3D reconstruction for construction, infrastructure, and historic preservation.
-            </p>
+            
+            {/* Punchy Opening Line */}
+            <div className="mb-6">
+              <p className="text-xl font-semibold text-[hsl(24,95%,53%)] mb-4">
+                From farm foundations to digital replicas—bringing real-world sites into stunning 3D.
+              </p>
+            </div>
+
+            {/* Matthew Byrd Quote Integration */}
+            <div className="bg-gray-800 border-l-4 border-[hsl(158,64%,52%)] p-4 mb-6 rounded-r-lg">
+              <blockquote className="text-gray-300 italic mb-2">
+                "The great thing about reality capturing is you can combine the data that is captured by multiple technology types into one model."
+              </blockquote>
+              <p className="text-sm text-gray-400">— Matthew Byrd, Nexus 3D Consulting</p>
+            </div>
+
             <p className="text-gray-400 mb-6">
-              Based in La Vergne, Tennessee, I work with RealityCapture, Metashape, CloudCompare, and FARO SCENE to process high-resolution photogrammetry models and LiDAR point clouds. My expertise extends to 360 cameras, drone imagery, and advanced reconstruction methods like NeRFs and Gaussian Splatting.
+              I'm <span className="text-[hsl(199,89%,48%)] font-semibold">Chandler Hopkins</span>, Operations Shift Leader at Estes Express Lines with an MTSU Construction Management background. I combine practical logistics experience with cutting-edge reality capture technologies to deliver precise digital twins for AEC, real estate, and historic preservation projects.
             </p>
-            <p className="text-gray-400 mb-8">
-              Currently serving as Operations Shift Leader at Estes Express Lines, I bring practical logistics experience to reality capture projects. I'm passionate about integrating AI, automation, and digital twins into Reality Capture solutions, driving innovation in the built environment.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-4">
-                <div className="flex items-center space-x-4">
-                  <MapPin className="w-5 h-5 text-[hsl(24,95%,53%)]" />
-                  <span>La Vergne, Tennessee + Regional</span>
-                </div>
-                <div className="flex items-center space-x-4">
-                  <Award className="w-5 h-5 text-[hsl(199,89%,48%)]" />
-                  <span>MTSU Construction Management</span>
-                </div>
-                <div className="flex items-center space-x-4">
-                  <Settings className="w-5 h-5 text-[hsl(158,64%,52%)]" />
-                  <span>Operations Shift Leader</span>
-                </div>
+
+            {/* Interactive Tech Tags */}
+            <div className="mb-6">
+              <h4 className="font-semibold text-[hsl(199,89%,48%)] mb-3">Core Technologies</h4>
+              <div className="flex flex-wrap gap-2 mb-4">
+                <TechTag 
+                  name="RealityCapture" 
+                  tooltip="Photogrammetry tool for high-resolution 3D reconstruction" 
+                />
+                <TechTag 
+                  name="Metashape" 
+                  tooltip="Professional photogrammetry software for aerial and terrestrial mapping" 
+                />
+                <TechTag 
+                  name="CloudCompare" 
+                  tooltip="Point-cloud editing and comparison tool for LiDAR and photogrammetry data" 
+                />
+                <TechTag 
+                  name="FARO SCENE" 
+                  tooltip="3D point cloud processing software for LiDAR scanning workflows" 
+                />
+                <TechTag 
+                  name="LiDAR Scanning" 
+                  tooltip="Laser-based method for capturing precise spatial data and measurements" 
+                />
+                <TechTag 
+                  name="NeRFs" 
+                  tooltip="Neural Radiance Fields for AI-powered 3D scene reconstruction" 
+                />
+                <TechTag 
+                  name="Gaussian Splatting" 
+                  tooltip="Advanced 3D rendering technique for photorealistic scene representation" 
+                />
               </div>
-              <div className="space-y-3">
-                <h4 className="font-semibold text-[hsl(199,89%,48%)]">Technical Skills</h4>
-                <ul className="text-sm text-gray-400 space-y-1">
-                  <li>• RealityCapture & Metashape</li>
-                  <li>• CloudCompare & FARO SCENE</li>
-                  <li>• NeRFs & Gaussian Splatting</li>
-                  <li>• Blueprint Reading & ACI Testing</li>
-                  <li>• Digital Twins & AI Integration</li>
-                </ul>
-              </div>
+            </div>
+
+            {/* Service Area with Map Icon */}
+            <div className="flex items-center space-x-3 text-[hsl(24,95%,53%)] font-semibold">
+              <MapPin className="w-5 h-5" />
+              <span>📍 Service Area: Nashville Region</span>
             </div>
           </div>
           <div className="relative">
