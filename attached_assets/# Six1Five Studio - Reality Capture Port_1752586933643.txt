@@ -1,0 +1,153 @@
+# Six1Five Studio - Reality Capture Portfolio Blueprint
+
+## Brand: Six1Five Studio
+
+**Founder**: Chandler Hopkins
+**Base**: Nashville, TN
+**Focus**: Drone Mapping, LiDAR Scanning, Photogrammetry, 3D Reconstruction for AEC + Historic Preservation
+
+---
+
+## 🎯 OVERALL GOALS
+
+* Transform portfolio from "code showcase" → "capture showcase"
+* Prioritize:
+
+  * 3D models (NeRFs, meshes, LiDAR point clouds)
+  * Before/after site captures
+  * Scan walkthroughs and workflows
+* Highlight client ROI & real-world deliverables
+* Leverage Sketchfab, Luma AI, Three.js, WebGL
+
+---
+
+## 🧭 SECTION 1: Hero — Signature Scan + Brand Identity
+
+* **Headline**: “Scan the World. Reconstruct Reality.”
+* **Subheadline**: “Drone mapping, LiDAR, photogrammetry — all captured with purpose.”
+* **Animated Text**: “I turn real spaces into digital products.”
+* **3D Component**:
+
+  * Replace planet with embedded Sketchfab viewer or NeRF flythrough (e.g., Floyd Stadium)
+  * Enable mouse interaction: rotate, zoom
+  * Background scanline animation
+
+---
+
+## 🧭 SECTION 2: Navbar — Fast Access to Projects & Industries
+
+* **Links**:
+
+  * Home
+  * Portfolio
+  * Industries Served (Construction, Real Estate, Historic Sites)
+  * About
+  * Contact
+* **Enhancements**:
+
+  * Hover icons with mini-thumbnails of 3D scans
+  * Active link indicator: animated scanline or flicker effect
+
+---
+
+## 🧭 SECTION 3: Service Summary — Reality Capture Tech Stack
+
+* **Scroll-Triggered Keywords**:
+
+  * Photogrammetry
+  * LiDAR Scanning
+  * 3D Reconstruction
+  * Drone Mapping
+  * Virtual Tours
+  * Scan-to-BIM
+* **Effects**:
+
+  * Slide/fade animations
+  * Slight distortion/glitch FX to mimic LiDAR distortion
+
+---
+
+## 🧭 SECTION 4: Services — Deep Capture Workflows
+
+### 🔹 Aerial Capture Workflow
+
+* Equipment: DJI Mini 4 Pro
+* Software: RealityCapture, Metashape
+* Visual: Raw drone photos → model mesh (slider or animation)
+
+### 🔹 Photogrammetry Pipeline
+
+* Steps: Raw → Align → Mesh → Texture
+* Visual: Step-by-step graphic w/ hover overlays
+
+### 🔹 LiDAR Integration
+
+* Tools: FARO SCENE, CloudCompare, Revit
+* Visual: Before/after point cloud + BIM export
+
+**UI:** Flip cards, scan preview sliders, scroll-reveal for process steps
+
+---
+
+## 🧭 SECTION 5: About — Meet the Scanner
+
+* **Bio**: “I’m Chandler — a Reality Capture specialist transforming physical spaces into 3D assets for AEC, real estate, and historic preservation.”
+* **Visual**: Photo of you with scanning gear on site
+* **Animation**: Scroll-reveal layering (wireframe → mesh → texture)
+
+---
+
+## 🧭 SECTION 6: Works — Featured Capture Projects
+
+### 🔹 Example Layout per Project:
+
+* **Title**: Floyd Stadium — Photogrammetry Flythrough
+* **Role**: Aerial drone scan, NeRF reconstruction
+* **Deliverable**: 3D model + Flythrough video
+* **Link**: Sketchfab or Luma AI embed
+* **Hover Effect**: Image overlay → “Launch Viewer”
+* **3D Viewers**: Scroll-reveal embedded viewer, rotation enabled
+
+---
+
+## 🧭 SECTION 7: Contact — Book a Scan CTA
+
+* **Call-to-action**:
+
+  * “Let’s capture your site in 3D.”
+  * “Now booking for: Nashville, TN + Surrounding Areas”
+* **Form**:
+
+  * Name, Email, Message
+  * Checkboxes:
+
+    * Drone Mapping
+    * Interior Scan
+    * LiDAR Survey
+    * Construction Monitoring
+* **Visuals**:
+
+  * Background: Animated point cloud or subtle rotating mesh
+
+---
+
+## 🧰 GLOBAL UPGRADES FOR RC FOCUS
+
+| Element       | Upgrade                                                                                 |
+| ------------- | --------------------------------------------------------------------------------------- |
+| Typography    | Monospaced or geometric sans-serif (tech aesthetic)                                     |
+| Background FX | Scanlines, point cloud flicker, subtle grid overlays                                    |
+| Icons         | Custom icons for drones, scans, mesh layers                                             |
+| Color Theme   | Tech-industrial (Concrete Gray, Drone Orange, Sky Blue) or Midnight (Black, Gold, Teal) |
+| Analytics     | Track model viewer interaction, form submissions, project clicks                        |
+
+---
+
+## ✅ NEXT STEPS
+
+* Scaffold Hero + Works sections with 3D embeds
+* Create `projects.json` to store 3D model data
+* Setup scroll animation framework with GSAP + Lenis
+* Optimize for mobile + desktop performance
+* Integrate contact form (Formspree or Supabase)
+* Optional: Add CMS for project uploads (Notion or Supabase)
