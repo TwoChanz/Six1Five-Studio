@@ -148,24 +148,26 @@ export default function AboutSection() {
             </div>
           </div>
           <div className="relative max-w-xs sm:max-w-sm mx-auto lg:mx-0">
-            <div className="bg-gray-800 rounded-xl p-4 shadow-2xl">
-              {/* Profile image with gradient frame */}
-              <div className="relative p-4 rounded-xl bg-gradient-to-br from-orange-400 via-sky-400 to-cyan-400 shadow-lg">
-                <div className="bg-gray-900 rounded-xl p-4 overflow-hidden">
-                  <div className="relative aspect-square rounded-xl overflow-hidden">
+            <div className="bg-[#111827] rounded-xl p-6 shadow-2xl">
+              {/* Profile image with minimal dark frame */}
+              <div className="relative bg-[#1f2937] p-1 rounded-xl shadow-inner max-w-xs w-full mx-auto">
+                <div className="rounded-xl overflow-hidden group transition-all duration-300 ease-in-out hover:scale-105 cursor-pointer">
+                  <div className="relative aspect-square">
                     <img 
                       src={profileImage}
                       alt="Chandler Hopkins, Founder of Six1Five Studio" 
-                      className="w-full h-full object-cover object-top transform scale-95" 
+                      className="w-full h-full object-cover object-top rounded-xl" 
                     />
-                    {/* Subtle vignette overlay */}
-                    <div className="absolute inset-0 bg-gradient-radial from-transparent to-black/20"></div>
+                    {/* Soft radial vignette overlay */}
+                    <div className="absolute inset-0 rounded-xl bg-gradient-radial from-transparent via-transparent to-black/30 pointer-events-none"></div>
                   </div>
+                  {/* Inner glow effect */}
+                  <div className="absolute inset-0 rounded-xl shadow-inner shadow-white/10 pointer-events-none"></div>
                 </div>
               </div>
               
               {/* Profile information and links */}
-              <div className="mt-4 text-center space-y-2">
+              <div className="mt-6 text-center space-y-2">
                 <h4 className="font-semibold text-white text-lg">Chandler Hopkins</h4>
                 <p className="text-sm text-gray-400">Founder & Reality Capture Specialist</p>
                 
