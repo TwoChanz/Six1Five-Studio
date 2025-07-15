@@ -19,7 +19,9 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center grid-overlay pt-16">
+    <section id="home" className="relative min-h-screen flex items-center justify-center pt-16">
+      {/* Semi-transparent gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[hsl(218,11%,15%)]/90 via-[hsl(218,11%,15%)]/50 to-[hsl(218,11%,15%)]/80 z-0"></div>
       <div className="container mx-auto px-6 z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="text-center lg:text-left">
