@@ -4,6 +4,14 @@
 
 This is a full-stack web application for Six1Five Studio, a reality capture company specializing in drone mapping, LiDAR scanning, and photogrammetry services. The application serves as a professional portfolio showcasing 3D models, project walkthroughs, and client deliverables for the AEC (Architecture, Engineering, Construction), real estate, and historic preservation industries.
 
+## Recent Changes
+
+**Sketchfab Integration (January 15, 2025)**
+- Integrated real Sketchfab 3D model viewer in hero section featuring "Watchtower | Shooting House" model
+- Updated portfolio section to showcase actual project from six1fivemedia Sketchfab profile
+- Added clickable links to view models on Sketchfab platform
+- Fixed TypeScript error in storage.ts for contact submissions
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.

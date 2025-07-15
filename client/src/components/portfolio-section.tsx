@@ -3,12 +3,12 @@ import { Play, Layers, GraduationCap } from "lucide-react";
 
 const projects = [
   {
-    title: "Floyd Stadium — Photogrammetry Flythrough",
-    role: "Aerial drone scan, NeRF reconstruction",
-    deliverable: "3D model + Flythrough video", 
-    tools: "DJI Mini 4 Pro, RealityCapture, Luma AI",
+    title: "Watchtower | Shooting House — Photogrammetry Scan",
+    role: "Aerial drone mapping, 3D reconstruction",
+    deliverable: "Interactive 3D model + Sketchfab viewer", 
+    tools: "DJI Mini 4 Pro, Photogrammetry Pipeline, Sketchfab",
     image: "https://images.unsplash.com/photo-1577223625816-7546f13df25d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
-    buttonText: "Launch Viewer",
+    buttonText: "View on Sketchfab",
     buttonColor: "bg-[hsl(24,95%,53%)] hover:bg-[hsl(24,95%,48%)]",
     icon: Play,
     iconColor: "text-[hsl(24,95%,53%)]"
@@ -56,8 +56,8 @@ export default function PortfolioSection() {
                 <div className={project.reverse ? 'lg:col-start-2' : ''}>
                   <h3 className="text-3xl font-semibold mb-4">{project.title}</h3>
                   <p className="text-gray-400 mb-6">
-                    {project.title === "Floyd Stadium — Photogrammetry Flythrough" 
-                      ? "Comprehensive aerial drone scan and NeRF reconstruction of Floyd Stadium, delivering an immersive 3D model and flythrough experience."
+                    {project.title === "Watchtower | Shooting House — Photogrammetry Scan" 
+                      ? "Complete photogrammetry reconstruction of a shooting house watchtower using aerial drone mapping. This interactive 3D model showcases precise detail capture and texture mapping for structural analysis."
                       : project.title === "Construction Progress Monitoring"
                       ? "Multi-phase construction documentation with drone mapping and progress tracking, providing stakeholders with detailed visual reports."
                       : "Comprehensive LiDAR scanning and photogrammetry of historic architecture for preservation records and virtual museum exhibits."
@@ -77,7 +77,14 @@ export default function PortfolioSection() {
                       <span>{project.tools}</span>
                     </div>
                   </div>
-                  <Button className={`${project.buttonColor} text-white px-8 py-3 rounded-lg font-semibold transition-colors`}>
+                  <Button 
+                    onClick={() => {
+                      if (project.title === "Watchtower | Shooting House — Photogrammetry Scan") {
+                        window.open("https://sketchfab.com/3d-models/watchtower-shooting-house-f066d332c0d145c3b90ad32efde4b4a9", "_blank");
+                      }
+                    }}
+                    className={`${project.buttonColor} text-white px-8 py-3 rounded-lg font-semibold transition-colors`}
+                  >
                     {project.buttonText}
                   </Button>
                 </div>
@@ -92,7 +99,7 @@ export default function PortfolioSection() {
                       <div className="text-center">
                         <IconComponent className={`w-16 h-16 ${project.iconColor} mb-4`} />
                         <p className="text-white font-semibold">
-                          {project.title === "Floyd Stadium — Photogrammetry Flythrough" 
+                          {project.title === "Watchtower | Shooting House — Photogrammetry Scan" 
                             ? "View 3D Model" 
                             : project.title === "Construction Progress Monitoring"
                             ? "Progress Timeline"
