@@ -156,3 +156,8 @@
 .tech-mono {
   font-family: 'JetBrains Mono', monospace;
 }
+
+/* Custom gradient utilities */
+.bg-gradient-radial {
+  background: radial-gradient(circle, var(--tw-gradient-stops));
+}

@@ -148,15 +148,20 @@ export default function AboutSection() {
             </div>
           </div>
           <div className="relative">
-            <div className="bg-gray-800 rounded-xl p-6 scanline-effect shadow-2xl">
+            <div className="bg-gray-800 rounded-xl p-6 shadow-2xl">
               {/* Profile image with gradient frame and margin */}
               <div className="relative p-4 rounded-xl bg-gradient-to-br from-[hsl(24,95%,53%)] via-[hsl(199,89%,48%)] to-[hsl(218,11%,15%)] shadow-lg">
-                <div className="bg-gray-900 rounded-lg p-3 shadow-inner">
-                  <img 
-                    src={profileImage}
-                    alt="Chandler Hopkins, Founder of Six1Five Studio" 
-                    className="rounded-md w-full h-auto object-cover aspect-square shadow-md" 
-                  />
+                <div className="bg-gray-900 rounded-xl p-3 shadow-inner overflow-hidden">
+                  <div className="relative rounded-xl overflow-hidden">
+                    <img 
+                      src={profileImage}
+                      alt="Chandler Hopkins, Founder of Six1Five Studio" 
+                      className="w-full h-auto object-cover aspect-square shadow-md transform scale-95 object-top" 
+                      style={{ objectPosition: 'center top' }}
+                    />
+                    {/* Subtle vignette overlay */}
+                    <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-black/20 rounded-xl"></div>
+                  </div>
                 </div>
               </div>
               
@@ -179,6 +184,12 @@ export default function AboutSection() {
                     className="text-[hsl(158,64%,52%)] hover:text-white transition-colors text-sm"
                   >
                     Read Digital Blueprint →
+                  </a>
+                  <a 
+                    href="#" 
+                    className="text-[hsl(24,95%,53%)] hover:text-white transition-colors text-sm"
+                  >
+                    Download Resume →
                   </a>
                 </div>
               </div>
