@@ -137,7 +137,7 @@ export default function AboutSection() {
                 
                 {/* Text with subtle map overlay */}
                 <div className="relative">
-                  {/* Subtle Nashville metro outline behind text */}
+                  {/* Subtle Tennessee state outline behind text */}
                   <div className="absolute -left-4 -top-2 w-48 h-8 opacity-8 pointer-events-none">
                     <svg 
                       width="192" 
@@ -146,16 +146,16 @@ export default function AboutSection() {
                       fill="none" 
                       className="w-full h-full text-[hsl(24,95%,53%)]"
                     >
-                      {/* Simplified Nashville metro area outline */}
+                      {/* Tennessee state outline - elongated horizontal shape */}
                       <path 
-                        d="M8 16 Q12 12, 20 14 L35 12 Q50 10, 65 12 L80 11 Q95 9, 110 11 L125 12 Q140 14, 155 16 Q170 18, 184 20 Q180 24, 170 26 L155 28 Q140 30, 125 28 L110 29 Q95 31, 80 29 L65 30 Q50 32, 35 30 L20 28 Q12 26, 8 20 Q6 18, 8 16 Z" 
+                        d="M4 16 L8 12 Q12 10, 18 11 L28 10 Q40 8, 52 10 L64 9 Q76 7, 88 9 L100 8 Q112 6, 124 8 L136 9 Q148 11, 160 13 L172 15 Q184 17, 188 20 Q186 24, 180 26 L168 28 Q156 30, 144 28 L132 29 Q120 31, 108 29 L96 30 Q84 32, 72 30 L60 29 Q48 27, 36 25 L24 23 Q12 21, 8 18 L4 16 Z" 
                         stroke="currentColor" 
                         strokeWidth="0.5" 
                         fill="none" 
                         opacity="0.6"
                         strokeDasharray="2,1"
                       />
-                      {/* Nashville center point */}
+                      {/* Nashville location marker */}
                       <circle cx="96" cy="20" r="1" fill="currentColor" opacity="0.4"/>
                     </svg>
                   </div>
