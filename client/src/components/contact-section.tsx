@@ -197,21 +197,21 @@ export default function ContactSection() {
                     <Phone className="w-6 h-6 text-[hsl(24,95%,53%)]" />
                     <div>
                       <p className="font-semibold">Call Direct</p>
-                      <p className="text-gray-400">(615) 555-0123</p>
+                      <p className="text-gray-400">(931) 588-8997</p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-4">
                     <Mail className="w-6 h-6 text-[hsl(199,89%,48%)]" />
                     <div>
                       <p className="font-semibold">Email</p>
-                      <p className="text-gray-400">chandler@six1five.studio</p>
+                      <p className="text-gray-400">hopkinsc1996@hotmail.com</p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-4">
                     <MapPin className="w-6 h-6 text-[hsl(158,64%,52%)]" />
                     <div>
                       <p className="font-semibold">Service Area</p>
-                      <p className="text-gray-400">Nashville, TN + 100 mi radius</p>
+                      <p className="text-gray-400">Tennessee + Regional Coverage</p>
                     </div>
                   </div>
                 </div>

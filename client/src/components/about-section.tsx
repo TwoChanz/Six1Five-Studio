@@ -11,37 +11,37 @@ export default function AboutSection() {
               Meet the <span className="text-[hsl(24,95%,53%)]">Scanner</span>
             </h2>
             <p className="text-xl text-gray-300 mb-6">
-              I'm <span className="text-[hsl(199,89%,48%)] font-semibold">Chandler Hopkins</span> — a Reality Capture specialist and founder of Six1Five Studio, transforming physical spaces into precise 3D digital assets for architecture, engineering, construction, real estate, and historic preservation projects.
+              I'm <span className="text-[hsl(199,89%,48%)] font-semibold">Chandler Hopkins</span> — a Reality Capture specialist and founder of Six1Five Studio. With a Construction Management degree from MTSU and hands-on experience in AEC workflows, I specialize in photogrammetry, LiDAR scanning, and 3D reconstruction for construction, infrastructure, and historic preservation.
             </p>
             <p className="text-gray-400 mb-6">
-              Based in Nashville, TN, I combine advanced drone technology, terrestrial LiDAR scanning, and photogrammetry techniques to deliver comprehensive spatial data solutions. My work bridges the gap between physical reality and digital workflows, enabling better decision-making through accurate 3D documentation.
+              Based in La Vergne, Tennessee, I work with RealityCapture, Metashape, CloudCompare, and FARO SCENE to process high-resolution photogrammetry models and LiDAR point clouds. My expertise extends to 360 cameras, drone imagery, and advanced reconstruction methods like NeRFs and Gaussian Splatting.
             </p>
             <p className="text-gray-400 mb-8">
-              From construction progress monitoring to heritage preservation, I provide end-to-end reality capture services that transform how professionals visualize, analyze, and interact with spatial data.
+              Currently serving as Operations Shift Leader at Estes Express Lines, I bring practical logistics experience to reality capture projects. I'm passionate about integrating AI, automation, and digital twins into Reality Capture solutions, driving innovation in the built environment.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-4">
                 <div className="flex items-center space-x-4">
                   <MapPin className="w-5 h-5 text-[hsl(24,95%,53%)]" />
-                  <span>Nashville, TN + Regional Coverage</span>
+                  <span>La Vergne, Tennessee + Regional</span>
                 </div>
                 <div className="flex items-center space-x-4">
                   <Award className="w-5 h-5 text-[hsl(199,89%,48%)]" />
-                  <span>FAA Part 107 Licensed</span>
+                  <span>MTSU Construction Management</span>
                 </div>
                 <div className="flex items-center space-x-4">
                   <Settings className="w-5 h-5 text-[hsl(158,64%,52%)]" />
-                  <span>Professional Reality Capture</span>
+                  <span>Operations Shift Leader</span>
                 </div>
               </div>
               <div className="space-y-3">
-                <h4 className="font-semibold text-[hsl(199,89%,48%)]">Core Expertise</h4>
+                <h4 className="font-semibold text-[hsl(199,89%,48%)]">Technical Skills</h4>
                 <ul className="text-sm text-gray-400 space-y-1">
-                  <li>• Aerial Photogrammetry & Mapping</li>
-                  <li>• LiDAR Point Cloud Processing</li>
-                  <li>• 3D Model Reconstruction</li>
-                  <li>• Construction Documentation</li>
-                  <li>• Historic Preservation Scanning</li>
+                  <li>• RealityCapture & Metashape</li>
+                  <li>• CloudCompare & FARO SCENE</li>
+                  <li>• NeRFs & Gaussian Splatting</li>
+                  <li>• Blueprint Reading & ACI Testing</li>
+                  <li>• Digital Twins & AI Integration</li>
                 </ul>
               </div>
             </div>
@@ -56,14 +56,24 @@ export default function AboutSection() {
               <div className="mt-4 text-center">
                 <h4 className="font-semibold text-white">Chandler Hopkins</h4>
                 <p className="text-sm text-gray-400">Founder & Reality Capture Specialist</p>
-                <a 
-                  href="https://www.linkedin.com/in/chandler-hopkins-924005112/" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="inline-block mt-2 text-[hsl(199,89%,48%)] hover:text-white transition-colors text-sm"
-                >
-                  Connect on LinkedIn →
-                </a>
+                <div className="flex flex-col gap-1 mt-2">
+                  <a 
+                    href="https://www.linkedin.com/in/chandler-hopkins-924005112/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-[hsl(199,89%,48%)] hover:text-white transition-colors text-sm"
+                  >
+                    Connect on LinkedIn →
+                  </a>
+                  <a 
+                    href="https://digitalblueprint.substack.com/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-[hsl(158,64%,52%)] hover:text-white transition-colors text-sm"
+                  >
+                    Read Digital Blueprint →
+                  </a>
+                </div>
               </div>
             </div>
           </div>

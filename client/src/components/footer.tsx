@@ -1,4 +1,4 @@
-import { Linkedin, ExternalLink, Instagram } from "lucide-react";
+import { Linkedin, ExternalLink, BookOpen } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -33,8 +33,14 @@ export default function Footer() {
               >
                 <ExternalLink className="w-6 h-6" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-[hsl(158,64%,52%)] transition-colors">
-                <Instagram className="w-6 h-6" />
+              <a 
+                href="https://digitalblueprint.substack.com/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-[hsl(158,64%,52%)] transition-colors"
+                title="Digital Blueprint on Substack"
+              >
+                <BookOpen className="w-6 h-6" />
               </a>
             </div>
           </div>
@@ -50,9 +56,9 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-4">Contact</h4>
             <ul className="space-y-2 text-gray-400">
-              <li>Nashville, TN</li>
-              <li>(615) 555-0123</li>
-              <li>chandler@six1five.studio</li>
+              <li>La Vergne, Tennessee</li>
+              <li>(931) 588-8997</li>
+              <li>hopkinsc1996@hotmail.com</li>
             </ul>
           </div>
         </div>
