@@ -98,24 +98,25 @@ export default function AboutSection() {
             </div>
 
             {/* Service Area with Enhanced Tennessee Background */}
-            <div className="relative overflow-hidden">
-              {/* Tennessee state outline background - responsive */}
-              <div className="absolute -left-4 -top-4 w-full max-w-sm h-16 opacity-[0.08] pointer-events-none">
+            <div className="relative overflow-visible pt-2 pb-2">
+              {/* Tennessee state outline background - enhanced visibility */}
+              <div className="absolute -left-6 -top-3 w-full max-w-full h-auto opacity-[0.14] pointer-events-none">
                 <svg 
                   width="100%" 
-                  height="100%" 
+                  height="auto" 
                   viewBox="0 0 400 64" 
                   fill="none" 
-                  className="w-full h-full text-[hsl(24,95%,53%)]"
-                  style={{ aspectRatio: '6.25/1', objectFit: 'contain' }}
+                  className="w-full h-auto text-[hsl(28,100%,58%)] drop-shadow-sm"
+                  style={{ aspectRatio: '6.25/1', objectFit: 'contain', maxWidth: '100%' }}
                 >
-                  {/* Full Tennessee state outline - horizontal orientation */}
+                  {/* Full Tennessee state outline - horizontal orientation with enhanced stroke */}
                   <path 
                     d="M20 32 L30 18 Q40 12, 55 16 L75 14 Q95 10, 115 14 L135 12 Q155 8, 175 12 L195 10 Q215 6, 235 10 L255 12 Q275 16, 295 20 L315 24 Q335 28, 350 32 Q360 40, 355 48 L345 52 Q325 56, 305 52 L285 54 Q265 58, 245 54 L225 56 Q205 60, 185 56 L165 58 Q145 62, 125 58 L105 56 Q85 52, 65 48 L45 44 Q25 40, 20 32 Z" 
                     stroke="currentColor" 
-                    strokeWidth="1" 
+                    strokeWidth="1.2" 
                     fill="none" 
                     strokeDasharray="6,4"
+                    filter="drop-shadow(0 0 2px rgba(255, 133, 27, 0.3))"
                   />
                 </svg>
               </div>
