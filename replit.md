@@ -6,6 +6,21 @@ This is a full-stack web application for Six1Five Studio, a reality capture comp
 
 ## Recent Changes
 
+**Enhanced Database Schema & Content Management (January 16, 2025)**
+- Expanded database schema with blog_posts and portfolio_items tables
+- Added comprehensive API routes for blog and portfolio management (GET/POST endpoints)
+- Populated database with sample portfolio items and blog posts
+- Integrated real Sketchfab 3D model viewer with "Watchtower | Shooting House" model
+- Enhanced contact form with file upload, project timeline, and budget range fields
+- Added comprehensive FAQ page with categorized questions and professional styling
+
+**Enhanced Portfolio & Gallery System (January 16, 2025)**
+- Updated portfolio section to fetch data from PostgreSQL database
+- Integrated multiple Sketchfab 3D model viewers throughout portfolio sections
+- Created dedicated gallery page with filtering by category and view modes
+- Added structured data markup for local business SEO optimization
+- Enhanced blog system with database integration and educational content
+
 **Professional Profile Integration (January 15, 2025)**
 - Enhanced About section with authentic LinkedIn profile information
 - Integrated real profile image of Chandler Hopkins

@@ -1,10 +1,18 @@
 import { useState } from "react";
+import { Link, useLocation } from "wouter";
 import { Menu, X } from "lucide-react";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [location] = useLocation();
 
   const scrollToSection = (sectionId: string) => {
+    if (location !== "/") {
+      // Navigate to home first, then scroll
+      window.location.href = `/#${sectionId}`;
+      return;
+    }
+    
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
@@ -30,24 +38,21 @@ export default function Navbar() {
             >
               Home
             </button>
-            <button 
-              onClick={() => scrollToSection("portfolio")}
-              className="relative hover:text-[hsl(24,95%,53%)] transition-colors"
-            >
-              Portfolio
-            </button>
+            <Link href="/gallery" className="relative hover:text-[hsl(24,95%,53%)] transition-colors">
+              Gallery
+            </Link>
             <button 
               onClick={() => scrollToSection("services")}
               className="relative hover:text-[hsl(24,95%,53%)] transition-colors"
             >
               Services
             </button>
-            <button 
-              onClick={() => scrollToSection("about")}
-              className="relative hover:text-[hsl(24,95%,53%)] transition-colors"
-            >
-              About
-            </button>
+            <Link href="/blog" className="relative hover:text-[hsl(24,95%,53%)] transition-colors">
+              Blog
+            </Link>
+            <Link href="/faq" className="relative hover:text-[hsl(24,95%,53%)] transition-colors">
+              FAQ
+            </Link>
             <button 
               onClick={() => scrollToSection("contact")}
               className="relative hover:text-[hsl(24,95%,53%)] transition-colors"
@@ -74,24 +79,33 @@ export default function Navbar() {
               >
                 Home
               </button>
-              <button 
-                onClick={() => scrollToSection("portfolio")}
+              <Link 
+                href="/gallery" 
                 className="text-left hover:text-[hsl(24,95%,53%)] transition-colors"
+                onClick={() => setIsMenuOpen(false)}
               >
-                Portfolio
-              </button>
+                Gallery
+              </Link>
               <button 
                 onClick={() => scrollToSection("services")}
                 className="text-left hover:text-[hsl(24,95%,53%)] transition-colors"
               >
                 Services
               </button>
-              <button 
-                onClick={() => scrollToSection("about")}
+              <Link 
+                href="/blog" 
                 className="text-left hover:text-[hsl(24,95%,53%)] transition-colors"
+                onClick={() => setIsMenuOpen(false)}
               >
-                About
-              </button>
+                Blog
+              </Link>
+              <Link 
+                href="/faq" 
+                className="text-left hover:text-[hsl(24,95%,53%)] transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                FAQ
+              </Link>
               <button 
                 onClick={() => scrollToSection("contact")}
                 className="text-left hover:text-[hsl(24,95%,53%)] transition-colors"

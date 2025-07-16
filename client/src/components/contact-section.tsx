@@ -7,16 +7,20 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
-import { Phone, Mail, MapPin } from "lucide-react";
+import { Phone, Mail, MapPin, Upload, X } from "lucide-react";
 
 const contactSchema = z.object({
   name: z.string().min(1, "Name is required"),
   email: z.string().email("Valid email is required"),
   services: z.array(z.string()).min(1, "Please select at least one service"),
   projectDetails: z.string().min(10, "Please provide project details (minimum 10 characters)"),
+  timeline: z.string().optional(),
+  budgetRange: z.string().optional(),
+  referenceFiles: z.array(z.string()).optional(),
 });
 
 type ContactForm = z.infer<typeof contactSchema>;
@@ -26,10 +30,30 @@ const serviceOptions = [
   { id: "interior-scan", label: "Interior Scan" },
   { id: "lidar-survey", label: "LiDAR Survey" },
   { id: "construction-monitoring", label: "Construction Monitoring" },
+  { id: "photogrammetry", label: "Photogrammetry" },
+  { id: "heritage-documentation", label: "Heritage Documentation" },
+];
+
+const timelineOptions = [
+  { value: "asap", label: "ASAP (Rush)" },
+  { value: "1-2-weeks", label: "1-2 weeks" },
+  { value: "3-4-weeks", label: "3-4 weeks" },
+  { value: "1-2-months", label: "1-2 months" },
+  { value: "flexible", label: "Flexible timeline" },
+];
+
+const budgetOptions = [
+  { value: "under-5k", label: "Under $5,000" },
+  { value: "5k-10k", label: "$5,000 - $10,000" },
+  { value: "10k-25k", label: "$10,000 - $25,000" },
+  { value: "25k-50k", label: "$25,000 - $50,000" },
+  { value: "over-50k", label: "Over $50,000" },
+  { value: "discuss", label: "Let's discuss" },
 ];
 
 export default function ContactSection() {
   const { toast } = useToast();
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
   
   const form = useForm<ContactForm>({
     resolver: zodResolver(contactSchema),
@@ -38,6 +62,9 @@ export default function ContactSection() {
       email: "",
       services: [],
       projectDetails: "",
+      timeline: "",
+      budgetRange: "",
+      referenceFiles: [],
     },
   });
 
@@ -51,6 +78,7 @@ export default function ContactSection() {
         description: "Thank you for your interest. We will contact you soon.",
       });
       form.reset();
+      setUploadedFiles([]);
     },
     onError: (error: Error) => {
       toast({
@@ -60,6 +88,56 @@ export default function ContactSection() {
       });
     },
   });
+
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(event.target.files || []);
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'application/pdf', 'text/plain'];
+    const maxSize = 10 * 1024 * 1024; // 10MB
+    
+    const validFiles = files.filter(file => {
+      if (!allowedTypes.includes(file.type)) {
+        toast({
+          title: "Invalid file type",
+          description: "Please upload images (JPEG, PNG, GIF), PDF, or text files only.",
+          variant: "destructive",
+        });
+        return false;
+      }
+      if (file.size > maxSize) {
+        toast({
+          title: "File too large",
+          description: `${file.name} is too large. Please keep files under 10MB.`,
+          variant: "destructive",
+        });
+        return false;
+      }
+      return true;
+    });
+
+    setUploadedFiles(prev => [...prev, ...validFiles]);
+    
+    // Convert files to base64 for form submission
+    const filePromises = validFiles.map(file => {
+      return new Promise<string>((resolve) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result as string);
+        reader.readAsDataURL(file);
+      });
+    });
+
+    Promise.all(filePromises).then(base64Files => {
+      form.setValue('referenceFiles', [...(form.getValues('referenceFiles') || []), ...base64Files]);
+    });
+  };
+
+  const removeFile = (index: number) => {
+    const newFiles = uploadedFiles.filter((_, i) => i !== index);
+    setUploadedFiles(newFiles);
+    
+    const currentFormFiles = form.getValues('referenceFiles') || [];
+    const newFormFiles = currentFormFiles.filter((_, i) => i !== index);
+    form.setValue('referenceFiles', newFormFiles);
+  };
 
   const onSubmit = (data: ContactForm) => {
     contactMutation.mutate(data);
@@ -177,6 +255,96 @@ export default function ContactSection() {
                     </FormItem>
                   )}
                 />
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <FormField
+                    control={form.control}
+                    name="timeline"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-sm font-medium">Project Timeline</FormLabel>
+                        <Select onValueChange={field.onChange} value={field.value}>
+                          <FormControl>
+                            <SelectTrigger className="bg-gray-700 border-gray-600 focus:border-[hsl(24,95%,53%)] text-white">
+                              <SelectValue placeholder="Select timeline" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {timelineOptions.map((option) => (
+                              <SelectItem key={option.value} value={option.value}>
+                                {option.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="budgetRange"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-sm font-medium">Budget Range</FormLabel>
+                        <Select onValueChange={field.onChange} value={field.value}>
+                          <FormControl>
+                            <SelectTrigger className="bg-gray-700 border-gray-600 focus:border-[hsl(24,95%,53%)] text-white">
+                              <SelectValue placeholder="Select budget" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {budgetOptions.map((option) => (
+                              <SelectItem key={option.value} value={option.value}>
+                                {option.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <div>
+                  <FormLabel className="text-sm font-medium mb-3 block">Reference Files</FormLabel>
+                  <div className="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center">
+                    <input
+                      type="file"
+                      multiple
+                      accept="image/*,.pdf,.txt"
+                      onChange={handleFileUpload}
+                      className="hidden"
+                      id="file-upload"
+                    />
+                    <label htmlFor="file-upload" className="cursor-pointer">
+                      <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
+                      <p className="text-gray-400 mb-1">Upload reference images or documents</p>
+                      <p className="text-xs text-gray-500">Drag files here or click to browse (Max 10MB each)</p>
+                    </label>
+                  </div>
+                  
+                  {uploadedFiles.length > 0 && (
+                    <div className="mt-4 space-y-2">
+                      {uploadedFiles.map((file, index) => (
+                        <div key={index} className="flex items-center justify-between bg-gray-700 rounded-lg p-3">
+                          <span className="text-sm text-white truncate">{file.name}</span>
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => removeFile(index)}
+                            className="text-red-400 hover:text-red-300 h-6 w-6 p-0"
+                          >
+                            <X className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
                 
                 <Button 
                   type="submit" 
