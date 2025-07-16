@@ -56,9 +56,9 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-4">Contact</h4>
             <ul className="space-y-2 text-gray-400">
-              <li>La Vergne, Tennessee</li>
+              <li>Nashville, Tennessee</li>
               <li>(931) 588-8997</li>
-              <li>hopkinsc1996@hotmail.com</li>
+              <li>six1fivestudio@outlook.com</li>
             </ul>
           </div>
         </div>
