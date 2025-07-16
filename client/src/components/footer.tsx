@@ -1,4 +1,4 @@
-import { Linkedin, ExternalLink, BookOpen } from "lucide-react";
+import { Users, Globe, FileText } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -15,32 +15,41 @@ export default function Footer() {
             <p className="text-gray-400 mb-4">
               Reality Capture specialists transforming physical spaces into digital assets for AEC, real estate, and historic preservation.
             </p>
-            <div className="flex space-x-4">
+            <div className="flex space-x-6">
               <a 
                 href="https://www.linkedin.com/in/chandler-hopkins-924005112/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-[hsl(24,95%,53%)] transition-colors"
+                className="group flex items-center space-x-2 text-gray-400 hover:text-[hsl(24,95%,53%)] transition-all duration-300 transform hover:scale-110"
               >
-                <Linkedin className="w-6 h-6" />
+                <div className="p-2 rounded-full bg-gray-800 group-hover:bg-[hsl(24,95%,53%)] transition-all duration-300">
+                  <Users className="w-5 h-5" />
+                </div>
+                <span className="text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">LinkedIn</span>
               </a>
               <a 
                 href="https://sketchfab.com/six1fivemedia" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-[hsl(199,89%,48%)] transition-colors"
+                className="group flex items-center space-x-2 text-gray-400 hover:text-[hsl(199,89%,48%)] transition-all duration-300 transform hover:scale-110"
                 title="View 3D Models on Sketchfab"
               >
-                <ExternalLink className="w-6 h-6" />
+                <div className="p-2 rounded-full bg-gray-800 group-hover:bg-[hsl(199,89%,48%)] transition-all duration-300">
+                  <Globe className="w-5 h-5" />
+                </div>
+                <span className="text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">3D Models</span>
               </a>
               <a 
                 href="https://digitalblueprint.substack.com/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-[hsl(158,64%,52%)] transition-colors"
+                className="group flex items-center space-x-2 text-gray-400 hover:text-[hsl(158,64%,52%)] transition-all duration-300 transform hover:scale-110"
                 title="Digital Blueprint on Substack"
               >
-                <BookOpen className="w-6 h-6" />
+                <div className="p-2 rounded-full bg-gray-800 group-hover:bg-[hsl(158,64%,52%)] transition-all duration-300">
+                  <FileText className="w-5 h-5" />
+                </div>
+                <span className="text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">Newsletter</span>
               </a>
             </div>
           </div>
