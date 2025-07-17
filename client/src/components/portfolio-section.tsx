@@ -3,11 +3,8 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Play, Layers, Building, ExternalLink, Eye } from "lucide-react";
+import { Play, Layers, Building, ArrowRight, Eye } from "lucide-react";
 import { getQueryFn } from "@/lib/queryClient";
-import { ModelViewer } from "./model-viewer";
-import { GLBModelViewer } from "./glb-model-viewer";
-import { SketchfabEmbed } from "./sketchfab-embed";
 import type { PortfolioItem } from "@shared/schema";
 
 const getIconForCategory = (category: string) => {
@@ -46,18 +43,7 @@ export default function PortfolioSection() {
     queryFn: getQueryFn({ on401: "returnNull" }),
   });
 
-  const SketchfabEmbed = ({ modelId, title }: { modelId: string; title: string }) => (
-    <div className="aspect-video relative bg-gray-800 rounded-lg overflow-hidden">
-      <iframe
-        src={`https://sketchfab.com/models/${modelId}/embed?autostart=0&ui_theme=dark`}
-        title={title}
-        frameBorder="0"
-        allow="autoplay; fullscreen; vr"
-        className="w-full h-full"
-        loading="lazy"
-      />
-    </div>
-  );
+
 
   return (
     <section id="portfolio" className="py-20 bg-[hsl(218,11%,15%)]">
@@ -123,108 +109,58 @@ export default function PortfolioSection() {
                     )}
                     
                     <div className="flex gap-3">
-                      {item.sketchfabModelId && (
-                        <a 
-                          href={`https://sketchfab.com/3d-models/${item.sketchfabModelId}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={`inline-flex items-center ${buttonColor} text-white px-6 py-3 rounded-lg font-semibold transition-colors hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-orange-500`}
-                        >
-                          <ExternalLink className="w-4 h-4 mr-2" />
-                          View on Sketchfab
-                        </a>
-                      )}
-                      {(item.modelFile && item.modelFormat) && (
-                        <button 
-                          onClick={() => {
-                            const modelElement = document.querySelector(`[data-model-id="${item.id}"]`);
-                            if (modelElement) {
-                              modelElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                            }
-                          }}
-                          className={`inline-flex items-center ${buttonColor} text-white px-6 py-3 rounded-lg font-semibold transition-colors hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-orange-500`}
-                        >
+                      <Link href={`/project/${item.slug}`}>
+                        <Button className={`${buttonColor} text-white px-6 py-3 rounded-lg font-semibold transition-colors hover:opacity-90`}>
                           <Eye className="w-4 h-4 mr-2" />
-                          View in 3D
-                        </button>
-                      )}
+                          View Project
+                        </Button>
+                      </Link>
                       <Link href="/gallery">
-                        <Button className="bg-gray-700 hover:bg-gray-600 text-white border-0 px-6 py-3 rounded-lg font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-gray-500">
+                        <Button variant="outline" className="border-gray-500 text-gray-200 hover:bg-gray-700 px-6 py-3 rounded-lg font-semibold transition-colors">
                           View All Projects
                         </Button>
                       </Link>
                     </div>
                   </div>
                   
-                  <div className={`relative ${isReverse ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
-                    {item.viewerType === 'polycam' && item.modelFile ? (
-                      <div className="bg-gray-800 rounded-xl p-4" data-model-id={item.id}>
-                        <iframe
-                          src={item.modelFile}
-                          title={`${item.title} 3D Capture`}
-                          style={{
-                            height: '100%',
-                            width: '100%',
-                            maxHeight: '720px',
-                            maxWidth: '1280px',
-                            minHeight: '280px',
-                            minWidth: '280px',
-                            borderRadius: '12px',
-                            border: '0'
-                          }}
-                          frameBorder="0"
-                          allowFullScreen
-                        />
-                      </div>
-                    ) : item.viewerType === 'local' && item.modelFile && item.modelFormat === 'glb' ? (
-                      <div className="bg-gray-800 rounded-xl p-4" data-model-id={item.id}>
-                        <GLBModelViewer 
-                          src={item.modelFile} 
-                          title={item.title} 
-                          className="rounded-lg"
-                        />
-                      </div>
-                    ) : item.sketchfabModelId ? (
-                      <div className="bg-gray-800 rounded-xl p-4">
-                        <SketchfabEmbed modelId={item.sketchfabModelId} title={item.title} />
-                      </div>
-                    ) : item.modelFile && item.modelFormat ? (
-                      <div className="bg-gray-800 rounded-xl p-4" data-model-id={item.id}>
-                        <ModelViewer 
-                          modelFile={item.modelFile} 
-                          modelFormat={item.modelFormat as 'glb' | 'gltf' | 'obj'} 
-                          title={item.title} 
-                          className="rounded-lg"
-                        />
-                        <div className="absolute top-4 right-4 z-20 bg-black/60 text-white px-3 py-1 rounded-lg text-sm flex items-center gap-2">
-                          <Eye className="w-3 h-3" />
-                          Interactive 3D
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="bg-gray-800 rounded-xl p-6 scanline-effect relative group">
-                        <img 
-                          src={item.featuredImage || "https://images.unsplash.com/photo-1577223625816-7546f13df25d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"} 
-                          alt={item.title} 
-                          className="rounded-lg w-full h-auto" 
-                        />
-                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center rounded-xl group-hover:bg-black/60 transition-colors">
-                          <div className="text-center">
-                            <IconComponent className={`w-16 h-16 ${iconColor} mb-4`} />
-                            <p className="text-white font-semibold mb-2">No 3D model available</p>
-                            <p className="text-gray-300 text-sm mb-4">View project details in gallery</p>
-                            <Link 
-                              href="/gallery"
-                              className="inline-flex items-center text-white bg-black/60 hover:bg-black/80 px-4 py-2 rounded-lg text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500"
-                            >
-                              <ExternalLink className="w-3 h-3 mr-1" />
-                              View Gallery
-                            </Link>
+                  {/* Static Image Thumbnail - Clickable */}
+                  <Link href={`/project/${item.slug}`} className={`relative block ${isReverse ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
+                    <div className="bg-gray-800 rounded-xl p-6 scanline-effect relative group cursor-pointer overflow-hidden">
+                      <img 
+                        src={item.featuredImage || "https://images.unsplash.com/photo-1577223625816-7546f13df25d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"} 
+                        alt={item.title} 
+                        className="rounded-lg w-full h-auto transition-transform duration-300 group-hover:scale-105" 
+                      />
+                      
+                      {/* Overlay with hover effect */}
+                      <div className="absolute inset-0 bg-black/40 flex items-center justify-center rounded-xl group-hover:bg-black/60 transition-all duration-300">
+                        <div className="text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <IconComponent className={`w-16 h-16 ${iconColor} mb-4 mx-auto`} />
+                          <p className="text-white font-semibold mb-2">View 3D Model</p>
+                          <p className="text-gray-300 text-sm mb-4">Interactive {item.viewerType || 'preview'} experience</p>
+                          <div className="inline-flex items-center text-white bg-black/60 hover:bg-black/80 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                            <ArrowRight className="w-4 h-4 mr-2" />
+                            Explore Project
                           </div>
                         </div>
                       </div>
-                    )}
-                  </div>
+
+                      {/* Badge indicators */}
+                      <div className="absolute top-4 left-4 z-10">
+                        <Badge variant="secondary" className="bg-black/70 text-white border-0">
+                          {item.category}
+                        </Badge>
+                      </div>
+                      
+                      {/* 3D indicator */}
+                      {(item.modelFile || item.sketchfabModelId || item.viewerType) && (
+                        <div className="absolute top-4 right-4 z-10 bg-black/70 text-white px-3 py-1 rounded-lg text-sm flex items-center gap-2">
+                          <Eye className="w-3 h-3" />
+                          3D Ready
+                        </div>
+                      )}
+                    </div>
+                  </Link>
                 </div>
               );
             })}

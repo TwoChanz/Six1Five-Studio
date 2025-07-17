@@ -101,6 +101,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/portfolio/slug/:slug", async (req, res) => {
+    try {
+      const { slug } = req.params;
+      const item = await storage.getPortfolioItemBySlug(slug);
+      if (!item) {
+        return res.status(404).json({ error: "Portfolio item not found" });
+      }
+      res.json(item);
+    } catch (error) {
+      console.error("Portfolio item fetch error:", error);
+      res.status(500).json({ error: "Failed to fetch portfolio item" });
+    }
+  });
+
   app.post("/api/portfolio", async (req, res) => {
     try {
       const item = insertPortfolioItemSchema.parse(req.body);
