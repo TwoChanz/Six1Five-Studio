@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three-stdlib';
 import { OBJLoader } from 'three-stdlib';
+import { MTLLoader } from 'three-stdlib';
 import { OrbitControls } from 'three-stdlib';
 import { Play, RotateCcw } from 'lucide-react';
 
@@ -65,74 +66,124 @@ export function ModelViewer({ modelFile, modelFormat, title, className = '' }: M
     directionalLight.castShadow = true;
     scene.add(directionalLight);
 
-    // Load model or create fallback geometry
+    // Load model with proper format support
     const loadModel = async () => {
       try {
         setLoading(true);
         
-        // For now, create a fallback geometry to demonstrate the viewer
-        // In production, this would load the actual model files
-        const geometry = new THREE.BoxGeometry(2, 2, 2);
-        const material = new THREE.MeshPhongMaterial({ 
-          color: 0x6b7280,
-          shininess: 100,
-          transparent: true,
-          opacity: 0.8
-        });
-        const cube = new THREE.Mesh(geometry, material);
-        
-        // Add wireframe overlay for better visualization
-        const wireframe = new THREE.WireframeGeometry(geometry);
-        const wireframeMaterial = new THREE.LineBasicMaterial({ color: 0xff6b35, linewidth: 1 });
-        const wireframeMesh = new THREE.LineSegments(wireframe, wireframeMaterial);
-        
-        const group = new THREE.Group();
-        group.add(cube);
-        group.add(wireframeMesh);
-        
-        scene.add(group);
-        setLoading(false);
-        
-        // TODO: Replace with actual model loading logic
-        /*
-        let loader: GLTFLoader | OBJLoader;
-        
         if (modelFormat === 'glb' || modelFormat === 'gltf') {
-          loader = new GLTFLoader();
+          const loader = new GLTFLoader();
           loader.load(
             modelFile,
             (gltf) => {
-              scene.add(gltf.scene);
+              const model = gltf.scene;
+              
+              // Center and scale the model
+              const box = new THREE.Box3().setFromObject(model);
+              const center = box.getCenter(new THREE.Vector3());
+              const size = box.getSize(new THREE.Vector3());
+              const maxDim = Math.max(size.x, size.y, size.z);
+              const scale = 4 / maxDim;
+              
+              model.position.sub(center);
+              model.scale.multiplyScalar(scale);
+              
+              scene.add(model);
               setLoading(false);
             },
             (progress) => {
               console.log('Loading progress:', (progress.loaded / progress.total) * 100 + '%');
             },
             (error) => {
-              console.error('Error loading model:', error);
+              console.error('Error loading GLTF model:', error);
               setError('Failed to load 3D model');
               setLoading(false);
             }
           );
         } else if (modelFormat === 'obj') {
-          loader = new OBJLoader();
-          loader.load(
-            modelFile,
-            (obj) => {
-              scene.add(obj);
-              setLoading(false);
+          // Load materials first, then the OBJ model
+          const mtlFile = modelFile.replace('.obj', '.mtl');
+          const mtlLoader = new MTLLoader();
+          
+          mtlLoader.load(
+            mtlFile,
+            (materials) => {
+              materials.preload();
+              
+              const objLoader = new OBJLoader();
+              objLoader.setMaterials(materials);
+              
+              objLoader.load(
+                modelFile,
+                (obj) => {
+                  // Center and scale the model
+                  const box = new THREE.Box3().setFromObject(obj);
+                  const center = box.getCenter(new THREE.Vector3());
+                  const size = box.getSize(new THREE.Vector3());
+                  const maxDim = Math.max(size.x, size.y, size.z);
+                  const scale = 4 / maxDim;
+                  
+                  obj.position.sub(center);
+                  obj.scale.multiplyScalar(scale);
+                  
+                  scene.add(obj);
+                  setLoading(false);
+                },
+                (progress) => {
+                  console.log('Loading progress:', (progress.loaded / progress.total) * 100 + '%');
+                },
+                (error) => {
+                  console.error('Error loading OBJ model:', error);
+                  setError('Failed to load 3D model');
+                  setLoading(false);
+                }
+              );
             },
             (progress) => {
-              console.log('Loading progress:', (progress.loaded / progress.total) * 100 + '%');
+              console.log('Loading MTL progress:', (progress.loaded / progress.total) * 100 + '%');
             },
             (error) => {
-              console.error('Error loading model:', error);
-              setError('Failed to load 3D model');
-              setLoading(false);
+              console.error('Error loading MTL materials:', error);
+              // Try loading OBJ without materials as fallback
+              const objLoader = new OBJLoader();
+              objLoader.load(
+                modelFile,
+                (obj) => {
+                  // Apply default material
+                  obj.traverse((child) => {
+                    if (child.isMesh) {
+                      child.material = new THREE.MeshPhongMaterial({ 
+                        color: 0x999999,
+                        shininess: 30
+                      });
+                    }
+                  });
+                  
+                  // Center and scale the model
+                  const box = new THREE.Box3().setFromObject(obj);
+                  const center = box.getCenter(new THREE.Vector3());
+                  const size = box.getSize(new THREE.Vector3());
+                  const maxDim = Math.max(size.x, size.y, size.z);
+                  const scale = 4 / maxDim;
+                  
+                  obj.position.sub(center);
+                  obj.scale.multiplyScalar(scale);
+                  
+                  scene.add(obj);
+                  setLoading(false);
+                },
+                (progress) => {
+                  console.log('Loading progress:', (progress.loaded / progress.total) * 100 + '%');
+                },
+                (error) => {
+                  console.error('Error loading OBJ model:', error);
+                  setError('Failed to load 3D model');
+                  setLoading(false);
+                }
+              );
             }
           );
         }
-        */
       } catch (err) {
         console.error('Model loading error:', err);
         setError('Failed to load 3D model');
