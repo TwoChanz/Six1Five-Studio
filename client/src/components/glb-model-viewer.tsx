@@ -28,7 +28,28 @@ export function GLBModelViewer({ src, title, className = '' }: GLBModelViewerPro
     if (!document.querySelector('script[src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"]')) {
       document.head.appendChild(script);
     }
-  }, []);
+
+    // Add error event listener for debugging
+    const handleError = (e: Event) => {
+      console.error('Model-viewer error:', e);
+    };
+
+    const handleLoad = () => {
+      console.log('Model-viewer loaded successfully:', src);
+    };
+
+    if (viewerRef.current) {
+      viewerRef.current.addEventListener('error', handleError);
+      viewerRef.current.addEventListener('load', handleLoad);
+    }
+
+    return () => {
+      if (viewerRef.current) {
+        viewerRef.current.removeEventListener('error', handleError);
+        viewerRef.current.removeEventListener('load', handleLoad);
+      }
+    };
+  }, [src]);
 
   const resetCamera = () => {
     if (viewerRef.current) {
@@ -61,11 +82,12 @@ export function GLBModelViewer({ src, title, className = '' }: GLBModelViewerPro
           height: '400px',
           display: 'block'
         }}
-        loading="eager"
-        reveal="interaction"
+        loading="lazy"
+        reveal="auto"
         ar-modes="webxr scene-viewer quick-look"
         ar
         ar-scale="fixed"
+        crossorigin="anonymous"
       >
         <div slot="poster" className="absolute inset-0 bg-gray-800 flex items-center justify-center">
           <div className="text-center">
@@ -78,7 +100,8 @@ export function GLBModelViewer({ src, title, className = '' }: GLBModelViewerPro
           <div className="text-center">
             <div className="text-red-400 mb-2">⚠️</div>
             <p className="text-gray-400">Failed to load 3D model</p>
-            <p className="text-xs text-gray-500 mt-1">Please check your connection</p>
+            <p className="text-xs text-gray-500 mt-1">Source: {src}</p>
+            <p className="text-xs text-gray-500">Check console for details</p>
           </div>
         </div>
       </model-viewer>
