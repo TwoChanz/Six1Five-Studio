@@ -3,8 +3,9 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Play, Layers, Building, ExternalLink } from "lucide-react";
+import { Play, Layers, Building, ExternalLink, Eye } from "lucide-react";
 import { getQueryFn } from "@/lib/queryClient";
+import { ModelViewer } from "./model-viewer";
 import type { PortfolioItem } from "@shared/schema";
 
 const getIconForCategory = (category: string) => {
@@ -128,8 +129,22 @@ export default function PortfolioSection() {
                           className={`inline-flex items-center ${buttonColor} text-white px-6 py-3 rounded-lg font-semibold transition-colors hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-orange-500`}
                         >
                           <ExternalLink className="w-4 h-4 mr-2" />
-                          View 3D Model
+                          View on Sketchfab
                         </a>
+                      )}
+                      {item.modelFile && item.modelFormat && (
+                        <button 
+                          onClick={() => {
+                            const modelElement = document.querySelector(`[data-model-id="${item.id}"]`);
+                            if (modelElement) {
+                              modelElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }
+                          }}
+                          className={`inline-flex items-center ${buttonColor} text-white px-6 py-3 rounded-lg font-semibold transition-colors hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-orange-500`}
+                        >
+                          <Eye className="w-4 h-4 mr-2" />
+                          View in 3D
+                        </button>
                       )}
                       <Link href="/gallery">
                         <Button className="bg-gray-700 hover:bg-gray-600 text-white border-0 px-6 py-3 rounded-lg font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-gray-500">
@@ -144,6 +159,19 @@ export default function PortfolioSection() {
                       <div className="bg-gray-800 rounded-xl p-4">
                         <SketchfabEmbed modelId={item.sketchfabModelId} title={item.title} />
                       </div>
+                    ) : item.modelFile && item.modelFormat ? (
+                      <div className="bg-gray-800 rounded-xl p-4" data-model-id={item.id}>
+                        <ModelViewer 
+                          modelFile={item.modelFile} 
+                          modelFormat={item.modelFormat as 'glb' | 'gltf' | 'obj'} 
+                          title={item.title} 
+                          className="rounded-lg"
+                        />
+                        <div className="absolute top-4 right-4 z-20 bg-black/60 text-white px-3 py-1 rounded-lg text-sm flex items-center gap-2">
+                          <Eye className="w-3 h-3" />
+                          Interactive 3D
+                        </div>
+                      </div>
                     ) : (
                       <div className="bg-gray-800 rounded-xl p-6 scanline-effect relative group">
                         <img 
@@ -154,20 +182,15 @@ export default function PortfolioSection() {
                         <div className="absolute inset-0 bg-black/40 flex items-center justify-center rounded-xl group-hover:bg-black/60 transition-colors">
                           <div className="text-center">
                             <IconComponent className={`w-16 h-16 ${iconColor} mb-4`} />
-                            <p className="text-white font-semibold mb-2">
-                              {item.category === 'photogrammetry' ? "3D Model Preview" : 
-                               item.category === 'construction' ? "Progress Documentation" : 
-                               "Virtual Documentation"}
-                            </p>
-                            <a 
-                              href={item.sketchfabModelId ? `https://sketchfab.com/3d-models/${item.sketchfabModelId}` : '/gallery'}
-                              target={item.sketchfabModelId ? "_blank" : "_self"}
-                              rel={item.sketchfabModelId ? "noopener noreferrer" : undefined}
+                            <p className="text-white font-semibold mb-2">No 3D model available</p>
+                            <p className="text-gray-300 text-sm mb-4">View project details in gallery</p>
+                            <Link 
+                              href="/gallery"
                               className="inline-flex items-center text-white bg-black/60 hover:bg-black/80 px-4 py-2 rounded-lg text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500"
                             >
                               <ExternalLink className="w-3 h-3 mr-1" />
-                              {item.sketchfabModelId ? "View Model" : "View Gallery"}
-                            </a>
+                              View Gallery
+                            </Link>
                           </div>
                         </div>
                       </div>
