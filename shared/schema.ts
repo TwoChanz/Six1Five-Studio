@@ -40,6 +40,7 @@ export const portfolioItems = pgTable("portfolio_items", {
   sketchfabModelId: text("sketchfab_model_id"),
   modelFile: text("model_file"), // Local 3D model file path (GLB, GLTF, OBJ)
   modelFormat: text("model_format"), // File format: 'glb', 'gltf', 'obj'
+  viewerType: text("viewer_type"), // 'sketchfab', 'local', or null
   category: text("category").notNull(),
   tools: text("tools").array().default([]),
   services: text("services").array().default([]),
@@ -81,6 +82,7 @@ export const insertPortfolioItemSchema = createInsertSchema(portfolioItems).pick
   sketchfabModelId: true,
   modelFile: true,
   modelFormat: true,
+  viewerType: true,
   category: true,
   tools: true,
   services: true,

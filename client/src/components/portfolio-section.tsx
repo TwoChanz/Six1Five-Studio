@@ -6,6 +6,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Play, Layers, Building, ExternalLink, Eye } from "lucide-react";
 import { getQueryFn } from "@/lib/queryClient";
 import { ModelViewer } from "./model-viewer";
+import { GLBModelViewer } from "./glb-model-viewer";
+import { SketchfabEmbed } from "./sketchfab-embed";
 import type { PortfolioItem } from "@shared/schema";
 
 const getIconForCategory = (category: string) => {
@@ -132,7 +134,7 @@ export default function PortfolioSection() {
                           View on Sketchfab
                         </a>
                       )}
-                      {item.modelFile && item.modelFormat && (
+                      {(item.modelFile && item.modelFormat) && (
                         <button 
                           onClick={() => {
                             const modelElement = document.querySelector(`[data-model-id="${item.id}"]`);
@@ -155,7 +157,15 @@ export default function PortfolioSection() {
                   </div>
                   
                   <div className={`relative ${isReverse ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
-                    {item.sketchfabModelId ? (
+                    {item.viewerType === 'local' && item.modelFile && item.modelFormat === 'glb' ? (
+                      <div className="bg-gray-800 rounded-xl p-4" data-model-id={item.id}>
+                        <GLBModelViewer 
+                          src={item.modelFile} 
+                          title={item.title} 
+                          className="rounded-lg"
+                        />
+                      </div>
+                    ) : item.sketchfabModelId ? (
                       <div className="bg-gray-800 rounded-xl p-4">
                         <SketchfabEmbed modelId={item.sketchfabModelId} title={item.title} />
                       </div>
