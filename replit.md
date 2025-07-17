@@ -6,10 +6,19 @@ This is a full-stack web application for Six1Five Studio, a reality capture comp
 
 ## Recent Changes
 
+**Authentic Project Portfolio Integration (January 16, 2025)**
+- Replaced placeholder portfolio items with actual reality capture projects
+- Added Murphy Center MTSU textured mesh documentation project
+- Integrated historic farmhouse heritage documentation with texture mapping
+- Added Freedom Bell Memorial vandalism documentation for legal/restoration purposes
+- Updated existing Watchtower Shooting House project with Sketchfab model integration
+- Enhanced blog content with real project case studies and regulatory compliance examples
+- Improved button and badge contrast throughout the site for better accessibility
+
 **Enhanced Database Schema & Content Management (January 16, 2025)**
 - Expanded database schema with blog_posts and portfolio_items tables
 - Added comprehensive API routes for blog and portfolio management (GET/POST endpoints)
-- Populated database with sample portfolio items and blog posts
+- Populated database with authentic portfolio items and educational blog posts
 - Integrated real Sketchfab 3D model viewer with "Watchtower | Shooting House" model
 - Enhanced contact form with file upload, project timeline, and budget range fields
 - Added comprehensive FAQ page with categorized questions and professional styling
