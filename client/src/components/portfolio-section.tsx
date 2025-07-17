@@ -157,7 +157,23 @@ export default function PortfolioSection() {
                   </div>
                   
                   <div className={`relative ${isReverse ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
-                    {item.viewerType === 'local' && item.modelFile && item.modelFormat === 'glb' ? (
+                    {item.viewerType === 'polycam' && item.modelFile ? (
+                      <div className="bg-gray-800 rounded-xl p-4" data-model-id={item.id}>
+                        <iframe
+                          src={item.modelFile}
+                          title={`${item.title} 3D Model`}
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            maxHeight: '720px',
+                            minHeight: '280px',
+                            border: '0',
+                            borderRadius: '12px'
+                          }}
+                          allowFullScreen
+                        />
+                      </div>
+                    ) : item.viewerType === 'local' && item.modelFile && item.modelFormat === 'glb' ? (
                       <div className="bg-gray-800 rounded-xl p-4" data-model-id={item.id}>
                         <GLBModelViewer 
                           src={item.modelFile} 
