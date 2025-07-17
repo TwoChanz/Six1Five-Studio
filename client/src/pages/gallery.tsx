@@ -86,7 +86,7 @@ export default function Gallery() {
                     onClick={() => setSelectedCategory(category)}
                     className={selectedCategory === category 
                       ? "bg-[hsl(24,95%,53%)] hover:bg-[hsl(24,95%,48%)]"
-                      : "border-gray-600 text-gray-300 hover:bg-gray-700"
+                      : "border-gray-400 text-gray-200 hover:bg-gray-600 hover:border-gray-300"
                     }
                   >
                     {category.charAt(0).toUpperCase() + category.slice(1)}
@@ -102,7 +102,7 @@ export default function Gallery() {
                 onClick={() => setViewMode('grid')}
                 className={viewMode === 'grid' 
                   ? "bg-[hsl(199,89%,48%)]" 
-                  : "border-gray-600 text-gray-300 hover:bg-gray-700"
+                  : "border-gray-400 text-gray-200 hover:bg-gray-600 hover:border-gray-300"
                 }
               >
                 <Grid3X3 className="w-4 h-4" />
@@ -113,7 +113,7 @@ export default function Gallery() {
                 onClick={() => setViewMode('detailed')}
                 className={viewMode === 'detailed' 
                   ? "bg-[hsl(199,89%,48%)]" 
-                  : "border-gray-600 text-gray-300 hover:bg-gray-700"
+                  : "border-gray-400 text-gray-200 hover:bg-gray-600 hover:border-gray-300"
                 }
               >
                 <Grid className="w-4 h-4" />
@@ -162,7 +162,7 @@ export default function Gallery() {
                       {item.tools && item.tools.length > 0 && (
                         <div className="flex flex-wrap gap-1">
                           {item.tools.map((tool, i) => (
-                            <Badge key={i} variant="outline" className="text-xs border-gray-600 text-gray-300">
+                            <Badge key={i} variant="outline" className="text-xs border-gray-400 text-gray-200">
                               {tool}
                             </Badge>
                           ))}

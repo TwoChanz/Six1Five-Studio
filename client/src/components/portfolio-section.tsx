@@ -111,7 +111,7 @@ export default function PortfolioSection() {
                         <span className={`${iconColor} font-semibold mr-3`}>Tools:</span>
                         <div className="flex flex-wrap gap-2 mt-2">
                           {item.tools.map((tool, i) => (
-                            <Badge key={i} variant="outline" className="border-gray-600 text-gray-300">
+                            <Badge key={i} variant="outline" className="border-gray-400 text-gray-200">
                               {tool}
                             </Badge>
                           ))}
@@ -130,7 +130,7 @@ export default function PortfolioSection() {
                         </Button>
                       )}
                       <Link href="/gallery">
-                        <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-700">
+                        <Button variant="outline" className="border-gray-400 text-gray-200 hover:bg-gray-600 hover:border-gray-300 hover:text-white">
                           View All Projects
                         </Button>
                       </Link>

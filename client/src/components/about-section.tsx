@@ -195,7 +195,7 @@ export default function AboutSection() {
                     rel="noopener noreferrer"
                     className="text-orange-400 hover:text-white transition-colors text-sm font-bold"
                   >
-                    View My Resume
+                    My Resume
                   </a>
                 </div>
               </div>
