@@ -121,16 +121,18 @@ export default function PortfolioSection() {
                     
                     <div className="flex gap-3">
                       {item.sketchfabModelId && (
-                        <Button 
-                          onClick={() => window.open(`https://sketchfab.com/3d-models/${item.sketchfabModelId}`, "_blank")}
-                          className={`${buttonColor} text-white px-6 py-3 rounded-lg font-semibold transition-colors`}
+                        <a 
+                          href={`https://sketchfab.com/3d-models/${item.sketchfabModelId}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`inline-flex items-center ${buttonColor} text-white px-6 py-3 rounded-lg font-semibold transition-colors hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-orange-500`}
                         >
                           <ExternalLink className="w-4 h-4 mr-2" />
                           View 3D Model
-                        </Button>
+                        </a>
                       )}
                       <Link href="/gallery">
-                        <Button variant="outline" className="border-gray-400 text-gray-200 hover:bg-gray-600 hover:border-gray-300 hover:text-white">
+                        <Button className="bg-gray-700 hover:bg-gray-600 text-white border-0 px-6 py-3 rounded-lg font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-gray-500">
                           View All Projects
                         </Button>
                       </Link>
@@ -143,20 +145,29 @@ export default function PortfolioSection() {
                         <SketchfabEmbed modelId={item.sketchfabModelId} title={item.title} />
                       </div>
                     ) : (
-                      <div className="bg-gray-800 rounded-xl p-6 scanline-effect">
+                      <div className="bg-gray-800 rounded-xl p-6 scanline-effect relative group">
                         <img 
                           src={item.featuredImage || "https://images.unsplash.com/photo-1577223625816-7546f13df25d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"} 
                           alt={item.title} 
                           className="rounded-lg w-full h-auto" 
                         />
-                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center rounded-xl">
+                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center rounded-xl group-hover:bg-black/60 transition-colors">
                           <div className="text-center">
                             <IconComponent className={`w-16 h-16 ${iconColor} mb-4`} />
-                            <p className="text-white font-semibold">
+                            <p className="text-white font-semibold mb-2">
                               {item.category === 'photogrammetry' ? "3D Model Preview" : 
                                item.category === 'construction' ? "Progress Documentation" : 
                                "Virtual Documentation"}
                             </p>
+                            <a 
+                              href={item.sketchfabModelId ? `https://sketchfab.com/3d-models/${item.sketchfabModelId}` : '/gallery'}
+                              target={item.sketchfabModelId ? "_blank" : "_self"}
+                              rel={item.sketchfabModelId ? "noopener noreferrer" : undefined}
+                              className="inline-flex items-center text-white bg-black/60 hover:bg-black/80 px-4 py-2 rounded-lg text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500"
+                            >
+                              <ExternalLink className="w-3 h-3 mr-1" />
+                              {item.sketchfabModelId ? "View Model" : "View Gallery"}
+                            </a>
                           </div>
                         </div>
                       </div>
@@ -171,7 +182,7 @@ export default function PortfolioSection() {
         {/* Call to Action */}
         <div className="text-center mt-16">
           <Link href="/gallery">
-            <Button className="bg-[hsl(199,89%,48%)] hover:bg-[hsl(199,89%,43%)] text-white px-8 py-3 rounded-lg font-semibold text-lg">
+            <Button className="bg-[hsl(199,89%,48%)] hover:bg-[hsl(199,89%,43%)] text-white px-8 py-3 rounded-lg font-semibold text-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-blue-500">
               Explore Full Gallery
             </Button>
           </Link>
