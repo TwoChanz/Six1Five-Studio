@@ -36,12 +36,10 @@ export const blogPosts = pgTable("blog_posts", {
 export const portfolioItems = pgTable("portfolio_items", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
-  slug: text("slug").notNull().unique(),
   description: text("description").notNull(),
   sketchfabModelId: text("sketchfab_model_id"),
   modelFile: text("model_file"), // Local 3D model file path (GLB, GLTF, OBJ)
   modelFormat: text("model_format"), // File format: 'glb', 'gltf', 'obj'
-  viewerType: text("viewer_type"), // 'sketchfab', 'local', 'polycam', or null
   category: text("category").notNull(),
   tools: text("tools").array().default([]),
   services: text("services").array().default([]),
@@ -79,12 +77,10 @@ export const insertBlogPostSchema = createInsertSchema(blogPosts).pick({
 
 export const insertPortfolioItemSchema = createInsertSchema(portfolioItems).pick({
   title: true,
-  slug: true,
   description: true,
   sketchfabModelId: true,
   modelFile: true,
   modelFormat: true,
-  viewerType: true,
   category: true,
   tools: true,
   services: true,

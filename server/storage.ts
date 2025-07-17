@@ -33,7 +33,6 @@ export interface IStorage {
   getPublishedPortfolioItems(): Promise<PortfolioItem[]>;
   getFeaturedPortfolioItems(): Promise<PortfolioItem[]>;
   getPortfolioItemById(id: number): Promise<PortfolioItem | undefined>;
-  getPortfolioItemBySlug(slug: string): Promise<PortfolioItem | undefined>;
   createPortfolioItem(item: InsertPortfolioItem): Promise<PortfolioItem>;
 }
 
@@ -126,11 +125,6 @@ export class DatabaseStorage implements IStorage {
 
   async getPortfolioItemById(id: number): Promise<PortfolioItem | undefined> {
     const [item] = await db.select().from(portfolioItems).where(eq(portfolioItems.id, id));
-    return item || undefined;
-  }
-
-  async getPortfolioItemBySlug(slug: string): Promise<PortfolioItem | undefined> {
-    const [item] = await db.select().from(portfolioItems).where(eq(portfolioItems.slug, slug));
     return item || undefined;
   }
 
