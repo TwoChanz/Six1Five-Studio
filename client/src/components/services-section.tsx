@@ -50,7 +50,7 @@ export default function ServicesSection() {
         <h2 className="text-4xl font-bold text-center mb-16">
           <span className="text-[hsl(199,89%,48%)]">Capture</span> Workflows
         </h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="flex flex-row gap-8 justify-center overflow-x-auto">
           {servicesData.map((service, index) => (
             <FlipCard key={service.title} service={service} />
           ))}
