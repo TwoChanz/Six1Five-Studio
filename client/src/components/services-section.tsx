@@ -1,5 +1,51 @@
-import FlipCard from "./flip-card";
-import { Plane, CameraIcon, Crosshair } from "lucide-react";
+import { Plane, CameraIcon, Crosshair, LucideIcon } from "lucide-react";
+
+interface ServiceData {
+  icon: LucideIcon;
+  title: string;
+  subtitle: string;
+  color: string;
+  bgColor: string;
+  workflow: string[];
+}
+
+interface ServiceCardProps {
+  service: ServiceData;
+}
+
+function ServiceCard({ service }: ServiceCardProps) {
+  const IconComponent = service.icon;
+  
+  return (
+    <div className="bg-[#1e1e1e] rounded-xl shadow-md hover:shadow-lg transition-all duration-300 p-6 flex flex-col items-center text-center group hover:-translate-y-2">
+      <div className="mb-6">
+        <IconComponent className={`w-16 h-16 ${
+          service.color === 'drone-orange' ? 'text-[hsl(24,95%,53%)]' : 
+          service.color === 'sky-blue' ? 'text-[hsl(199,89%,48%)]' : 
+          'text-[hsl(158,64%,52%)]'
+        } group-hover:scale-110 transition-transform duration-300`} />
+      </div>
+      
+      <h3 className="text-xl font-bold text-white mb-3">{service.title}</h3>
+      
+      <p className="text-sm text-gray-400 mb-6 leading-relaxed">{service.subtitle}</p>
+      
+      <div className="mt-auto">
+        <h4 className="text-sm font-semibold text-white mb-3 uppercase tracking-wide">
+          {service.title === "Photogrammetry" ? "Pipeline" : service.title === "LiDAR Integration" ? "Tools" : "Workflow"}
+        </h4>
+        <ul className="space-y-2 text-xs text-gray-300">
+          {service.workflow.map((item, index) => (
+            <li key={index} className="flex items-center justify-center">
+              <span className="w-1.5 h-1.5 bg-gray-500 rounded-full mr-2"></span>
+              {item.replace('• ', '')}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
 
 const servicesData = [
   {
@@ -46,18 +92,23 @@ const servicesData = [
 export default function ServicesSection() {
   return (
     <section id="services" className="py-20 bg-[hsl(218,11%,15%)]">
-      <div className="container mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-4xl font-bold text-center mb-16">
           <span className="text-[hsl(199,89%,48%)]">Capture</span> Workflows
         </h2>
-        <div className="flex justify-center overflow-x-auto pb-4">
-          <div className="flex flex-row gap-4 md:gap-6 lg:gap-8 flex-nowrap px-4 md:px-6 lg:px-0">
-            {servicesData.map((service, index) => (
-              <div key={service.title} className="flex-shrink-0 w-72 sm:w-80 md:w-72 lg:w-80 xl:w-96">
-                <FlipCard service={service} />
-              </div>
-            ))}
-          </div>
+        
+        {/* Responsive Grid Layout */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
+          {servicesData.map((service, index) => (
+            <ServiceCard key={service.title} service={service} />
+          ))}
+        </div>
+
+        {/* Call to Action */}
+        <div className="mt-16 text-center">
+          <button className="bg-[hsl(199,89%,48%)] hover:bg-[hsl(199,89%,43%)] text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1">
+            Request a Free Quote
+          </button>
         </div>
       </div>
     </section>
