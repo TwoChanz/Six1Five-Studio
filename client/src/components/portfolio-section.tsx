@@ -161,15 +161,18 @@ export default function PortfolioSection() {
                       <div className="bg-gray-800 rounded-xl p-4" data-model-id={item.id}>
                         <iframe
                           src={item.modelFile}
-                          title={`${item.title} 3D Model`}
+                          title={`${item.title} 3D Capture`}
                           style={{
-                            width: '100%',
                             height: '100%',
+                            width: '100%',
                             maxHeight: '720px',
+                            maxWidth: '1280px',
                             minHeight: '280px',
-                            border: '0',
-                            borderRadius: '12px'
+                            minWidth: '280px',
+                            borderRadius: '12px',
+                            border: '0'
                           }}
+                          frameBorder="0"
                           allowFullScreen
                         />
                       </div>
