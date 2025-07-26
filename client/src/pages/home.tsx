@@ -3,6 +3,7 @@ import Navbar from "@/components/navbar";
 import HeroSection from "@/components/hero-section";
 import ServiceKeywords from "@/components/service-keywords";
 import ServicesSection from "@/components/services-section";
+import AIWorkflowShowcase from "@/components/ai-workflow-showcase";
 import AboutSection from "@/components/about-section";
 import PortfolioSection from "@/components/portfolio-section";
 import ContactSection from "@/components/contact-section";
@@ -97,6 +98,7 @@ export default function Home() {
       <HeroSection />
       <ServiceKeywords />
       <ServicesSection />
+      <AIWorkflowShowcase />
       <AboutSection />
       <PortfolioSection />
       <ContactSection />
