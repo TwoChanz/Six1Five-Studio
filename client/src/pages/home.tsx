@@ -6,7 +6,9 @@ import ServicesSection from "@/components/services-section";
 import AIWorkflowShowcase from "@/components/ai-workflow-showcase";
 import AboutSection from "@/components/about-section";
 import PortfolioSection from "@/components/portfolio-section";
+import TestimonialsSection from "@/components/testimonials-section";
 import ContactSection from "@/components/contact-section";
+import FinalCTABanner from "@/components/final-cta-banner";
 import Footer from "@/components/footer";
 
 export default function Home() {
@@ -101,7 +103,9 @@ export default function Home() {
       <AIWorkflowShowcase />
       <AboutSection />
       <PortfolioSection />
+      <TestimonialsSection />
       <ContactSection />
+      <FinalCTABanner />
       <Footer />
     </div>
   );

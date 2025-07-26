@@ -6,6 +6,18 @@ This is a full-stack web application for Six1Five Studio, a reality capture comp
 
 ## Recent Changes
 
+**Conversion Optimization & Professional Enhancement (January 26, 2025)**
+- Implemented sticky navigation with persistent "Book a Scan" CTA for better conversion
+- Added value proposition below hero headline for immediate clarity
+- Enhanced services section with better visual spacing, bullet-pointed benefits, and mini-CTAs
+- Added project type and location fields to contact form for better lead qualification
+- Integrated testimonials section with FAA Part 107 certification and trust signals
+- Created final CTA banner with multiple conversion touchpoints
+- Fixed theme toggle to show opposite state icon (sun for dark mode, moon for light mode)
+- Added deliverables section to portfolio showcasing specific project outputs
+- Enhanced portfolio section with thumbnail previews and "See full project" CTAs
+- Improved AI workflow showcase with interactive features and mini-CTAs throughout
+
 **Authentic Project Portfolio Integration (January 16, 2025)**
 - Replaced placeholder portfolio items with actual reality capture projects
 - Added Murphy Center MTSU textured mesh documentation project

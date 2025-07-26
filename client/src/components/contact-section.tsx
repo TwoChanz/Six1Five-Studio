@@ -17,6 +17,8 @@ const contactSchema = z.object({
   name: z.string().min(1, "Name is required"),
   email: z.string().email("Valid email is required"),
   services: z.array(z.string()).min(1, "Please select at least one service"),
+  projectType: z.string().min(1, "Please select a project type"),
+  location: z.string().min(1, "Location is required for service area verification"),
   projectDetails: z.string().min(10, "Please provide project details (minimum 10 characters)"),
   timeline: z.string().optional(),
   budgetRange: z.string().optional(),
@@ -32,6 +34,15 @@ const serviceOptions = [
   { id: "construction-monitoring", label: "Construction Monitoring" },
   { id: "photogrammetry", label: "Photogrammetry" },
   { id: "heritage-documentation", label: "Heritage Documentation" },
+];
+
+const projectTypeOptions = [
+  { value: "drone-mapping", label: "Drone Mapping" },
+  { value: "heritage", label: "Heritage Documentation" },
+  { value: "bim", label: "BIM/Construction" },
+  { value: "real-estate", label: "Real Estate" },
+  { value: "inspection", label: "Inspection/Survey" },
+  { value: "other", label: "Other" },
 ];
 
 const timelineOptions = [
@@ -61,6 +72,8 @@ export default function ContactSection() {
       name: "",
       email: "",
       services: [],
+      projectType: "",
+      location: "",
       projectDetails: "",
       timeline: "",
       budgetRange: "",
@@ -190,6 +203,49 @@ export default function ContactSection() {
                           {...field} 
                           type="email"
                           placeholder="your@email.com"
+                          className="bg-gray-700 border-gray-600 focus:border-[hsl(24,95%,53%)] text-white"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="projectType"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-medium">Project Type</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger className="bg-gray-700 border-gray-600 focus:border-[hsl(24,95%,53%)] text-white">
+                            <SelectValue placeholder="Select project type" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent className="bg-gray-700 border-gray-600">
+                          {projectTypeOptions.map((option) => (
+                            <SelectItem key={option.value} value={option.value} className="text-white hover:bg-gray-600">
+                              {option.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="location"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-medium">Project Location</FormLabel>
+                      <FormControl>
+                        <Input 
+                          {...field} 
+                          placeholder="City, State (e.g., Nashville, TN)"
                           className="bg-gray-700 border-gray-600 focus:border-[hsl(24,95%,53%)] text-white"
                         />
                       </FormControl>

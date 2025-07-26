@@ -62,6 +62,7 @@
 
   body {
     @apply font-sans antialiased bg-background text-foreground;
+    padding-top: 64px; /* Account for fixed navbar */
   }
 }
 

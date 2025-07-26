@@ -173,32 +173,41 @@ export default function AIWorkflowShowcase() {
                             <li>• Intelligent component recognition</li>
                             <li>• Automated region merging</li>
                             <li>• Bounding box generation</li>
-                            <li>• Exploded view analysis</li>
+                            <li>• Material classification & separation</li>
                           </ul>
+                          <button className="mt-4 text-[hsl(199,89%,48%)] hover:text-white text-sm font-medium transition-colors">
+                            Learn about AI segmentation →
+                          </button>
                         </div>
                       )}
-                      
+
                       {step.id === "reconstruction" && (
                         <div className="space-y-4">
-                          <h4 className="text-white font-semibold">3D Output Formats:</h4>
+                          <h4 className="text-white font-semibold">3D Gaussian Benefits:</h4>
                           <ul className="text-gray-300 space-y-2">
-                            <li>• .PLY point cloud data</li>
-                            <li>• Combined 3D Gaussian models</li>
-                            <li>• Component-separated assets</li>
-                            <li>• Web-ready GLB/GLTF exports</li>
+                            <li>• Real-time rendering optimization</li>
+                            <li>• Photorealistic quality output</li>
+                            <li>• Component-based architecture</li>
+                            <li>• Scalable for large environments</li>
                           </ul>
+                          <button className="mt-4 text-[hsl(199,89%,48%)] hover:text-white text-sm font-medium transition-colors">
+                            See reconstruction examples →
+                          </button>
                         </div>
                       )}
-                      
+
                       {step.id === "assets" && (
                         <div className="space-y-4">
-                          <h4 className="text-white font-semibold">Application Uses:</h4>
+                          <h4 className="text-white font-semibold">Asset Applications:</h4>
                           <ul className="text-gray-300 space-y-2">
-                            <li>• Virtual neighborhood development</li>
-                            <li>• Game environment creation</li>
-                            <li>• Architectural simulation</li>
+                            <li>• Game development environments</li>
+                            <li>• Architectural visualization</li>
                             <li>• VR/AR experiences</li>
+                            <li>• Simulation & training platforms</li>
                           </ul>
+                          <button className="mt-4 text-[hsl(199,89%,48%)] hover:text-white text-sm font-medium transition-colors">
+                            Download sample assets →
+                          </button>
                         </div>
                       )}
                     </CardContent>

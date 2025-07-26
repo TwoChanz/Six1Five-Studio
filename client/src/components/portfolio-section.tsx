@@ -84,7 +84,7 @@ export default function PortfolioSection() {
           </div>
         ) : (
           <div className="space-y-16">
-            {portfolioItems?.map((item: PortfolioItem, index: number) => {
+            {(portfolioItems as PortfolioItem[])?.map((item: PortfolioItem, index: number) => {
               const IconComponent = getIconForCategory(item.category);
               const iconColor = getColorForCategory(item.category);
               const buttonColor = getButtonColorForCategory(item.category);
@@ -120,13 +120,28 @@ export default function PortfolioSection() {
                       </div>
                     )}
                     
-                    <div className="flex gap-3">
+                    {/* Deliverables Section */}
+                    {(item.services && item.services.length > 0) && (
+                      <div className="mb-6">
+                        <span className={`${iconColor} font-semibold mb-2 block`}>Deliverables:</span>
+                        <ul className="space-y-1 text-sm text-gray-300">
+                          {item.services.map((service, i) => (
+                            <li key={i} className="flex items-start">
+                              <span className="w-1.5 h-1.5 bg-[hsl(24,95%,53%)] rounded-full mr-2 mt-2 flex-shrink-0"></span>
+                              {service}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    
+                    <div className="flex flex-wrap gap-3">
                       {item.sketchfabModelId && (
                         <a 
                           href={`https://sketchfab.com/3d-models/${item.sketchfabModelId}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className={`inline-flex items-center ${buttonColor} text-white px-6 py-3 rounded-lg font-semibold transition-colors hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-orange-500`}
+                          className={`inline-flex items-center ${buttonColor} text-white px-6 py-3 rounded-lg font-semibold transition-colors hover:opacity-90`}
                         >
                           <ExternalLink className="w-4 h-4 mr-2" />
                           View on Sketchfab
@@ -140,17 +155,15 @@ export default function PortfolioSection() {
                               modelElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
                             }
                           }}
-                          className={`inline-flex items-center ${buttonColor} text-white px-6 py-3 rounded-lg font-semibold transition-colors hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-orange-500`}
+                          className={`inline-flex items-center ${buttonColor} text-white px-6 py-3 rounded-lg font-semibold transition-colors hover:opacity-90`}
                         >
                           <Eye className="w-4 h-4 mr-2" />
                           View in 3D
                         </button>
                       )}
-                      <Link href="/gallery">
-                        <Button className="bg-gray-700 hover:bg-gray-600 text-white border-0 px-6 py-3 rounded-lg font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-gray-500">
-                          View All Projects
-                        </Button>
-                      </Link>
+                      <button className="text-[hsl(199,89%,48%)] hover:text-white text-sm font-medium transition-colors">
+                        See full project →
+                      </button>
                     </div>
                   </div>
                   

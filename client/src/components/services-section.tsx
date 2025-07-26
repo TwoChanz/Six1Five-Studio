@@ -17,31 +17,34 @@ function ServiceCard({ service }: ServiceCardProps) {
   const IconComponent = service.icon;
   
   return (
-    <div className="bg-[#1e1e1e] rounded-xl shadow-md hover:shadow-lg transition-all duration-300 p-6 flex flex-col items-center text-center group hover:-translate-y-2">
-      <div className="mb-6">
-        <IconComponent className={`w-16 h-16 ${
+    <div className="bg-[#1e1e1e] rounded-xl shadow-md hover:shadow-lg transition-all duration-300 p-8 flex flex-col items-center text-center group hover:-translate-y-2">
+      <div className="mb-8">
+        <IconComponent className={`w-20 h-20 ${
           service.color === 'drone-orange' ? 'text-[hsl(24,95%,53%)]' : 
           service.color === 'sky-blue' ? 'text-[hsl(199,89%,48%)]' : 
           'text-[hsl(158,64%,52%)]'
         } group-hover:scale-110 transition-transform duration-300`} />
       </div>
       
-      <h3 className="text-xl font-bold text-white mb-3">{service.title}</h3>
+      <h3 className="text-xl font-bold text-white mb-4">{service.title}</h3>
       
-      <p className="text-sm text-gray-400 mb-6 leading-relaxed">{service.subtitle}</p>
+      <p className="text-sm text-gray-400 mb-8 leading-relaxed">{service.subtitle}</p>
       
-      <div className="mt-auto">
-        <h4 className="text-sm font-semibold text-white mb-3 uppercase tracking-wide">
-          {service.title === "Photogrammetry" ? "Pipeline" : service.title === "LiDAR Integration" ? "Tools" : "Workflow"}
+      <div className="mt-auto w-full">
+        <h4 className="text-sm font-semibold text-white mb-4 uppercase tracking-wide">
+          Key Benefits
         </h4>
-        <ul className="space-y-2 text-xs text-gray-300">
+        <ul className="space-y-3 text-xs text-gray-300 mb-6">
           {service.workflow.map((item, index) => (
-            <li key={index} className="flex items-center justify-center">
-              <span className="w-1.5 h-1.5 bg-gray-500 rounded-full mr-2"></span>
+            <li key={index} className="flex items-start text-left">
+              <span className="w-1.5 h-1.5 bg-[hsl(24,95%,53%)] rounded-full mr-3 mt-1.5 flex-shrink-0"></span>
               {item.replace('• ', '')}
             </li>
           ))}
         </ul>
+        <button className="text-[hsl(199,89%,48%)] hover:text-white text-sm font-medium transition-colors">
+          Learn More →
+        </button>
       </div>
     </div>
   );
@@ -51,40 +54,40 @@ const servicesData = [
   {
     icon: Plane,
     title: "Aerial Capture",
-    subtitle: "DJI Mini 4 Pro drone mapping",
+    subtitle: "DJI Mini 4 Pro drone mapping for large-scale projects",
     color: "drone-orange",
     bgColor: "bg-[hsl(24,95%,53%)]",
     workflow: [
-      "• Flight planning & execution",
-      "• RealityCapture processing", 
-      "• Metashape reconstruction",
-      "• Textured 3D model output"
+      "Flight planning & automated execution",
+      "High-resolution aerial photography", 
+      "Real-time progress monitoring",
+      "Weather-optimized scheduling"
     ]
   },
   {
     icon: CameraIcon,
     title: "Photogrammetry",
-    subtitle: "Multi-angle photo reconstruction", 
+    subtitle: "Multi-angle photo reconstruction with mm precision", 
     color: "sky-blue",
     bgColor: "bg-[hsl(199,89%,48%)]",
     workflow: [
-      "• Raw image capture",
-      "• Feature alignment",
-      "• Mesh generation", 
-      "• Texture mapping"
+      "Structured light scanning capability",
+      "Sub-millimeter accuracy levels",
+      "Texture-mapped 3D models", 
+      "Multiple export formats"
     ]
   },
   {
     icon: Crosshair,
     title: "LiDAR Integration",
-    subtitle: "Precision point cloud scanning",
+    subtitle: "Precision point cloud scanning and BIM workflows",
     color: "tech-green", 
     bgColor: "bg-[hsl(158,64%,52%)]",
     workflow: [
-      "• FARO SCENE processing",
-      "• CloudCompare analysis",
-      "• Revit BIM integration",
-      "• CAD-ready outputs"
+      "FARO & Leica scanner compatibility",
+      "Cloud-to-mesh processing",
+      "Revit & AutoCAD integration",
+      "As-built documentation"
     ]
   }
 ];
@@ -106,9 +109,17 @@ export default function ServicesSection() {
 
         {/* Call to Action */}
         <div className="mt-16 text-center">
-          <button className="bg-[hsl(199,89%,48%)] hover:bg-[hsl(199,89%,43%)] text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1">
-            Request a Free Quote
-          </button>
+          <div className="bg-gray-800 rounded-xl p-8 max-w-2xl mx-auto">
+            <h3 className="text-2xl font-bold text-white mb-4">
+              Ready to capture your project?
+            </h3>
+            <p className="text-gray-400 mb-6">
+              Get a custom quote based on your specific requirements and timeline.
+            </p>
+            <button className="bg-[hsl(24,95%,53%)] hover:bg-[hsl(24,95%,48%)] text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1">
+              Get Free Quote →
+            </button>
+          </div>
         </div>
       </div>
     </section>

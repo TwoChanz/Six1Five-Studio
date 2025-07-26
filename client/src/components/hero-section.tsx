@@ -30,7 +30,10 @@ export default function HeroSection() {
               <br />
               <span className="text-[hsl(199,89%,48%)]">Reconstruct</span> Reality.
             </h1>
-            <p className="text-xl text-gray-300 mb-8 max-w-lg">
+            <p className="text-xl text-gray-400 mb-4 max-w-lg">
+              Professional drone mapping and 3D scanning for construction, real estate, and preservation.
+            </p>
+            <p className="text-lg text-gray-300 mb-8 max-w-lg">
               Drone mapping, LiDAR, photogrammetry — all captured with purpose.
             </p>
             <div className="animated-text mb-8">

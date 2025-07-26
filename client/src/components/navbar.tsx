@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import ThemeToggle from "@/components/theme-toggle";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -21,7 +23,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-[hsl(218,11%,15%)]/90 backdrop-blur-sm border-b border-[hsl(220,9%,46%)]/20">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-[hsl(218,11%,15%)]/95 backdrop-blur-sm border-b border-[hsl(220,9%,46%)]/20">
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-2">
@@ -31,7 +33,7 @@ export default function Navbar() {
             <span className="text-xl font-semibold">Six1Five Studio</span>
           </div>
           
-          <div className="hidden md:flex space-x-8">
+          <div className="hidden md:flex items-center space-x-8">
             <button 
               onClick={() => scrollToSection("home")}
               className="relative hover:text-[hsl(24,95%,53%)] transition-colors"
@@ -59,6 +61,13 @@ export default function Navbar() {
             >
               Contact
             </button>
+            <ThemeToggle />
+            <Button 
+              onClick={() => scrollToSection("contact")}
+              className="bg-[hsl(24,95%,53%)] hover:bg-[hsl(24,95%,48%)] text-white px-4 py-2 rounded-lg transition-colors"
+            >
+              Book a Scan
+            </Button>
           </div>
           
           <button 
