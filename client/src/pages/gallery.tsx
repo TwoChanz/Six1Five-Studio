@@ -30,7 +30,7 @@ export default function Gallery() {
 
   const categories = ['all', 'photogrammetry', 'lidar', 'construction', 'heritage', 'interior'];
   
-  const filteredItems = portfolioItems?.filter((item: PortfolioItem) => 
+  const filteredItems = (portfolioItems as PortfolioItem[])?.filter((item: PortfolioItem) => 
     selectedCategory === 'all' || item.category === selectedCategory
   ) || [];
 

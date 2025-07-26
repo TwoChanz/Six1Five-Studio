@@ -151,8 +151,8 @@ export function ModelViewer({ modelFile, modelFormat, title, className = '' }: M
                 (obj) => {
                   // Apply default material
                   obj.traverse((child) => {
-                    if (child.isMesh) {
-                      child.material = new THREE.MeshPhongMaterial({ 
+                    if ((child as THREE.Mesh).isMesh) {
+                      (child as THREE.Mesh).material = new THREE.MeshPhongMaterial({ 
                         color: 0x999999,
                         shininess: 30
                       });

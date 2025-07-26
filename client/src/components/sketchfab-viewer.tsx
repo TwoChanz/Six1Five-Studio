@@ -14,13 +14,7 @@ export default function SketchfabViewer() {
           title="Watchtower | Shooting House" 
           frameBorder="0" 
           allowFullScreen 
-          mozallowfullscreen="true" 
-          webkitallowfullscreen="true" 
           allow="autoplay; fullscreen; xr-spatial-tracking" 
-          xr-spatial-tracking="true"
-          execution-while-out-of-viewport="true" 
-          execution-while-not-rendered="true" 
-          web-share="true"
           src="https://sketchfab.com/models/f066d332c0d145c3b90ad32efde4b4a9/embed?autostart=1&preload=1&ui_theme=dark&camera=0"
           className="w-full h-full rounded-lg"
         />

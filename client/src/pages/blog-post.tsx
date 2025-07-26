@@ -14,7 +14,7 @@ import type { BlogPost } from "@shared/schema";
 export default function BlogPostPage() {
   const { slug } = useParams();
 
-  const { data: post, isLoading } = useQuery({
+  const { data: post, isLoading } = useQuery<BlogPost>({
     queryKey: ['/api/blog', slug],
     queryFn: getQueryFn({ on401: "returnNull" }),
     enabled: !!slug,
@@ -26,7 +26,7 @@ export default function BlogPostPage() {
       
       const metaDescription = document.querySelector('meta[name="description"]');
       if (metaDescription) {
-        metaDescription.setAttribute("content", post.excerpt || post.description);
+        metaDescription.setAttribute("content", post.excerpt || "Blog post from Six1Five Studio");
       }
     }
   }, [post]);
