@@ -34,3 +34,9 @@ author = "agent"
 task = "shell.exec"
 args = "npm run dev"
 waitForPort = 5000
+
+[objectStorage]
+defaultBucketID = "replit-objstore-5cb7d8d6-8c32-4b65-906f-6d291d95cfe9"
+
+[agent]
+integrations = ["javascript_google_analytics==1.0.0", "javascript_sendgrid==1.0.0"]
