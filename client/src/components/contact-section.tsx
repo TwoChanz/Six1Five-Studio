@@ -380,22 +380,7 @@ export default function ContactSection() {
                 </div>
               </div>
             </div>
-            
-            <div className="mt-8 pt-6 border-t border-gray-700">
-              <h4 className="text-md font-semibold mb-4">Recent Equipment</h4>
-              <div className="grid grid-cols-2 gap-3">
-                <img 
-                  src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300" 
-                  alt="Professional drone equipment" 
-                  className="w-full h-20 object-cover rounded border border-gray-600" 
-                />
-                <img 
-                  src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300" 
-                  alt="3D scanning technology" 
-                  className="w-full h-20 object-cover rounded border border-gray-600" 
-                />
-              </div>
-            </div>
+
           </div>
         </div>
       </div>
