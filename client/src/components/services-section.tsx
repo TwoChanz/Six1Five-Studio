@@ -38,60 +38,50 @@ function ServiceCard({ service }: ServiceCardProps) {
   };
   
   return (
-    <div className="flip-card-container perspective-1000 h-[400px]">
-      <div className="flip-card-inner relative w-full h-full transition-transform duration-600 ease-in-out transform-style-preserve-3d group-hover:rotate-y-180 hover:scale-105">
-        {/* Front of card */}
-        <div className="flip-card-front absolute inset-0 w-full h-full backface-hidden bg-[#1e1e1e] rounded-xl shadow-md p-8 flex flex-col items-center text-center group hover:shadow-lg transition-all duration-600 hover:shadow-[0_0_20px_rgba(255,102,0,0.3)]" 
+    <div className="flip-card-container perspective-1000 h-[180px] w-full">
+      <div className="flip-card-inner relative w-full h-full transition-transform duration-600 ease-in-out transform-style-preserve-3d hover:scale-105">
+        {/* Front of card - Minimal Design */}
+        <div className="flip-card-front absolute inset-0 w-full h-full backface-hidden bg-[#1e1e1e] rounded-xl shadow-md p-6 flex flex-col items-center justify-center text-center hover:shadow-lg transition-all duration-600" 
              style={{'--glow-color': getGlowColor(service.color)} as any}>
-          <div className="mb-8">
-            <IconComponent className={`w-20 h-20 ${
+          <div className="mb-4">
+            <IconComponent className={`w-12 h-12 ${
               service.color === 'drone-orange' ? 'text-[hsl(24,95%,53%)]' : 
               service.color === 'sky-blue' ? 'text-[hsl(199,89%,48%)]' : 
               'text-[hsl(158,64%,52%)]'
-            } group-hover:scale-110 transition-transform duration-300`} />
+            } transition-transform duration-300`} />
           </div>
           
-          <h3 className="text-xl font-bold text-white mb-4">{service.title}</h3>
-          
-          <p className="text-sm text-gray-400 mb-8 leading-relaxed">{service.subtitle}</p>
-          
-          <div className="mt-auto w-full">
-            <h4 className="text-sm font-semibold text-white mb-4 uppercase tracking-wide">
-              Key Benefits
-            </h4>
-            <ul className="space-y-3 text-xs text-gray-300 mb-6">
-              {service.workflow.map((item, index) => (
-                <li key={index} className="flex items-start text-left">
-                  <span className="w-1.5 h-1.5 bg-[hsl(24,95%,53%)] rounded-full mr-3 mt-1.5 flex-shrink-0"></span>
-                  {item.replace('• ', '')}
-                </li>
-              ))}
-            </ul>
-            <button className="text-[hsl(199,89%,48%)] hover:text-white text-sm font-medium transition-colors">
-              Learn More →
-            </button>
-          </div>
+          <h3 className="text-lg font-bold text-white">{service.title}</h3>
         </div>
 
-        {/* Back of card */}
-        <div className="flip-card-back absolute inset-0 w-full h-full backface-hidden rotate-y-180 bg-[#1e1e1e] rounded-xl shadow-md p-8 flex flex-col items-center justify-center text-center"
+        {/* Back of card - Detailed Info */}
+        <div className="flip-card-back absolute inset-0 w-full h-full backface-hidden rotate-y-180 bg-[#1e1e1e] rounded-xl shadow-md p-4 flex flex-col justify-center text-center"
              style={{boxShadow: `0 0 20px ${getGlowColor(service.color)}33`}}>
-          <div className="mb-8">
-            <IconComponent className={`w-24 h-24 ${
+          <div className="mb-3">
+            <IconComponent className={`w-8 h-8 ${
               service.color === 'drone-orange' ? 'text-[hsl(24,95%,53%)]' : 
               service.color === 'sky-blue' ? 'text-[hsl(199,89%,48%)]' : 
               'text-[hsl(158,64%,52%)]'
-            } animate-pulse`} />
+            } mx-auto animate-pulse`} />
           </div>
           
-          <h3 className="text-2xl font-bold text-white mb-6">{service.title}</h3>
+          <h3 className="text-md font-bold text-white mb-2">{service.title}</h3>
           
-          <p className="text-lg text-gray-300 leading-relaxed mb-8 font-medium">
+          <p className="text-xs text-gray-300 leading-relaxed mb-3">
             {getBackContent(service.title)}
           </p>
           
-          <button className="bg-gradient-to-r from-[hsl(24,95%,53%)] to-[hsl(199,89%,48%)] hover:from-[hsl(24,95%,48%)] hover:to-[hsl(199,89%,43%)] text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1">
-            Get Quote →
+          <ul className="space-y-1 text-xs text-gray-400 mb-3">
+            {service.workflow.slice(0, 2).map((item, index) => (
+              <li key={index} className="flex items-center justify-center">
+                <span className="w-1 h-1 bg-[hsl(24,95%,53%)] rounded-full mr-2"></span>
+                {item.replace('• ', '')}
+              </li>
+            ))}
+          </ul>
+          
+          <button className="text-[hsl(199,89%,48%)] hover:text-white text-xs font-medium transition-colors">
+            Learn More →
           </button>
         </div>
       </div>
@@ -188,10 +178,12 @@ export default function ServicesSection() {
           <span className="text-[hsl(199,89%,48%)]">Capture</span> Workflows
         </h2>
         
-        {/* Responsive Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mt-10">
+        {/* Single Horizontal Row */}
+        <div className="flex flex-wrap justify-center gap-4 mt-10 max-w-7xl mx-auto">
           {servicesData.map((service, index) => (
-            <ServiceCard key={service.title} service={service} />
+            <div key={service.title} className="flex-1 min-w-[180px] max-w-[200px]">
+              <ServiceCard service={service} />
+            </div>
           ))}
         </div>
 

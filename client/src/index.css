@@ -87,6 +87,13 @@
   transform: rotateY(180deg) scale(1.05);
 }
 
+/* Responsive adjustments for horizontal layout */
+@media (max-width: 768px) {
+  .flip-card-container {
+    height: 160px;
+  }
+}
+
 .flip-card-front,
 .flip-card-back {
   backface-visibility: hidden;
