@@ -9,7 +9,7 @@ import { ModelViewer } from "./model-viewer";
 import type { PortfolioItem } from "@shared/schema";
 
 const getIconForCategory = (category: string) => {
-  switch (category) {
+  switch (category.toLowerCase()) {
     case 'photogrammetry': return Play;
     case 'construction': return Layers;
     case 'heritage': 
@@ -19,7 +19,7 @@ const getIconForCategory = (category: string) => {
 };
 
 const getColorForCategory = (category: string) => {
-  switch (category) {
+  switch (category.toLowerCase()) {
     case 'photogrammetry': return 'text-[hsl(24,95%,53%)]';
     case 'construction': return 'text-[hsl(199,89%,48%)]';
     case 'heritage':
@@ -29,7 +29,7 @@ const getColorForCategory = (category: string) => {
 };
 
 const getButtonColorForCategory = (category: string) => {
-  switch (category) {
+  switch (category.toLowerCase()) {
     case 'photogrammetry': return 'bg-[hsl(24,95%,53%)] hover:bg-[hsl(24,95%,48%)]';
     case 'construction': return 'bg-[hsl(199,89%,48%)] hover:bg-[hsl(199,89%,43%)]';
     case 'heritage':
@@ -186,25 +186,19 @@ export default function PortfolioSection() {
                         </div>
                       </div>
                     ) : (
-                      <div className="bg-gray-800 rounded-xl p-6 scanline-effect relative group">
+                      <div className="bg-gray-800 rounded-xl overflow-hidden relative group">
                         <img 
                           src={item.featuredImage || "https://images.unsplash.com/photo-1577223625816-7546f13df25d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"} 
                           alt={item.title} 
-                          className="rounded-lg w-full h-auto" 
+                          className="w-full h-auto object-cover aspect-video" 
                         />
-                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center rounded-xl group-hover:bg-black/60 transition-colors">
-                          <div className="text-center">
-                            <IconComponent className={`w-16 h-16 ${iconColor} mb-4`} />
-                            <p className="text-white font-semibold mb-2">No 3D model available</p>
-                            <p className="text-gray-300 text-sm mb-4">View project details in gallery</p>
-                            <Link 
-                              href="/gallery"
-                              className="inline-flex items-center text-white bg-black/60 hover:bg-black/80 px-4 py-2 rounded-lg text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500"
-                            >
-                              <ExternalLink className="w-3 h-3 mr-1" />
-                              View Gallery
-                            </Link>
+                        {item.images && item.images.length > 1 && (
+                          <div className="absolute bottom-4 right-4 bg-black/70 text-white px-3 py-1 rounded-lg text-sm">
+                            +{item.images.length - 1} more images
                           </div>
+                        )}
+                        <div className="absolute top-4 left-4 bg-black/70 text-white px-3 py-1 rounded-lg text-sm font-medium">
+                          {item.category}
                         </div>
                       </div>
                     )}
