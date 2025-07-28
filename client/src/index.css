@@ -125,6 +125,35 @@
   transform: rotateY(180deg);
 }
 
+/* Loading Screen Animations */
+.grid-animation {
+  background-image: 
+    linear-gradient(rgba(0, 170, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 170, 255, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: grid-move 20s linear infinite;
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes grid-move {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(50px, 50px); }
+}
+
+.drone-container {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.drone-svg {
+  filter: drop-shadow(0 0 20px rgba(0, 170, 255, 0.3));
+}
+
+.particles-container {
+  overflow: hidden;
+}
+
 @keyframes flicker {
   0%, 100% { opacity: 0.8; }
   50% { opacity: 1; }
