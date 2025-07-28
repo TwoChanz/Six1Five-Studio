@@ -17,7 +17,12 @@ export default function Navbar() {
     
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      // Add offset for fixed navbar (64px height + 20px padding)
+      const offsetTop = element.offsetTop - 84;
+      window.scrollTo({
+        top: offsetTop,
+        behavior: "smooth"
+      });
       setIsMenuOpen(false);
     }
   };
@@ -48,6 +53,12 @@ export default function Navbar() {
               className="relative hover:text-[hsl(24,95%,53%)] transition-colors"
             >
               Services
+            </button>
+            <button 
+              onClick={() => scrollToSection("portfolio")}
+              className="relative hover:text-[hsl(24,95%,53%)] transition-colors"
+            >
+              Portfolio
             </button>
             <Link href="/blog" className="relative hover:text-[hsl(24,95%,53%)] transition-colors">
               Blog
@@ -100,6 +111,12 @@ export default function Navbar() {
                 className="text-left hover:text-[hsl(24,95%,53%)] transition-colors"
               >
                 Services
+              </button>
+              <button 
+                onClick={() => scrollToSection("portfolio")}
+                className="text-left hover:text-[hsl(24,95%,53%)] transition-colors"
+              >
+                Portfolio
               </button>
               <Link 
                 href="/blog" 
