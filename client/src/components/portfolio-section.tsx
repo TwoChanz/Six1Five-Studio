@@ -6,6 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Play, Layers, Building, ExternalLink, Eye, PlayCircle } from "lucide-react";
 import { getQueryFn } from "@/lib/queryClient";
 import { ModelViewer } from "./model-viewer";
+import OptimizedImage from "./optimized-image";
 import type { PortfolioItem } from "@shared/schema";
 
 const getIconForCategory = (category: string) => {
@@ -47,12 +48,13 @@ export default function PortfolioSection() {
   const SketchfabEmbed = ({ modelId, title }: { modelId: string; title: string }) => (
     <div className="aspect-video relative bg-gray-800 rounded-lg overflow-hidden">
       <iframe
-        src={`https://sketchfab.com/models/${modelId}/embed?autostart=0&ui_theme=dark`}
+        src={`https://sketchfab.com/models/${modelId}/embed?autostart=0&ui_theme=dark&preload=0`}
         title={title}
         frameBorder="0"
         allow="autoplay; fullscreen; vr"
         className="w-full h-full"
         loading="lazy"
+        sandbox="allow-scripts allow-same-origin allow-presentation"
       />
     </div>
   );
@@ -219,10 +221,11 @@ export default function PortfolioSection() {
                       </div>
                     ) : (
                       <div className="bg-gray-800 rounded-xl overflow-hidden relative group">
-                        <img 
-                          src={item.featuredImage || "https://images.unsplash.com/photo-1577223625816-7546f13df25d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"} 
-                          alt={item.title} 
-                          className="w-full h-auto object-cover aspect-video" 
+                        <OptimizedImage
+                          src={item.featuredImage || "https://images.unsplash.com/photo-1577223625816-7546f13df25d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"}
+                          alt={item.title}
+                          aspectRatio="video"
+                          className="w-full h-auto"
                         />
                         {item.images && item.images.length > 1 && (
                           <div className="absolute bottom-4 right-4 bg-black/70 text-white px-3 py-1 rounded-lg text-sm">
