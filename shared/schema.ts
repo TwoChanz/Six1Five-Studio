@@ -42,6 +42,8 @@ export const portfolioItems = pgTable("portfolio_items", {
   sketchfabModelId: text("sketchfab_model_id"),
   modelFile: text("model_file"), // Local 3D model file path (GLB, GLTF, OBJ)
   modelFormat: text("model_format"), // File format: 'glb', 'gltf', 'obj'
+  videoFile: text("video_file"), // Video demonstration/walkthrough file path
+  videoFormat: text("video_format"), // Video format: 'mp4', 'webm', 'mov'
   category: text("category").notNull(),
   tools: text("tools").array().default([]),
   services: text("services").array().default([]),

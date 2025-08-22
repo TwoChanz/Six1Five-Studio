@@ -3,7 +3,7 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Play, Layers, Building, ExternalLink, Eye } from "lucide-react";
+import { Play, Layers, Building, ExternalLink, Eye, PlayCircle } from "lucide-react";
 import { getQueryFn } from "@/lib/queryClient";
 import { ModelViewer } from "./model-viewer";
 import type { PortfolioItem } from "@shared/schema";
@@ -161,6 +161,23 @@ export default function PortfolioSection() {
                           View in 3D
                         </button>
                       )}
+                      {/* @ts-ignore - videoFile is added via schema extension */}
+                      {item.videoFile && item.videoFormat && (
+                        <button 
+                          onClick={() => {
+                            const videoElement = document.querySelector(`[data-video-id="${item.id}"]`);
+                            if (videoElement) {
+                              videoElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                              const video = videoElement.querySelector('video');
+                              if (video) video.play();
+                            }
+                          }}
+                          className={`inline-flex items-center ${buttonColor} text-white px-6 py-3 rounded-lg font-semibold transition-colors hover:opacity-90`}
+                        >
+                          <PlayCircle className="w-4 h-4 mr-2" />
+                          Watch Video
+                        </button>
+                      )}
                       <button className="text-[hsl(199,89%,48%)] hover:text-white text-sm font-medium transition-colors">
                         See full project →
                       </button>
@@ -183,6 +200,23 @@ export default function PortfolioSection() {
                         <div className="absolute top-4 right-4 z-20 bg-black/60 text-white px-3 py-1 rounded-lg text-sm flex items-center gap-2">
                           <Eye className="w-3 h-3" />
                           Interactive 3D
+                        </div>
+                      </div>
+                    ) : /* @ts-ignore - videoFile is added via schema extension */ item.videoFile && item.videoFormat ? (
+                      <div className="bg-gray-800 rounded-xl overflow-hidden relative" data-video-id={item.id}>
+                        <video 
+                          controls
+                          preload="metadata"
+                          className="w-full h-auto aspect-video object-cover rounded-lg"
+                          poster={item.featuredImage || "https://images.unsplash.com/photo-1577223625816-7546f13df25d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"}
+                        >
+                          {/* @ts-ignore - videoFile is added via schema extension */}
+                          <source src={item.videoFile} type={`video/${item.videoFormat}`} />
+                          Your browser does not support the video tag.
+                        </video>
+                        <div className="absolute top-4 left-4 bg-black/70 text-white px-3 py-1 rounded-lg text-sm font-medium flex items-center gap-2">
+                          <PlayCircle className="w-3 h-3" />
+                          Video Walkthrough
                         </div>
                       </div>
                     ) : (
