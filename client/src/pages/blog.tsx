@@ -20,7 +20,7 @@ export default function Blog() {
     }
   }, []);
 
-  const { data: blogPosts, isLoading } = useQuery({
+  const { data: blogPosts, isLoading } = useQuery<BlogPost[]>({
     queryKey: ['/api/blog'],
     queryFn: getQueryFn({ on401: "returnNull" }),
   });
@@ -83,7 +83,7 @@ export default function Blog() {
                 ))}
               </div>
             </div>
-          ) : blogPosts && blogPosts.length > 0 ? (
+          ) : blogPosts && Array.isArray(blogPosts) && blogPosts.length > 0 ? (
             <div className="space-y-12">
               {/* Featured Post */}
               {featuredPost && (
@@ -120,7 +120,7 @@ export default function Blog() {
                     </p>
                     
                     <div className="flex flex-wrap gap-2 mb-6">
-                      {featuredPost.tags?.map((tag, i) => (
+                      {featuredPost.tags?.map((tag: string, i: number) => (
                         <Badge key={i} variant="secondary" className="bg-[hsl(24,95%,53%)] text-white">
                           {tag}
                         </Badge>

@@ -87,6 +87,8 @@ export const insertPortfolioItemSchema = createInsertSchema(portfolioItems).pick
   sketchfabModelId: true,
   modelFile: true,
   modelFormat: true,
+  videoFile: true,
+  videoFormat: true,
   category: true,
   tools: true,
   services: true,

@@ -161,7 +161,6 @@ export default function PortfolioSection() {
                           View in 3D
                         </button>
                       )}
-                      {/* @ts-ignore - videoFile is added via schema extension */}
                       {item.videoFile && item.videoFormat && (
                         <button 
                           onClick={() => {
@@ -202,7 +201,7 @@ export default function PortfolioSection() {
                           Interactive 3D
                         </div>
                       </div>
-                    ) : /* @ts-ignore - videoFile is added via schema extension */ item.videoFile && item.videoFormat ? (
+                    ) : item.videoFile && item.videoFormat ? (
                       <div className="bg-gray-800 rounded-xl overflow-hidden relative" data-video-id={item.id}>
                         <video 
                           controls
@@ -210,7 +209,6 @@ export default function PortfolioSection() {
                           className="w-full h-auto aspect-video object-cover rounded-lg"
                           poster={item.featuredImage || "https://images.unsplash.com/photo-1577223625816-7546f13df25d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"}
                         >
-                          {/* @ts-ignore - videoFile is added via schema extension */}
                           <source src={item.videoFile} type={`video/${item.videoFormat}`} />
                           Your browser does not support the video tag.
                         </video>
