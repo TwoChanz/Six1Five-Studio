@@ -1,6 +1,6 @@
 import { Users, Globe, FileText } from "lucide-react";
 import logoImage from "@/assets/six1five-logo.png";
-import logoHorizontalWhite from "@/assets/logo-horizontal-white-clean.png";
+import logoHorizontalWhite from "@/assets/logo-horizontal-final.png";
 
 export default function Footer() {
   return (
@@ -12,7 +12,7 @@ export default function Footer() {
               <img 
                 src={logoHorizontalWhite} 
                 alt="SixlFive Studio - Reality Capture Specialists" 
-                className="h-10 w-auto filter drop-shadow-lg"
+                className="h-12 w-auto filter drop-shadow-lg"
                 style={{
                   filter: 'drop-shadow(0 0 8px var(--logo-blue))'
                 }}
