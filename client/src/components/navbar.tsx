@@ -4,6 +4,7 @@ import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ThemeToggle from "@/components/theme-toggle";
 import logoImage from "@/assets/six1five-logo.png";
+import logoHorizontal from "@/assets/logo-horizontal-blue.png";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,13 +33,12 @@ export default function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-[hsl(218,11%,15%)]/95 backdrop-blur-sm border-b border-[hsl(220,9%,46%)]/20">
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+          <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
             <img 
-              src={logoImage} 
+              src={logoHorizontal} 
               alt="SixlFive Studio - Reality Capture Specialists" 
-              className="h-10 w-auto md:h-11 transition-transform hover:scale-105"
+              className="h-8 w-auto md:h-10 transition-transform hover:scale-105"
             />
-            <span className="text-xl font-semibold">Six1Five Studio</span>
           </Link>
           
           <div className="hidden md:flex items-center space-x-8">
