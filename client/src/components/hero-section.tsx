@@ -26,9 +26,9 @@ export default function HeroSection() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="text-center lg:text-left">
             <h1 className="text-5xl lg:text-7xl font-bold mb-6 leading-tight">
-              <span className="text-[hsl(24,95%,53%)]">Scan</span> the World.
+              <span className="text-[var(--primary-blue)]">Scan</span> the World.
               <br />
-              <span className="text-[hsl(199,89%,48%)]">Reconstruct</span> Reality.
+              <span className="text-[var(--logo-blue)]">Reconstruct</span> Reality.
             </h1>
             <p className="text-xl text-gray-400 mb-4 max-w-lg">
               Professional drone mapping and 3D scanning for construction, real estate, and preservation.
@@ -44,14 +44,14 @@ export default function HeroSection() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
                 onClick={() => scrollToSection("portfolio")}
-                className="bg-[hsl(24,95%,53%)] hover:bg-[hsl(24,95%,48%)] text-white px-8 py-3 rounded-lg font-semibold transition-colors"
+                className="bg-[var(--primary-blue)] hover:bg-[var(--navy-blue)] text-white px-8 py-3 rounded-lg font-semibold transition-colors"
               >
                 View Portfolio
               </Button>
               <Button 
                 onClick={() => scrollToSection("contact")}
                 variant="outline"
-                className="border border-[hsl(199,89%,48%)] text-[hsl(199,89%,48%)] hover:bg-[hsl(199,89%,48%)] hover:text-white px-8 py-3 rounded-lg font-semibold transition-colors"
+                className="border border-[var(--logo-blue)] text-[var(--logo-blue)] hover:bg-[var(--logo-blue)] hover:text-white px-8 py-3 rounded-lg font-semibold transition-colors"
               >
                 Book a Scan
               </Button>

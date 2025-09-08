@@ -13,7 +13,7 @@ export default function Footer() {
                 alt="SixlFive Studio - Reality Capture Specialists" 
                 className="h-16 w-auto filter drop-shadow-lg"
                 style={{
-                  filter: 'drop-shadow(0 0 8px hsl(199,89%,48%))'
+                  filter: 'drop-shadow(0 0 8px var(--logo-blue))'
                 }}
               />
               <span className="text-xl font-semibold">Six1Five Studio</span>
@@ -26,9 +26,9 @@ export default function Footer() {
                 href="https://www.linkedin.com/in/chandler-hopkins-924005112/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="group flex items-center space-x-2 text-gray-400 hover:text-[hsl(24,95%,53%)] transition-all duration-300 transform hover:scale-110"
+                className="group flex items-center space-x-2 text-gray-400 hover:text-[var(--primary-blue)] transition-all duration-300 transform hover:scale-110"
               >
-                <div className="p-2 rounded-full bg-gray-800 group-hover:bg-[hsl(24,95%,53%)] transition-all duration-300">
+                <div className="p-2 rounded-full bg-gray-800 group-hover:bg-[var(--primary-blue)] transition-all duration-300">
                   <Users className="w-5 h-5" />
                 </div>
                 <span className="text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">LinkedIn</span>
@@ -37,10 +37,10 @@ export default function Footer() {
                 href="https://sketchfab.com/six1fivemedia" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="group flex items-center space-x-2 text-gray-400 hover:text-[hsl(199,89%,48%)] transition-all duration-300 transform hover:scale-110"
+                className="group flex items-center space-x-2 text-gray-400 hover:text-[var(--logo-blue)] transition-all duration-300 transform hover:scale-110"
                 title="View 3D Models on Sketchfab"
               >
-                <div className="p-2 rounded-full bg-gray-800 group-hover:bg-[hsl(199,89%,48%)] transition-all duration-300">
+                <div className="p-2 rounded-full bg-gray-800 group-hover:bg-[var(--logo-blue)] transition-all duration-300">
                   <Globe className="w-5 h-5" />
                 </div>
                 <span className="text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">3D Models</span>

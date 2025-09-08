@@ -61,7 +61,7 @@ export default function LoadingScreen({ isLoading, onLoadingComplete }: LoadingS
           />
           <div>
             <h1 className="text-2xl font-bold text-white">Six1Five Studio</h1>
-            <p className="text-[hsl(199,89%,48%)] text-sm font-medium">Reality Capture Technology</p>
+            <p className="text-[var(--logo-blue)] text-sm font-medium">Reality Capture Technology</p>
           </div>
         </div>
 
@@ -73,13 +73,13 @@ export default function LoadingScreen({ isLoading, onLoadingComplete }: LoadingS
         {/* Simple Progress Bar */}
         <div className="relative w-full bg-gray-700 rounded-full h-2 mb-4 overflow-hidden">
           <div
-            className="h-full bg-gradient-to-r from-[hsl(24,95%,53%)] to-[hsl(199,89%,48%)] rounded-full transition-all duration-300 ease-out"
+            className="h-full bg-gradient-to-r from-[var(--primary-blue)] to-[var(--logo-blue)] rounded-full transition-all duration-300 ease-out"
             style={{ width: `${progress}%` }}
           />
         </div>
 
         {/* Progress Percentage */}
-        <p className="text-[hsl(199,89%,48%)] text-sm font-mono">
+        <p className="text-[var(--logo-blue)] text-sm font-mono">
           {Math.round(progress)}%
         </p>
       </div>

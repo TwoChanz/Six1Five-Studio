@@ -44,22 +44,22 @@ export default function Navbar() {
           <div className="hidden md:flex items-center space-x-8">
             <button 
               onClick={() => scrollToSection("home")}
-              className="relative hover:text-[hsl(24,95%,53%)] transition-colors"
+              className="relative hover:text-[var(--primary-blue)] transition-colors"
             >
               Home
             </button>
-            <Link href="/gallery" className="relative hover:text-[hsl(24,95%,53%)] transition-colors">
+            <Link href="/gallery" className="relative hover:text-[var(--primary-blue)] transition-colors">
               Gallery
             </Link>
             <button 
               onClick={() => scrollToSection("services")}
-              className="relative hover:text-[hsl(24,95%,53%)] transition-colors"
+              className="relative hover:text-[var(--primary-blue)] transition-colors"
             >
               Services
             </button>
             <button 
               onClick={() => scrollToSection("portfolio")}
-              className="relative hover:text-[hsl(24,95%,53%)] transition-colors"
+              className="relative hover:text-[var(--primary-blue)] transition-colors"
             >
               Portfolio
             </button>
@@ -71,14 +71,14 @@ export default function Navbar() {
             </Link>
             <button 
               onClick={() => scrollToSection("contact")}
-              className="relative hover:text-[hsl(24,95%,53%)] transition-colors"
+              className="relative hover:text-[var(--primary-blue)] transition-colors"
             >
               Contact
             </button>
             <ThemeToggle />
             <Button 
               onClick={() => scrollToSection("contact")}
-              className="bg-[hsl(24,95%,53%)] hover:bg-[hsl(24,95%,48%)] text-white px-4 py-2 rounded-lg transition-colors"
+              className="bg-[var(--primary-blue)] hover:bg-[var(--navy-blue)] text-white px-4 py-2 rounded-lg transition-colors"
             >
               Book a Scan
             </Button>
@@ -98,46 +98,46 @@ export default function Navbar() {
             <div className="flex flex-col space-y-4">
               <button 
                 onClick={() => scrollToSection("home")}
-                className="text-left hover:text-[hsl(24,95%,53%)] transition-colors"
+                className="text-left hover:text-[var(--primary-blue)] transition-colors"
               >
                 Home
               </button>
               <Link 
                 href="/gallery" 
-                className="text-left hover:text-[hsl(24,95%,53%)] transition-colors"
+                className="text-left hover:text-[var(--primary-blue)] transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Gallery
               </Link>
               <button 
                 onClick={() => scrollToSection("services")}
-                className="text-left hover:text-[hsl(24,95%,53%)] transition-colors"
+                className="text-left hover:text-[var(--primary-blue)] transition-colors"
               >
                 Services
               </button>
               <button 
                 onClick={() => scrollToSection("portfolio")}
-                className="text-left hover:text-[hsl(24,95%,53%)] transition-colors"
+                className="text-left hover:text-[var(--primary-blue)] transition-colors"
               >
                 Portfolio
               </button>
               <Link 
                 href="/blog" 
-                className="text-left hover:text-[hsl(24,95%,53%)] transition-colors"
+                className="text-left hover:text-[var(--primary-blue)] transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Blog
               </Link>
               <Link 
                 href="/faq" 
-                className="text-left hover:text-[hsl(24,95%,53%)] transition-colors"
+                className="text-left hover:text-[var(--primary-blue)] transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
                 FAQ
               </Link>
               <button 
                 onClick={() => scrollToSection("contact")}
-                className="text-left hover:text-[hsl(24,95%,53%)] transition-colors"
+                className="text-left hover:text-[var(--primary-blue)] transition-colors"
               >
                 Contact
               </button>
