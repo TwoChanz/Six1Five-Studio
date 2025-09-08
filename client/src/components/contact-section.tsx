@@ -161,7 +161,7 @@ export default function ContactSection() {
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Let's capture your site in <span className="text-[hsl(24,95%,53%)]">3D</span>
+            Let's capture your site in <span className="text-[var(--primary-blue)]">3D</span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
             Ready to transform your project with Reality Capture technology? Get started with a custom quote.
@@ -405,7 +405,7 @@ export default function ContactSection() {
                 <Button 
                   type="submit" 
                   disabled={contactMutation.isPending}
-                  className="w-full bg-[hsl(24,95%,53%)] hover:bg-[hsl(24,95%,48%)] text-white py-3 rounded-lg font-semibold transition-colors"
+                  className="w-full bg-[var(--primary-blue)] hover:bg-[var(--navy-blue)] text-white py-3 rounded-lg font-semibold transition-colors"
                 >
                   {contactMutation.isPending ? "Sending..." : "Request Quote"}
                 </Button>

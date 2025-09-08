@@ -10,7 +10,7 @@ export default function FinalCTABanner() {
   };
 
   return (
-    <section className="py-16 bg-gradient-to-r from-[hsl(24,95%,53%)] to-[hsl(199,89%,48%)]">
+    <section className="py-16 bg-gradient-to-r from-[var(--primary-blue)] to-[var(--logo-blue)]">
       <div className="max-w-4xl mx-auto px-6 text-center">
         <h2 className="text-4xl font-bold text-white mb-6">
           Ready to capture your site?
@@ -38,7 +38,7 @@ export default function FinalCTABanner() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button 
             onClick={scrollToContact}
-            className="bg-white text-[hsl(24,95%,53%)] hover:bg-gray-100 px-8 py-3 text-lg font-semibold transition-colors"
+            className="bg-white text-[var(--primary-blue)] hover:bg-gray-100 px-8 py-3 text-lg font-semibold transition-colors"
           >
             Book a scan now
             <ArrowRight className="w-5 h-5 ml-2" />
@@ -46,7 +46,7 @@ export default function FinalCTABanner() {
           <Button 
             onClick={scrollToContact}
             variant="outline"
-            className="border-white text-white hover:bg-white hover:text-[hsl(24,95%,53%)] px-8 py-3 text-lg font-semibold transition-colors"
+            className="border-white text-white hover:bg-white hover:text-[var(--primary-blue)] px-8 py-3 text-lg font-semibold transition-colors"
           >
             Get Free Quote
           </Button>
