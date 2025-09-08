@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import logoImage from "@/assets/six1five-logo.png";
 
 interface LoadingScreenProps {
   isLoading: boolean;
@@ -51,11 +52,13 @@ export default function LoadingScreen({ isLoading, onLoadingComplete }: LoadingS
     <div className="fixed inset-0 z-50 bg-[hsl(218,11%,15%)] flex items-center justify-center overflow-hidden">
       {/* Simple Content */}
       <div className="text-center max-w-md mx-auto px-6">
-        {/* Simple Logo */}
+        {/* Logo */}
         <div className="flex items-center justify-center mb-6">
-          <div className="w-12 h-12 bg-gradient-to-br from-[hsl(24,95%,53%)] to-[hsl(199,89%,48%)] rounded-lg flex items-center justify-center mr-3">
-            <span className="text-white font-bold font-mono text-lg">615</span>
-          </div>
+          <img 
+            src={logoImage} 
+            alt="SixlFive Studio - Reality Capture Specialists" 
+            className="h-32 w-auto mr-4 transition-transform hover:scale-105"
+          />
           <div>
             <h1 className="text-2xl font-bold text-white">Six1Five Studio</h1>
             <p className="text-[hsl(199,89%,48%)] text-sm font-medium">Reality Capture Technology</p>
