@@ -1,0 +1,115 @@
+# Website Logo Integration Prompt for SixlFive Studio
+
+## Primary Logo Placement Instructions
+
+**Header/Navigation:**
+- Place the main SixlFive Studio logo (circular drone-inspired design with three stars) in the top-left corner of all pages
+- Size: 40-50px height for desktop, 35px for mobile
+- Ensure logo links back to homepage
+- Maintain adequate spacing (15-20px) from navigation menu items
+
+**Footer:**
+- Include logo in footer alongside company information
+- Size: 60-80px height
+- Position: Left side of footer, above company description
+- Add subtle glow effect matching the blue accent color
+
+**Favicon:**
+- Create 16x16, 32x32, and 180x180px versions of the circular logo element
+- Use the navy blue center circle with the three white stars
+- Ensure visibility at small sizes
+
+## Secondary Logo Applications
+
+**Loading Screens:**
+- Use animated version of logo while 3D models are loading
+- Subtle rotation animation of the outer drone propellers
+- Center of screen, 120-150px size
+
+**Watermarks on 3D Models:**
+- Semi-transparent logo overlay (20% opacity)
+- Bottom-right corner of 3D viewer windows
+- Size: 80-100px
+- Use white version on dark backgrounds, navy on light backgrounds
+
+**Social Media Integration:**
+- Include logo in Open Graph meta tags for social sharing
+- Size: 1200x630px for social preview cards
+- Logo positioned in bottom-right corner of preview images
+
+**Print Materials/PDFs:**
+- Header of project reports and documentation
+- Business card integration
+- Letterhead design
+
+## Brand Consistency Guidelines
+
+**Color Variations:**
+- Primary: Full color version (blue gradient + navy center)
+- Secondary: Navy monochrome version for single-color applications
+- Reverse: White version for dark backgrounds
+- Accent: Use the blue gradient (#00A2E8 to #0066CC) for highlights
+
+**Sizing Standards:**
+- Minimum size: 24px height (maintain legibility of stars)
+- Maximum size: 300px height (for hero sections)
+- Always maintain aspect ratio
+- Ensure clear space of 1/2 logo width around all sides
+
+**File Format Requirements:**
+- SVG for web applications (scalable, crisp at all sizes)
+- PNG with transparent background for overlays
+- JPG for social media and print applications
+- ICO format for favicons
+
+## Implementation Code Snippets
+
+**CSS for Responsive Logo:**
+```css
+.logo {
+  height: 45px;
+  width: auto;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .logo {
+    height: 35px;
+  }
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+```
+
+**HTML Structure:**
+```html
+<a href="/" class="logo-link">
+  <img src="/logo.svg" alt="SixlFive Studio - Reality Capture Specialists" class="logo">
+</a>
+```
+
+## Special Considerations
+
+**3D Model Viewers:**
+- Ensure logo doesn't interfere with model interaction
+- Use fade-in/fade-out on hover for better UX
+- Position outside of measurement tool areas
+
+**Dark Mode Compatibility:**
+- Provide white/light versions for dark theme
+- Test contrast ratios for accessibility compliance
+- Maintain brand recognition across all themes
+
+**Performance:**
+- Optimize SVG files (remove unnecessary code)
+- Use appropriate image compression for raster formats
+- Implement lazy loading for decorative logo instances
+
+**Accessibility:**
+- Include descriptive alt text: "SixlFive Studio - Reality Capture Specialists"
+- Ensure sufficient contrast ratios
+- Make logo links keyboard accessible
+
+This comprehensive integration will establish strong brand presence while maintaining professional aesthetics across all touchpoints of your website.
