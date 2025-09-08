@@ -1,5 +1,6 @@
 import { Users, Globe, FileText } from "lucide-react";
 import logoImage from "@/assets/six1five-logo.png";
+import logoHorizontalWhite from "@/assets/logo-horizontal-white.png";
 
 export default function Footer() {
   return (
@@ -7,16 +8,15 @@ export default function Footer() {
       <div className="container mx-auto px-6">
         <div className="grid md:grid-cols-4 gap-8">
           <div className="md:col-span-2">
-            <div className="flex items-center space-x-3 mb-4">
+            <div className="flex items-center mb-4">
               <img 
-                src={logoImage} 
+                src={logoHorizontalWhite} 
                 alt="SixlFive Studio - Reality Capture Specialists" 
-                className="h-16 w-auto filter drop-shadow-lg"
+                className="h-12 w-auto filter drop-shadow-lg"
                 style={{
                   filter: 'drop-shadow(0 0 8px var(--logo-blue))'
                 }}
               />
-              <span className="text-xl font-semibold">Six1Five Studio</span>
             </div>
             <p className="text-gray-400 mb-4">
               Reality Capture specialists transforming physical spaces into digital assets for AEC, real estate, and historic preservation.
