@@ -1,6 +1,6 @@
 import { Users, Globe, FileText } from "lucide-react";
 import logoImage from "@/assets/six1five-logo.png";
-import logoHorizontalWhite from "@/assets/logo-horizontal-final.png";
+import logoHorizontalWhite from "@/assets/logo-horizontal-clean-bg.png";
 
 export default function Footer() {
   return (
