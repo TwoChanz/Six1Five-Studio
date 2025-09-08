@@ -1,4 +1,5 @@
 import { Users, Globe, FileText } from "lucide-react";
+import logoImage from "@/assets/six1five-logo.png";
 
 export default function Footer() {
   return (
@@ -6,10 +7,15 @@ export default function Footer() {
       <div className="container mx-auto px-6">
         <div className="grid md:grid-cols-4 gap-8">
           <div className="md:col-span-2">
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-[hsl(24,95%,53%)] to-[hsl(199,89%,48%)] rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold font-mono text-sm">615</span>
-              </div>
+            <div className="flex items-center space-x-3 mb-4">
+              <img 
+                src={logoImage} 
+                alt="SixlFive Studio - Reality Capture Specialists" 
+                className="h-16 w-auto filter drop-shadow-lg"
+                style={{
+                  filter: 'drop-shadow(0 0 8px hsl(199,89%,48%))'
+                }}
+              />
               <span className="text-xl font-semibold">Six1Five Studio</span>
             </div>
             <p className="text-gray-400 mb-4">
