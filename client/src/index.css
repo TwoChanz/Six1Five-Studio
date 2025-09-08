@@ -24,11 +24,13 @@
   --ring: hsl(240, 10%, 3.9%);
   --radius: 0.5rem;
 
-  /* Custom tech-industrial color palette */
+  /* Logo-complementary color palette */
   --concrete: hsl(220, 9%, 46%);
-  --drone-orange: hsl(24, 95%, 53%);
-  --sky-blue: hsl(199, 89%, 48%);
-  --tech-green: hsl(158, 64%, 52%);
+  --primary-blue: hsl(210, 85%, 50%);
+  --logo-blue: hsl(210, 100%, 60%);
+  --navy-blue: hsl(218, 85%, 25%);
+  --accent-blue: hsl(199, 89%, 48%);
+  --tech-orange: hsl(24, 95%, 53%);
   --dark-gray: hsl(218, 11%, 15%);
   --light-gray: hsl(220, 14%, 96%);
 }
