@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import logoImage from "@/assets/six1five-logo.png";
-import logoCircular from "@/assets/logo-circular-large.png";
+import logoCircular from "@/assets/logo-circular-clean.png";
 
 interface LoadingScreenProps {
   isLoading: boolean;
@@ -58,7 +58,7 @@ export default function LoadingScreen({ isLoading, onLoadingComplete }: LoadingS
           <img 
             src={logoCircular} 
             alt="SixlFive Studio - Reality Capture Specialists" 
-            className="h-40 w-auto mb-4 transition-transform hover:scale-105"
+            className="h-36 w-auto mb-4 transition-transform hover:scale-105"
           />
           <div className="text-center">
             <h1 className="text-2xl font-bold text-white">Six1Five Studio</h1>
