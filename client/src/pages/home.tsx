@@ -32,7 +32,7 @@ export default function Home() {
       "description": "Professional reality capture services specializing in drone mapping, LiDAR scanning, and photogrammetry",
       "url": "https://six1fivestudio.com",
       "telephone": "+1-931-588-8997",
-      "email": "six1fivestudio@outlook.com",
+      "email": "admin@six1fivestudio.com",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "La Vergne",

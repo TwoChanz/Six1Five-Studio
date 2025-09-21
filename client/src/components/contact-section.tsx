@@ -426,7 +426,7 @@ export default function ContactSection() {
               <div className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-[hsl(199,89%,48%)]" />
                 <div>
-                  <span className="font-semibold">Email:</span> six1fivestudio@outlook.com
+                  <span className="font-semibold">Email:</span> admin@six1fivestudio.com
                 </div>
               </div>
               <div className="flex items-center space-x-3">

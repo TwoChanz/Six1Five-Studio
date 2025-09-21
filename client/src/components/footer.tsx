@@ -73,7 +73,7 @@ export default function Footer() {
             <ul className="space-y-2 text-gray-400">
               <li>Nashville, Tennessee</li>
               <li>(931) 588-8997</li>
-              <li>six1fivestudio@outlook.com</li>
+              <li>admin@six1fivestudio.com</li>
             </ul>
           </div>
         </div>
