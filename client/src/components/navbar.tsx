@@ -19,8 +19,10 @@ export default function Navbar() {
     
     const element = document.getElementById(sectionId);
     if (element) {
-      // Add offset for fixed navbar (64px height + 20px padding)
-      const offsetTop = element.offsetTop - 84;
+      // Calculate offset dynamically based on actual navbar height
+      const nav = document.querySelector('nav');
+      const navHeight = nav?.getBoundingClientRect().height ?? 80;
+      const offsetTop = element.offsetTop - navHeight - 20;
       window.scrollTo({
         top: offsetTop,
         behavior: "smooth"
@@ -32,12 +34,12 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-[hsl(218,11%,15%)]/95 backdrop-blur-sm border-b border-[hsl(220,9%,46%)]/20">
       <div className="container mx-auto px-6">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-20 md:h-24">
           <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
             <img 
               src={logoHorizontal} 
-              alt="SixlFive Studio - Reality Capture Specialists" 
-              className="h-8 w-auto md:h-10 transition-transform hover:scale-105 rounded-lg"
+              alt="Six1Five Studio - Reality Capture Specialists" 
+              className="h-12 sm:h-14 md:h-16 lg:h-20 xl:h-24 w-auto transition-transform hover:scale-105 rounded-lg"
             />
           </Link>
           
