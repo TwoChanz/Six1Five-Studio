@@ -34,12 +34,12 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-[hsl(218,11%,15%)]/95 backdrop-blur-sm border-b border-[hsl(220,9%,46%)]/20">
       <div className="container mx-auto px-6">
-        <div className="flex items-center justify-between h-24 md:h-28">
+        <div className="flex items-center justify-between h-20 sm:h-24 md:h-28">
           <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
             <img 
               src={logoHorizontal} 
               alt="Six1Five Studio - Reality Capture Specialists" 
-              className="h-14 sm:h-16 md:h-20 lg:h-24 xl:h-28 w-auto transition-transform hover:scale-105 rounded-lg shadow-lg"
+              className="h-16 sm:h-20 md:h-20 lg:h-24 xl:h-28 w-auto transition-transform hover:scale-105 rounded-lg shadow-lg"
             />
           </Link>
           
