@@ -163,9 +163,25 @@ export default function ContactSection() {
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Let's capture your site in <span className="text-[var(--primary-blue)]">3D</span>
           </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">
+          <p className="text-gray-400 max-w-2xl mx-auto mb-6">
             Ready to transform your project with Reality Capture technology? Get started with a custom quote.
           </p>
+          
+          {/* Value Proposition Highlights */}
+          <div className="flex flex-wrap justify-center gap-4 text-sm">
+            <div className="flex items-center gap-2 bg-gray-800 px-3 py-1 rounded-lg">
+              <span className="w-2 h-2 bg-[hsl(158,64%,52%)] rounded-full"></span>
+              <span className="text-gray-300">Free consultation</span>
+            </div>
+            <div className="flex items-center gap-2 bg-gray-800 px-3 py-1 rounded-lg">
+              <span className="w-2 h-2 bg-[hsl(24,95%,53%)] rounded-full"></span>
+              <span className="text-gray-300">Same-day quotes</span>
+            </div>
+            <div className="flex items-center gap-2 bg-gray-800 px-3 py-1 rounded-lg">
+              <span className="w-2 h-2 bg-[hsl(199,89%,48%)] rounded-full"></span>
+              <span className="text-gray-300">No upfront costs</span>
+            </div>
+          </div>
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">

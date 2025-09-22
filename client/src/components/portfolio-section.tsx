@@ -207,12 +207,29 @@ export default function PortfolioSection() {
                         </button>
                       )}
                       <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-4">
-                        <button className="bg-gradient-to-r from-[hsl(158,64%,52%)] to-[hsl(158,64%,47%)] text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all hover:shadow-lg w-full sm:w-auto">
+                        <button 
+                          onClick={() => {
+                            // Scroll to contact and pass project context
+                            const contactElement = document.getElementById('contact');
+                            if (contactElement) {
+                              contactElement.scrollIntoView({ behavior: 'smooth' });
+                              // Store project context for form prefill
+                              sessionStorage.setItem('portfolioContext', JSON.stringify({
+                                projectTitle: item.title,
+                                projectCategory: item.category,
+                                projectId: item.id
+                              }));
+                            }
+                          }}
+                          className="bg-gradient-to-r from-[hsl(158,64%,52%)] to-[hsl(158,64%,47%)] text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all hover:shadow-lg w-full sm:w-auto"
+                        >
                           Get Quote for Similar Project
                         </button>
-                        <button className="text-[hsl(199,89%,48%)] hover:text-white text-sm font-medium transition-colors border border-[hsl(199,89%,48%)] px-4 py-2 rounded-lg hover:bg-[hsl(199,89%,48%)] w-full sm:w-auto">
-                          View Full Case Study →
-                        </button>
+                        <Link href="/gallery" className="w-full sm:w-auto">
+                          <button className="text-[hsl(199,89%,48%)] hover:text-white text-sm font-medium transition-colors border border-[hsl(199,89%,48%)] px-4 py-2 rounded-lg hover:bg-[hsl(199,89%,48%)] w-full">
+                            View More Projects →
+                          </button>
+                        </Link>
                       </div>
                     </div>
                   </div>
