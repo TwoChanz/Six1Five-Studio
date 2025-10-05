@@ -1,5 +1,7 @@
+import { useState, useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
+import { analytics } from "@/lib/analytics";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -60,19 +62,69 @@ export default function PortfolioSection() {
     queryFn: getQueryFn({ on401: "returnNull" }),
   });
 
-  const SketchfabEmbed = ({ modelId, title }: { modelId: string; title: string }) => (
-    <div className="aspect-video relative bg-gray-800 rounded-lg overflow-hidden">
-      <iframe
-        src={`https://sketchfab.com/models/${modelId}/embed?autostart=0&ui_theme=dark&preload=0`}
-        title={title}
-        frameBorder="0"
-        allow="autoplay; fullscreen; vr"
-        className="w-full h-full"
-        loading="lazy"
-        sandbox="allow-scripts allow-same-origin allow-presentation"
-      />
-    </div>
-  );
+  const SketchfabEmbed = ({ modelId, title }: { modelId: string; title: string }) => {
+    const [isLoading, setIsLoading] = useState(true);
+    const [shouldLoad, setShouldLoad] = useState(false);
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && !shouldLoad) {
+              setShouldLoad(true);
+            }
+          });
+        },
+        {
+          rootMargin: '50px', // Start loading 50px before entering viewport
+        }
+      );
+
+      if (containerRef.current) {
+        observer.observe(containerRef.current);
+      }
+
+      return () => {
+        if (containerRef.current) {
+          observer.unobserve(containerRef.current);
+        }
+      };
+    }, [shouldLoad]);
+
+    return (
+      <div ref={containerRef} className="aspect-video relative bg-gray-800 rounded-lg overflow-hidden">
+        {!shouldLoad && (
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-800">
+            <div className="text-center">
+              <div className="w-12 h-12 border-4 border-gray-600 border-t-[hsl(199,89%,48%)] rounded-full animate-spin mx-auto mb-3"></div>
+              <p className="text-gray-400 text-sm">Ready to load 3D model...</p>
+            </div>
+          </div>
+        )}
+        {isLoading && shouldLoad && (
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-800 z-10">
+            <div className="text-center">
+              <div className="w-12 h-12 border-4 border-[hsl(199,89%,48%)] border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
+              <p className="text-gray-400 text-sm">Loading 3D Model...</p>
+            </div>
+          </div>
+        )}
+        {shouldLoad && (
+          <iframe
+            src={`https://sketchfab.com/models/${modelId}/embed?autostart=0&ui_theme=dark&preload=0`}
+            title={title}
+            frameBorder="0"
+            allow="autoplay; fullscreen; vr"
+            className="w-full h-full"
+            loading="lazy"
+            sandbox="allow-scripts allow-same-origin allow-presentation"
+            onLoad={() => setIsLoading(false)}
+          />
+        )}
+      </div>
+    );
+  };
 
   return (
     <section id="portfolio" className="py-20 bg-[hsl(218,11%,15%)]">
@@ -166,10 +218,11 @@ export default function PortfolioSection() {
                     {/* Mobile-First CTA Strategy */}
                     <div className="flex flex-col sm:flex-row flex-wrap gap-3">
                       {item.sketchfabModelId && (
-                        <a 
+                        <a
                           href={`https://sketchfab.com/3d-models/${item.sketchfabModelId}`}
                           target="_blank"
                           rel="noopener noreferrer"
+                          onClick={() => analytics.externalLink(`https://sketchfab.com/3d-models/${item.sketchfabModelId}`, 'View on Sketchfab')}
                           className={`inline-flex items-center ${buttonColor} text-white px-6 py-3 rounded-lg font-semibold transition-colors hover:opacity-90`}
                         >
                           <ExternalLink className="w-4 h-4 mr-2" />
@@ -177,7 +230,7 @@ export default function PortfolioSection() {
                         </a>
                       )}
                       {item.modelFile && item.modelFormat && (
-                        <button 
+                        <button
                           onClick={() => {
                             const modelElement = document.querySelector(`[data-model-id="${item.id}"]`);
                             if (modelElement) {
@@ -185,13 +238,14 @@ export default function PortfolioSection() {
                             }
                           }}
                           className={`inline-flex items-center ${buttonColor} text-white px-6 py-3 rounded-lg font-semibold transition-colors hover:opacity-90`}
+                          aria-label={`View ${item.title} in interactive 3D viewer`}
                         >
                           <Eye className="w-4 h-4 mr-2" />
                           View in 3D
                         </button>
                       )}
                       {item.videoFile && item.videoFormat && (
-                        <button 
+                        <button
                           onClick={() => {
                             const videoElement = document.querySelector(`[data-video-id="${item.id}"]`);
                             if (videoElement) {
@@ -201,14 +255,18 @@ export default function PortfolioSection() {
                             }
                           }}
                           className={`inline-flex items-center ${buttonColor} text-white px-6 py-3 rounded-lg font-semibold transition-colors hover:opacity-90`}
+                          aria-label={`Watch video walkthrough of ${item.title}`}
                         >
                           <PlayCircle className="w-4 h-4 mr-2" />
                           Watch Video
                         </button>
                       )}
                       <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-4">
-                        <button 
+                        <button
                           onClick={() => {
+                            // Track CTA click
+                            analytics.ctaClick('Get Quote for Similar Project', 'portfolio_section');
+
                             // Scroll to contact and pass project context
                             const contactElement = document.getElementById('contact');
                             if (contactElement) {
@@ -222,11 +280,15 @@ export default function PortfolioSection() {
                             }
                           }}
                           className="bg-gradient-to-r from-[hsl(158,64%,52%)] to-[hsl(158,64%,47%)] text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all hover:shadow-lg w-full sm:w-auto"
+                          aria-label={`Get quote for project similar to ${item.title}`}
                         >
                           Get Quote for Similar Project
                         </button>
                         <Link href="/gallery" className="w-full sm:w-auto">
-                          <button className="text-[hsl(199,89%,48%)] hover:text-white text-sm font-medium transition-colors border border-[hsl(199,89%,48%)] px-4 py-2 rounded-lg hover:bg-[hsl(199,89%,48%)] w-full">
+                          <button
+                            className="text-[hsl(199,89%,48%)] hover:text-white text-sm font-medium transition-colors border border-[hsl(199,89%,48%)] px-4 py-2 rounded-lg hover:bg-[hsl(199,89%,48%)] w-full"
+                            aria-label="View more projects in gallery"
+                          >
                             View More Projects →
                           </button>
                         </Link>
@@ -303,7 +365,7 @@ export default function PortfolioSection() {
             </div>
             <div className="flex items-center gap-2 text-gray-300">
               <span className="w-2 h-2 bg-[hsl(24,95%,53%)] rounded-full"></span>
-              <span className="text-sm font-medium">50+ Projects Completed</span>
+              <span className="text-sm font-medium">Growing Project Portfolio</span>
             </div>
             <div className="flex items-center gap-2 text-gray-300">
               <span className="w-2 h-2 bg-[hsl(199,89%,48%)] rounded-full"></span>
@@ -363,8 +425,8 @@ export default function PortfolioSection() {
                 <div className="text-sm text-gray-400">Standard Accuracy</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-[hsl(158,64%,52%)]">100%</div>
-                <div className="text-sm text-gray-400">Client Satisfaction</div>
+                <div className="text-2xl font-bold text-[hsl(158,64%,52%)]">5★</div>
+                <div className="text-sm text-gray-400">Client Reviews</div>
               </div>
             </div>
           </div>

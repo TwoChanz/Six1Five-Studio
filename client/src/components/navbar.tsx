@@ -36,32 +36,38 @@ export default function Navbar() {
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-20 sm:h-24 md:h-28">
           <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
-            <img 
-              src={logoHorizontal} 
-              alt="Six1Five Studio - Reality Capture Specialists" 
-              className="h-16 sm:h-20 md:h-20 lg:h-24 xl:h-28 w-auto transition-transform hover:scale-105 rounded-lg shadow-lg"
+            <img
+              src={logoHorizontal}
+              alt="Six1Five Studio - Reality Capture Specialists"
+              className="h-16 sm:h-18 md:h-20 max-h-20 w-auto transition-transform hover:scale-105 rounded-lg shadow-lg"
             />
           </Link>
           
           <div className="hidden md:flex items-center space-x-8">
-            <button 
+            <button
               onClick={() => scrollToSection("home")}
               className="relative hover:text-[var(--primary-blue)] transition-colors"
+              aria-label="Navigate to home section"
             >
               Home
             </button>
             <Link href="/gallery" className="relative hover:text-[var(--primary-blue)] transition-colors">
               Gallery
             </Link>
-            <button 
+            <button
               onClick={() => scrollToSection("services")}
               className="relative hover:text-[var(--primary-blue)] transition-colors"
+              aria-label="Navigate to services section"
             >
               Services
             </button>
-            <button 
+            <Link href="/pricing" className="relative hover:text-[var(--primary-blue)] transition-colors">
+              Pricing
+            </Link>
+            <button
               onClick={() => scrollToSection("portfolio")}
               className="relative hover:text-[var(--primary-blue)] transition-colors"
+              aria-label="Navigate to portfolio section"
             >
               Portfolio
             </button>
@@ -71,24 +77,28 @@ export default function Navbar() {
             <Link href="/faq" className="relative hover:text-[hsl(24,95%,53%)] transition-colors">
               FAQ
             </Link>
-            <button 
+            <button
               onClick={() => scrollToSection("contact")}
               className="relative hover:text-[var(--primary-blue)] transition-colors"
+              aria-label="Navigate to contact section"
             >
               Contact
             </button>
             <ThemeToggle />
-            <Button 
+            <Button
               onClick={() => scrollToSection("contact")}
               className="bg-[var(--primary-blue)] hover:bg-[var(--navy-blue)] text-white px-4 py-2 rounded-lg transition-colors"
+              aria-label="Book a scan - navigate to contact form"
             >
               Book a Scan
             </Button>
           </div>
           
-          <button 
+          <button
             className="md:hidden"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMenuOpen}
           >
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -98,9 +108,10 @@ export default function Navbar() {
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t border-[hsl(220,9%,46%)]/20">
             <div className="flex flex-col space-y-4">
-              <button 
+              <button
                 onClick={() => scrollToSection("home")}
                 className="text-left hover:text-[var(--primary-blue)] transition-colors"
+                aria-label="Navigate to home section"
               >
                 Home
               </button>
@@ -111,15 +122,24 @@ export default function Navbar() {
               >
                 Gallery
               </Link>
-              <button 
+              <button
                 onClick={() => scrollToSection("services")}
                 className="text-left hover:text-[var(--primary-blue)] transition-colors"
+                aria-label="Navigate to services section"
               >
                 Services
               </button>
-              <button 
+              <Link
+                href="/pricing"
+                className="text-left hover:text-[var(--primary-blue)] transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Pricing
+              </Link>
+              <button
                 onClick={() => scrollToSection("portfolio")}
                 className="text-left hover:text-[var(--primary-blue)] transition-colors"
+                aria-label="Navigate to portfolio section"
               >
                 Portfolio
               </button>
@@ -137,11 +157,22 @@ export default function Navbar() {
               >
                 FAQ
               </Link>
-              <button 
+              <button
                 onClick={() => scrollToSection("contact")}
                 className="text-left hover:text-[var(--primary-blue)] transition-colors"
+                aria-label="Navigate to contact section"
               >
                 Contact
+              </button>
+              <div className="pt-4 border-t border-[hsl(220,9%,46%)]/20">
+                <ThemeToggle />
+              </div>
+              <button
+                onClick={() => scrollToSection("contact")}
+                className="bg-[var(--primary-blue)] hover:bg-[var(--navy-blue)] text-white px-4 py-2 rounded-lg transition-colors w-full text-center"
+                aria-label="Book a scan - navigate to contact form"
+              >
+                Book a Scan
               </button>
             </div>
           </div>

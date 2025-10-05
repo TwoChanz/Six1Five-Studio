@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
+import { analytics } from "@/lib/analytics";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import { Button } from "@/components/ui/button";
@@ -34,28 +35,79 @@ export default function Gallery() {
     selectedCategory === 'all' || item.category === selectedCategory
   ) || [];
 
-  const SketchfabEmbed = ({ modelId, title }: { modelId: string; title: string }) => (
-    <div className="aspect-video relative bg-gray-800 rounded-lg overflow-hidden">
-      <iframe
-        src={`https://sketchfab.com/models/${modelId}/embed?autostart=0&ui_theme=dark`}
-        title={title}
-        frameBorder="0"
-        allow="autoplay; fullscreen; vr"
-        className="w-full h-full"
-        loading="lazy"
-      />
-      <div className="absolute top-2 right-2">
-        <Button
-          size="sm"
-          variant="secondary"
-          onClick={() => window.open(`https://sketchfab.com/3d-models/${modelId}`, '_blank')}
-        >
-          <ExternalLink className="w-3 h-3 mr-1" />
-          View on Sketchfab
-        </Button>
+  const SketchfabEmbed = ({ modelId, title }: { modelId: string; title: string }) => {
+    const [isLoading, setIsLoading] = useState(true);
+    const [shouldLoad, setShouldLoad] = useState(false);
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && !shouldLoad) {
+              setShouldLoad(true);
+            }
+          });
+        },
+        {
+          rootMargin: '100px', // Start loading 100px before entering viewport
+        }
+      );
+
+      if (containerRef.current) {
+        observer.observe(containerRef.current);
+      }
+
+      return () => {
+        if (containerRef.current) {
+          observer.unobserve(containerRef.current);
+        }
+      };
+    }, [shouldLoad]);
+
+    return (
+      <div ref={containerRef} className="aspect-video relative bg-gray-800 rounded-lg overflow-hidden">
+        {!shouldLoad && (
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-800">
+            <div className="text-center">
+              <div className="w-12 h-12 border-4 border-gray-600 border-t-[hsl(199,89%,48%)] rounded-full animate-spin mx-auto mb-3"></div>
+              <p className="text-gray-400 text-sm">Scroll to load 3D model</p>
+            </div>
+          </div>
+        )}
+        {isLoading && shouldLoad && (
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-800 z-10">
+            <div className="text-center">
+              <div className="w-12 h-12 border-4 border-[hsl(199,89%,48%)] border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
+              <p className="text-gray-400 text-sm">Loading 3D Model...</p>
+            </div>
+          </div>
+        )}
+        {shouldLoad && (
+          <iframe
+            src={`https://sketchfab.com/models/${modelId}/embed?autostart=0&ui_theme=dark`}
+            title={title}
+            frameBorder="0"
+            allow="autoplay; fullscreen; vr"
+            className="w-full h-full"
+            loading="lazy"
+            onLoad={() => setIsLoading(false)}
+          />
+        )}
+        <div className="absolute top-2 right-2">
+          <Button
+            size="sm"
+            variant="secondary"
+            onClick={() => window.open(`https://sketchfab.com/3d-models/${modelId}`, '_blank')}
+            aria-label="View this model on Sketchfab"
+          >
+            <ExternalLink className="w-3 h-3 mr-1" />
+            View on Sketchfab
+          </Button>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <div className="min-h-screen bg-[hsl(218,11%,15%)] text-white font-sans">
@@ -83,8 +135,11 @@ export default function Gallery() {
                     key={category}
                     variant={selectedCategory === category ? "default" : "outline"}
                     size="sm"
-                    onClick={() => setSelectedCategory(category)}
-                    className={selectedCategory === category 
+                    onClick={() => {
+                      setSelectedCategory(category);
+                      analytics.galleryFilter(category);
+                    }}
+                    className={selectedCategory === category
                       ? "bg-[hsl(24,95%,53%)] hover:bg-[hsl(24,95%,48%)]"
                       : "border-gray-400 text-gray-200 hover:bg-gray-600 hover:border-gray-300"
                     }

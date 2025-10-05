@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { analytics } from "@/lib/analytics";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -65,7 +66,7 @@ const budgetOptions = [
 export default function ContactSection() {
   const { toast } = useToast();
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
-  
+
   const form = useForm<ContactForm>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
@@ -81,11 +82,60 @@ export default function ContactSection() {
     },
   });
 
+  // Pre-fill form with portfolio context if available
+  useEffect(() => {
+    try {
+      const portfolioContext = sessionStorage.getItem('portfolioContext');
+      if (portfolioContext) {
+        const context = JSON.parse(portfolioContext);
+
+        // Pre-fill project details with portfolio context
+        const prefillText = `I'm interested in a project similar to "${context.projectTitle}" (${context.projectCategory}). `;
+        form.setValue('projectDetails', prefillText);
+
+        // Auto-select project type based on category
+        if (context.projectCategory) {
+          const categoryMap: Record<string, string> = {
+            'photogrammetry': 'drone-mapping',
+            'construction': 'bim',
+            'heritage': 'heritage',
+            'interior': 'real-estate'
+          };
+          const projectType = categoryMap[context.projectCategory.toLowerCase()] || 'other';
+          form.setValue('projectType', projectType);
+        }
+
+        // Clear the context after using it
+        sessionStorage.removeItem('portfolioContext');
+      }
+    } catch (error) {
+      console.error('Error loading portfolio context:', error);
+    }
+  }, [form]);
+
   const contactMutation = useMutation({
-    mutationFn: async (data: ContactForm) => {
+    mutationFn: async (data: ContactForm | FormData) => {
+      // Use fetch directly for FormData to preserve multipart/form-data
+      if (data instanceof FormData) {
+        const response = await fetch("/api/contact", {
+          method: "POST",
+          body: data,
+        });
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.message || "Failed to send message");
+        }
+        return response.json();
+      }
       return await apiRequest("POST", "/api/contact", data);
     },
-    onSuccess: () => {
+    onSuccess: (_, variables) => {
+      // Track successful form submission
+      const projectType = variables instanceof FormData
+        ? variables.get('projectType') as string
+        : '';
+      analytics.contactFormSubmit(projectType);
+
       toast({
         title: "Message Sent!",
         description: "Thank you for your interest. We will contact you soon.",
@@ -104,14 +154,14 @@ export default function ContactSection() {
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files || []);
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'application/pdf', 'text/plain'];
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'application/pdf', 'text/plain'];
     const maxSize = 10 * 1024 * 1024; // 10MB
-    
+
     const validFiles = files.filter(file => {
       if (!allowedTypes.includes(file.type)) {
         toast({
           title: "Invalid file type",
-          description: "Please upload images (JPEG, PNG, GIF), PDF, or text files only.",
+          description: "Please upload images (JPEG, PNG, GIF, WebP), PDF, or text files only.",
           variant: "destructive",
         });
         return false;
@@ -127,33 +177,51 @@ export default function ContactSection() {
       return true;
     });
 
-    setUploadedFiles(prev => [...prev, ...validFiles]);
-    
-    // Convert files to base64 for form submission
-    const filePromises = validFiles.map(file => {
-      return new Promise<string>((resolve) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result as string);
-        reader.readAsDataURL(file);
+    // Check total files limit
+    const totalFiles = uploadedFiles.length + validFiles.length;
+    if (totalFiles > 5) {
+      toast({
+        title: "Too many files",
+        description: "Maximum 5 files allowed per submission.",
+        variant: "destructive",
       });
-    });
+      return;
+    }
 
-    Promise.all(filePromises).then(base64Files => {
-      form.setValue('referenceFiles', [...(form.getValues('referenceFiles') || []), ...base64Files]);
-    });
+    setUploadedFiles(prev => [...prev, ...validFiles]);
   };
 
   const removeFile = (index: number) => {
     const newFiles = uploadedFiles.filter((_, i) => i !== index);
     setUploadedFiles(newFiles);
-    
-    const currentFormFiles = form.getValues('referenceFiles') || [];
-    const newFormFiles = currentFormFiles.filter((_, i) => i !== index);
-    form.setValue('referenceFiles', newFormFiles);
   };
 
   const onSubmit = (data: ContactForm) => {
-    contactMutation.mutate(data);
+    // Create FormData for multipart upload
+    const formData = new FormData();
+
+    // Append form fields
+    formData.append('name', data.name);
+    formData.append('email', data.email);
+    formData.append('services', JSON.stringify(data.services));
+    formData.append('projectType', data.projectType);
+    formData.append('location', data.location);
+    formData.append('projectDetails', data.projectDetails);
+    if (data.timeline) formData.append('timeline', data.timeline);
+    if (data.budgetRange) formData.append('budgetRange', data.budgetRange);
+
+    // Append files
+    uploadedFiles.forEach(file => {
+      formData.append('referenceFiles', file);
+    });
+
+    // Track file upload if files present
+    if (uploadedFiles.length > 0) {
+      const totalSize = uploadedFiles.reduce((sum, file) => sum + file.size, 0);
+      analytics.fileUpload(uploadedFiles.length, totalSize);
+    }
+
+    contactMutation.mutate(formData as any);
   };
 
   return (
@@ -386,7 +454,7 @@ export default function ContactSection() {
                     <input
                       type="file"
                       multiple
-                      accept="image/*,.pdf,.txt"
+                      accept="image/jpeg,image/png,image/gif,image/webp,.pdf,.txt"
                       onChange={handleFileUpload}
                       className="hidden"
                       id="file-upload"
@@ -394,7 +462,7 @@ export default function ContactSection() {
                     <label htmlFor="file-upload" className="cursor-pointer">
                       <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
                       <p className="text-gray-400 mb-1">Upload reference images or documents</p>
-                      <p className="text-xs text-gray-500">Drag files here or click to browse (Max 10MB each)</p>
+                      <p className="text-xs text-gray-500">Max 5 files, 10MB each (JPEG, PNG, GIF, WebP, PDF, TXT)</p>
                     </label>
                   </div>
                   

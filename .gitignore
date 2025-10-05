@@ -4,3 +4,7 @@ dist
 server/public
 vite.config.ts.*
 *.tar.gz
+
+# User uploaded files (keep directory structure with .gitkeep)
+server/uploads/**/*
+!server/uploads/.gitkeep

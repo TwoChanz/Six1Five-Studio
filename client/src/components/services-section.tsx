@@ -30,7 +30,7 @@ function ServiceCard({ service }: ServiceCardProps) {
       case 'Photogrammetry': return 'Precise 3D models from aerial photography with sub-centimeter accuracy';
       case 'LiDAR Scanning': return 'Millimeter-precise point clouds for engineering-grade documentation';
       case '3D Reconstruction': return 'Professional 3D assets ready for CAD, VR, and visualization workflows';
-      case 'Bot Mapping': return 'Autonomous aerial mapping with repeatable flight paths and progress tracking';
+      case 'Automated Mapping': return 'Autonomous aerial mapping with repeatable flight paths and progress tracking';
       case 'Virtual Tours': return 'Immersive 360° experiences with interactive hotspots and measurements';
       case 'Scan-to-BIM': return 'LOD 300+ BIM models from laser scan data for renovation projects';
       default: return 'Professional reality capture solutions for your project needs';
@@ -80,7 +80,15 @@ function ServiceCard({ service }: ServiceCardProps) {
             ))}
           </ul>
           
-          <button className="text-[hsl(199,89%,48%)] hover:text-white text-xs font-medium transition-colors">
+          <button
+            onClick={() => {
+              const contactElement = document.getElementById('contact');
+              if (contactElement) {
+                contactElement.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+            className="text-[hsl(199,89%,48%)] hover:text-white text-xs font-medium transition-colors"
+          >
             Learn More →
           </button>
         </div>
@@ -131,13 +139,13 @@ const servicesData = [
   },
   {
     icon: Bot,
-    title: "Bot Mapping",
+    title: "Automated Mapping",
     subtitle: "Automated drone missions for large-scale site mapping",
     color: "drone-orange",
     bgColor: "bg-[hsl(24,95%,53%)]",
     workflow: [
       "Flight planning & automated execution",
-      "Large-scale site mapping", 
+      "Large-scale site mapping",
       "Real-time progress monitoring",
       "Weather-optimized scheduling"
     ]
@@ -196,7 +204,15 @@ export default function ServicesSection() {
             <p className="text-gray-400 mb-6">
               Get a custom quote based on your specific requirements and timeline.
             </p>
-            <button className="bg-[hsl(24,95%,53%)] hover:bg-[hsl(24,95%,48%)] text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1">
+            <button
+              onClick={() => {
+                const contactElement = document.getElementById('contact');
+                if (contactElement) {
+                  contactElement.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+              className="bg-[hsl(24,95%,53%)] hover:bg-[hsl(24,95%,48%)] text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1"
+            >
               Get Free Quote →
             </button>
           </div>

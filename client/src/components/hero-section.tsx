@@ -30,7 +30,7 @@ export default function HeroSection() {
               <br />
               <span className="text-[var(--logo-blue)]">Reconstruct</span> Reality.
             </h1>
-            <p className="text-lg sm:text-xl text-gray-400 mb-3 md:mb-4 max-w-lg">
+            <p className="text-lg sm:text-xl text-contrast-medium mb-3 md:mb-4 max-w-lg">
               Professional drone mapping and 3D scanning for construction, real estate, and preservation.
             </p>
             <p className="text-base sm:text-lg text-gray-300 mb-6 md:mb-8 max-w-lg">

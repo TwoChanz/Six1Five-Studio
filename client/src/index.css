@@ -66,6 +66,41 @@
     @apply font-sans antialiased bg-background text-foreground;
     padding-top: 64px; /* Account for fixed navbar */
   }
+
+  /* Keyboard navigation focus states */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible,
+  [role="button"]:focus-visible,
+  [tabindex]:not([tabindex="-1"]):focus-visible {
+    @apply outline-none ring-2 ring-offset-2;
+    outline: 2px solid hsl(199, 89%, 48%);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Enhanced focus for primary CTAs */
+  button.bg-\[var\(--primary-blue\)\]:focus-visible,
+  button.bg-\[hsl\(24\,95\%\,53\%\)\]:focus-visible,
+  button.bg-\[hsl\(199\,89\%\,48\%\)\]:focus-visible {
+    @apply ring-4 ring-offset-4;
+    outline: 3px solid hsl(158, 64%, 52%);
+  }
+
+  /* WCAG AA compliant text colors for dark backgrounds */
+  .text-contrast-low {
+    color: hsl(220, 13%, 65%); /* Improved from gray-400 for better contrast */
+  }
+
+  .text-contrast-medium {
+    color: hsl(220, 13%, 75%); /* Better than gray-300 */
+  }
+
+  .text-contrast-high {
+    color: hsl(0, 0%, 90%); /* High contrast for important text */
+  }
 }
 
 /* Custom animations */
