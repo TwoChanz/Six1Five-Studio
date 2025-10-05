@@ -18,14 +18,17 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
+      // Allows imports like "@/components/Button" from client/src
       "@": path.resolve(import.meta.dirname, "client", "src"),
       "@shared": path.resolve(import.meta.dirname, "shared"),
       "@assets": path.resolve(import.meta.dirname, "attached_assets"),
     },
   },
+  // Your app source lives in /client
   root: path.resolve(import.meta.dirname, "client"),
   build: {
-    outDir: path.resolve(import.meta.dirname, "dist/public"),
+    // IMPORTANT: Vercel expects "dist". This is the fix.
+    outDir: path.resolve(import.meta.dirname, "dist"),
     emptyOutDir: true,
   },
   server: {
