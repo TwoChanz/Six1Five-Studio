@@ -1,0 +1,29 @@
+name: Block Large Files
+on: [pull_request]
+
+jobs:
+  size-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Fail if any added/modified file > 10MB
+        run: |
+          set -e
+          THRESHOLD=$((10*1024*1024))
+          git fetch origin ${{ github.base_ref }} --depth=1
+          CHANGED=$(git diff --name-only --diff-filter=AM origin/${{ github.base_ref }}...HEAD)
+          FAIL=0
+          for f in $CHANGED; do
+            if [ -f "$f" ]; then
+              SZ=$(stat -c%s "$f")
+              if [ "$SZ" -gt "$THRESHOLD" ]; then
+                echo "::error file=$f::File exceeds 10MB ($SZ bytes)."
+                FAIL=1
+              fi
+            fi
+          done
+          exit $FAIL
+
+

@@ -8,3 +8,23 @@ vite.config.ts.*
 # User uploaded files (keep directory structure with .gitkeep)
 server/uploads/**/*
 !server/uploads/.gitkeep
+
+# build / cache
+build/
+.vercel/
+.next/
+coverage/
+uploads/
+.local/
+
+# heavy assets (keep them outside Git or store via LFS/CDN)
+client/public/assets/models/
+attached_assets/
+*.obj
+*.ply
+*.glb
+*.gltf
+*.bin
+*.webp
+*.heic
+*.pdf
