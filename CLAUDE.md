@@ -18,15 +18,30 @@ npm run check        # Run TypeScript type checking
 
 ### Database
 ```bash
-npm run db:push      # Push Drizzle schema changes to PostgreSQL
+npm run db:push      # Push Drizzle schema changes to database (PostgreSQL or SQLite)
+tsx scripts/init-local-db.ts        # Initialize SQLite database with schema
+tsx scripts/seed-simple.ts          # Seed SQLite with minimal sample data
+tsx scripts/seed-sample-portfolio.ts # Seed SQLite with full sample portfolio
+tsx scripts/add-portfolio-item.ts   # Add a single portfolio item to database
 ```
 
 ### Environment Variables
 
-Required environment variables:
+**Database Configuration:**
+The project supports **dual database modes** for flexibility:
 
-**Database (Required)**
-- `DATABASE_URL` - PostgreSQL connection string
+1. **SQLite (Local Development - Default)**
+   - Set `USE_SQLITE=true` in `.env`
+   - Database file: `local.db` at project root
+   - No DATABASE_URL needed
+   - Use `drizzle.config.local.ts` for schema management
+   - Faster setup, no external dependencies
+
+2. **PostgreSQL (Production)**
+   - Set `USE_SQLITE=false` (or omit it) in `.env`
+   - Required: `DATABASE_URL` - PostgreSQL connection string
+   - Uses Neon serverless PostgreSQL driver
+   - Use `drizzle.config.ts` for schema management
 
 **Email Notifications (Optional but recommended)**
 - `SENDGRID_API_KEY` - SendGrid API key for sending contact form emails
@@ -46,11 +61,12 @@ Without GA configured, analytics tracking will be skipped. Analytics tracks:
 ### Stack Overview
 - **Frontend**: React 18 + TypeScript + Vite + Tailwind CSS
 - **Backend**: Express.js + TypeScript (ES modules)
-- **Database**: PostgreSQL with Drizzle ORM
+- **Database**: PostgreSQL OR SQLite with Drizzle ORM (dual mode support)
 - **Routing**: Wouter (client-side)
 - **State Management**: TanStack Query (React Query)
 - **Forms**: React Hook Form + Zod validation
 - **UI Components**: Shadcn/ui (Radix UI primitives)
+- **3D Rendering**: Three.js + three-stdlib for local model viewing
 
 ### Project Structure
 
@@ -60,13 +76,20 @@ client/
     components/     # React components (hero, portfolio, contact, etc.)
     pages/          # Route pages (home, gallery, pricing, blog, faq)
     lib/            # Client utilities (analytics, queryClient, etc.)
+    hooks/          # Custom React hooks
 server/
   index.ts          # Express server entry point
-  routes.ts         # API route definitions
+  routes.ts         # API route definitions + multer file upload config
   storage.ts        # Database abstraction layer
-  db.ts             # Database connection
+  db.ts             # Database connection (dual SQLite/PostgreSQL support)
+  uploads/          # File upload directory (gitignored except .gitkeep)
 shared/
   schema.ts         # Drizzle schema and Zod validators (shared types)
+scripts/
+  init-local-db.ts           # Initialize SQLite database schema
+  seed-simple.ts             # Quick seed with minimal data
+  seed-sample-portfolio.ts   # Full portfolio seed with sample projects
+  add-portfolio-item.ts      # Add single portfolio item helper
 ```
 
 ### Path Aliases
