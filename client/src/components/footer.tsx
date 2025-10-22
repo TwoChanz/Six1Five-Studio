@@ -1,6 +1,6 @@
 import { Users, Globe, FileText } from "lucide-react";
 import logoImage from "@/assets/six1five-logo.png";
-import logoHorizontalWhite from "@/assets/logo-horizontal-clean-bg.png";
+import logoHorizontalTransparent from "@/assets/logo-horizontal-transparent.png";
 
 export default function Footer() {
   return (
@@ -9,9 +9,9 @@ export default function Footer() {
         <div className="grid md:grid-cols-4 gap-8">
           <div className="md:col-span-2">
             <div className="flex items-center mb-4">
-              <img 
-                src={logoHorizontalWhite} 
-                alt="SixlFive Studio - Reality Capture Specialists" 
+              <img
+                src={logoHorizontalTransparent}
+                alt="SixlFive Studio - Reality Capture Specialists"
                 className="h-12 w-auto filter drop-shadow-lg"
                 style={{
                   filter: 'drop-shadow(0 0 8px var(--logo-blue))'
