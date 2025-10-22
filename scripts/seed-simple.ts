@@ -1,8 +1,9 @@
 import 'dotenv/config';
 import { db } from "../server/db.js";
-import { portfolioItems } from "../shared/schema.js";
+import { sql } from "drizzle-orm";
 
-const now = new Date();
+const now = new Date().toISOString();
+const useSqlite = process.env.USE_SQLITE === 'true';
 
 const sampleItems = [
   {
@@ -13,7 +14,6 @@ const sampleItems = [
     services: ["Aerial Mapping", "Photogrammetry"],
     published: true,
     featured: true,
-    createdAt: now
   },
   {
     title: "Commercial Construction Site",
@@ -23,7 +23,6 @@ const sampleItems = [
     services: ["Drone Mapping", "Progress Monitoring"],
     published: true,
     featured: true,
-    createdAt: now
   },
   {
     title: "LiDAR Forest Analysis",
@@ -33,17 +32,43 @@ const sampleItems = [
     services: ["LiDAR Scanning", "Data Analysis"],
     published: true,
     featured: false,
-    createdAt: now
   }
 ];
 
 async function seed() {
   try {
     console.log("🌱 Seeding...\n");
+
     for (const item of sampleItems) {
       console.log(`Adding: ${item.title}`);
-      await db.insert(portfolioItems).values(item);
+
+      if (useSqlite) {
+        // For SQLite: manually insert with JSON-stringified arrays
+        await db.run(sql`
+          INSERT INTO portfolio_items (
+            title, description, category, tools, services,
+            published, featured, created_at
+          ) VALUES (
+            ${item.title},
+            ${item.description},
+            ${item.category},
+            ${JSON.stringify(item.tools)},
+            ${JSON.stringify(item.services)},
+            ${item.published ? 1 : 0},
+            ${item.featured ? 1 : 0},
+            ${now}
+          )
+        `);
+      } else {
+        // For PostgreSQL: use Drizzle ORM with array support
+        const { portfolioItems } = await import("../shared/schema.js");
+        await db.insert(portfolioItems).values({
+          ...item,
+          createdAt: new Date(now)
+        });
+      }
     }
+
     console.log("\n✅ Done! Visit http://localhost:5000/gallery\n");
     process.exit(0);
   } catch (error) {
