@@ -1,6 +1,6 @@
 import { Users, Globe, FileText } from "lucide-react";
 import logoImage from "@/assets/six1five-logo.png";
-import logoHorizontalTransparent from "@/assets/logo-horizontal-transparent.png";
+import logoHorizontalWhiteClean from "@/assets/logo-horizontal-white-clean.png";
 
 export default function Footer() {
   return (
@@ -8,13 +8,14 @@ export default function Footer() {
       <div className="container mx-auto px-6">
         <div className="grid md:grid-cols-4 gap-8">
           <div className="md:col-span-2">
-            <div className="flex items-center mb-4">
+            <div className="flex items-start mb-4 pl-2">
               <img
-                src={logoHorizontalTransparent}
+                src={logoHorizontalWhiteClean}
                 alt="SixlFive Studio - Reality Capture Specialists"
-                className="h-12 w-auto filter drop-shadow-lg"
+                className="h-auto w-full max-w-[180px] md:max-w-[220px]"
                 style={{
-                  filter: 'drop-shadow(0 0 8px var(--logo-blue))'
+                  mixBlendMode: 'screen',
+                  filter: 'drop-shadow(0 0 4px var(--logo-blue))'
                 }}
               />
             </div>
@@ -62,10 +63,10 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-4">Services</h4>
             <ul className="space-y-2 text-gray-400">
-              <li><a href="#services" className="hover:text-white transition-colors">Drone Mapping</a></li>
-              <li><a href="#services" className="hover:text-white transition-colors">LiDAR Scanning</a></li>
-              <li><a href="#services" className="hover:text-white transition-colors">Photogrammetry</a></li>
-              <li><a href="#services" className="hover:text-white transition-colors">3D Reconstruction</a></li>
+              <li><a href="/#services" className="hover:text-white transition-colors">Drone Mapping</a></li>
+              <li><a href="/#services" className="hover:text-white transition-colors">LiDAR Scanning</a></li>
+              <li><a href="/#services" className="hover:text-white transition-colors">Photogrammetry</a></li>
+              <li><a href="/#services" className="hover:text-white transition-colors">3D Reconstruction</a></li>
             </ul>
           </div>
           <div>

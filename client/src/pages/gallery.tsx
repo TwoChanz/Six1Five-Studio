@@ -14,15 +14,23 @@ import type { PortfolioItem } from "@shared/schema";
 export default function Gallery() {
   const [viewMode, setViewMode] = useState<'grid' | 'detailed'>('grid');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   useEffect(() => {
     document.title = "3D Model Gallery - Six1Five Studio | Reality Capture Portfolio";
-    
+
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
       metaDescription.setAttribute("content", "Explore our complete collection of 3D models, photogrammetry captures, and LiDAR scans. Interactive Sketchfab viewers for AEC, construction, and heritage documentation projects.");
     }
   }, []);
+
+  // Smooth transition effect when changing filters or view mode
+  useEffect(() => {
+    setIsTransitioning(true);
+    const timer = setTimeout(() => setIsTransitioning(false), 300);
+    return () => clearTimeout(timer);
+  }, [selectedCategory, viewMode]);
 
   const { data: portfolioItems, isLoading } = useQuery({
     queryKey: ['/api/portfolio'],
@@ -138,11 +146,19 @@ export default function Gallery() {
                     onClick={() => {
                       setSelectedCategory(category);
                       analytics.galleryFilter(category);
+                      // Smooth scroll to portfolio grid for better UX
+                      const portfolioGrid = document.querySelector('.grid');
+                      if (portfolioGrid) {
+                        portfolioGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                      }
                     }}
-                    className={selectedCategory === category
-                      ? "bg-[hsl(24,95%,53%)] hover:bg-[hsl(24,95%,48%)]"
-                      : "border-gray-400 text-gray-200 hover:bg-gray-600 hover:border-gray-300"
-                    }
+                    className={`transition-all duration-300 ${
+                      selectedCategory === category
+                        ? "bg-[hsl(24,95%,53%)] hover:bg-[hsl(24,95%,48%)] shadow-lg scale-105"
+                        : "border-gray-400 text-gray-200 hover:bg-gray-600 hover:border-gray-300 hover:scale-105"
+                    }`}
+                    aria-pressed={selectedCategory === category}
+                    aria-label={`Filter by ${category} category`}
                   >
                     {category.charAt(0).toUpperCase() + category.slice(1)}
                   </Button>
@@ -155,10 +171,13 @@ export default function Gallery() {
                 variant={viewMode === 'grid' ? "default" : "outline"}
                 size="sm"
                 onClick={() => setViewMode('grid')}
-                className={viewMode === 'grid' 
-                  ? "bg-[hsl(199,89%,48%)]" 
-                  : "border-gray-400 text-gray-200 hover:bg-gray-600 hover:border-gray-300"
-                }
+                className={`transition-all duration-300 ${
+                  viewMode === 'grid'
+                    ? "bg-[hsl(199,89%,48%)] shadow-lg scale-105"
+                    : "border-gray-400 text-gray-200 hover:bg-gray-600 hover:border-gray-300 hover:scale-105"
+                }`}
+                aria-pressed={viewMode === 'grid'}
+                aria-label="Grid view - 3 columns"
               >
                 <Grid3X3 className="w-4 h-4" />
               </Button>
@@ -166,10 +185,13 @@ export default function Gallery() {
                 variant={viewMode === 'detailed' ? "default" : "outline"}
                 size="sm"
                 onClick={() => setViewMode('detailed')}
-                className={viewMode === 'detailed' 
-                  ? "bg-[hsl(199,89%,48%)]" 
-                  : "border-gray-400 text-gray-200 hover:bg-gray-600 hover:border-gray-300"
-                }
+                className={`transition-all duration-300 ${
+                  viewMode === 'detailed'
+                    ? "bg-[hsl(199,89%,48%)] shadow-lg scale-105"
+                    : "border-gray-400 text-gray-200 hover:bg-gray-600 hover:border-gray-300 hover:scale-105"
+                }`}
+                aria-pressed={viewMode === 'detailed'}
+                aria-label="Detailed view - 2 columns"
               >
                 <Grid className="w-4 h-4" />
               </Button>
@@ -178,9 +200,9 @@ export default function Gallery() {
 
           {/* Portfolio Grid */}
           {isLoading ? (
-            <div className={`grid gap-6 ${viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1 lg:grid-cols-2'}`}>
+            <div className={`grid gap-6 transition-all duration-300 ${viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1 lg:grid-cols-2'}`}>
               {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="bg-gray-800 rounded-xl p-6">
+                <div key={i} className="bg-gray-800 rounded-xl p-6 animate-pulse">
                   <Skeleton className="aspect-video mb-4 bg-gray-700" />
                   <Skeleton className="h-6 mb-2 bg-gray-700" />
                   <Skeleton className="h-4 mb-4 bg-gray-700" />
@@ -192,9 +214,15 @@ export default function Gallery() {
               ))}
             </div>
           ) : (
-            <div className={`grid gap-6 ${viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1 lg:grid-cols-2'}`}>
-              {filteredItems.map((item: PortfolioItem) => (
-                <div key={item.id} className="bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-700">
+            <div className={`grid gap-6 transition-all duration-500 ease-in-out ${viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1 lg:grid-cols-2'}`}>
+              {filteredItems.map((item: PortfolioItem, index: number) => (
+                <div
+                  key={item.id}
+                  className={`bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-700 transition-all duration-300 ${
+                    isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
+                  }`}
+                  style={{ transitionDelay: `${index * 50}ms` }}
+                >
                   {item.sketchfabModelId ? (
                     <SketchfabEmbed modelId={item.sketchfabModelId} title={item.title} />
                   ) : (
@@ -231,11 +259,19 @@ export default function Gallery() {
           )}
 
           {filteredItems.length === 0 && !isLoading && (
-            <div className="text-center py-16">
-              <p className="text-xl text-gray-400 mb-4">No models found in this category</p>
-              <Button onClick={() => setSelectedCategory('all')} className="bg-[hsl(24,95%,53%)] hover:bg-[hsl(24,95%,48%)]">
-                View All Models
-              </Button>
+            <div className="text-center py-16 animate-fade-in">
+              <div className="bg-gray-800 rounded-xl p-8 border border-gray-700 max-w-md mx-auto">
+                <p className="text-xl text-gray-300 mb-2 font-semibold">No models found</p>
+                <p className="text-gray-400 mb-6 text-sm">
+                  There are no projects in the "{selectedCategory}" category yet.
+                </p>
+                <Button
+                  onClick={() => setSelectedCategory('all')}
+                  className="bg-[hsl(24,95%,53%)] hover:bg-[hsl(24,95%,48%)] transition-all duration-300 hover:scale-105"
+                >
+                  View All Models
+                </Button>
+              </div>
             </div>
           )}
 
