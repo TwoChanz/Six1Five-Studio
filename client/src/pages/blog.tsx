@@ -103,10 +103,12 @@ export default function Blog() {
                         <Calendar className="w-4 h-4" />
                         <span>{format(new Date(featuredPost.createdAt), 'MMM dd, yyyy')}</span>
                       </div>
-                      <div className="flex items-center space-x-1">
-                        <Clock className="w-4 h-4" />
-                        <span>{readingTime(featuredPost.content)} min read</span>
-                      </div>
+                      {!featuredPost.substackEmbedCode && (
+                        <div className="flex items-center space-x-1">
+                          <Clock className="w-4 h-4" />
+                          <span>{readingTime(featuredPost.content)} min read</span>
+                        </div>
+                      )}
                     </div>
                     
                     <h2 className="text-3xl font-bold mb-4 hover:text-[hsl(24,95%,53%)] transition-colors">
@@ -159,7 +161,7 @@ export default function Blog() {
                       <div className="p-6">
                         <div className="flex items-center justify-between text-xs text-gray-400 mb-3">
                           <span>{format(new Date(post.createdAt), 'MMM dd')}</span>
-                          <span>{readingTime(post.content)} min</span>
+                          {!post.substackEmbedCode && <span>{readingTime(post.content)} min</span>}
                         </div>
                         
                         <h3 className="text-lg font-semibold mb-3 hover:text-[hsl(24,95%,53%)] transition-colors">

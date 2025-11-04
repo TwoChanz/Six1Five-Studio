@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams, Link } from "wouter";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import { SubstackEmbed } from "@/components/substack-embed";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -128,10 +129,12 @@ export default function BlogPostPage() {
                 <Calendar className="w-4 h-4" />
                 <span>{format(new Date(post.createdAt), 'MMMM dd, yyyy')}</span>
               </div>
-              <div className="flex items-center space-x-1">
-                <Clock className="w-4 h-4" />
-                <span>{readingTime(post.content)} min read</span>
-              </div>
+              {!post.substackEmbedCode && (
+                <div className="flex items-center space-x-1">
+                  <Clock className="w-4 h-4" />
+                  <span>{readingTime(post.content)} min read</span>
+                </div>
+              )}
               <Button 
                 variant="ghost" 
                 size="sm" 
@@ -165,12 +168,18 @@ export default function BlogPostPage() {
           </header>
 
           {/* Article Content */}
-          <div className="prose prose-invert prose-lg max-w-none">
-            <div 
-              className="text-gray-300 leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, '<br/>') }}
-            />
-          </div>
+          {post.substackEmbedCode ? (
+            // Render Substack embed if available
+            <SubstackEmbed embedCode={post.substackEmbedCode} />
+          ) : (
+            // Otherwise render regular content
+            <div className="prose prose-invert prose-lg max-w-none">
+              <div 
+                className="text-gray-300 leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, '<br/>') }}
+              />
+            </div>
+          )}
 
           {/* Article Footer */}
           <footer className="mt-16 pt-8 border-t border-gray-700">

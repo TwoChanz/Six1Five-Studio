@@ -8,6 +8,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Play, Layers, Building, ExternalLink, Eye, PlayCircle } from "lucide-react";
 import { getQueryFn } from "@/lib/queryClient";
 import { ModelViewer } from "./model-viewer";
+import { LumaEmbed } from "./luma-embed";
+import { PolycamEmbed } from "./polycam-embed";
 import OptimizedImage from "./optimized-image";
 import type { PortfolioItem } from "@shared/schema";
 
@@ -297,7 +299,15 @@ export default function PortfolioSection() {
                   </div>
                   
                   <div className={`relative ${isReverse ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
-                    {item.sketchfabModelId ? (
+                    {item.lumaEmbedUrl ? (
+                      <div className="bg-gray-800 rounded-xl p-4">
+                        <LumaEmbed embedUrl={item.lumaEmbedUrl} title={item.title} />
+                      </div>
+                    ) : item.polycamEmbedUrl ? (
+                      <div className="bg-gray-800 rounded-xl p-4">
+                        <PolycamEmbed embedUrl={item.polycamEmbedUrl} title={item.title} />
+                      </div>
+                    ) : item.sketchfabModelId ? (
                       <div className="bg-gray-800 rounded-xl p-4">
                         <SketchfabEmbed modelId={item.sketchfabModelId} title={item.title} />
                       </div>

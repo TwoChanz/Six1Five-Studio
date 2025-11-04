@@ -27,8 +27,9 @@ export const blogPosts = pgTable("blog_posts", {
   title: text("title").notNull(),
   slug: text("slug").notNull().unique(),
   content: text("content").notNull(),
-  excerpt: text("excerpt").notNull(),
+  excerpt: text("excerpt"),
   featuredImage: text("featured_image"),
+  substackEmbedCode: text("substack_embed_code"), // Substack embed HTML code
   tags: text("tags").array().default([]),
   published: boolean("published").default(false),
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -40,6 +41,8 @@ export const portfolioItems = pgTable("portfolio_items", {
   title: text("title").notNull(),
   description: text("description").notNull(),
   sketchfabModelId: text("sketchfab_model_id"),
+  lumaEmbedUrl: text("luma_embed_url"), // Luma AI embed URL or capture ID
+  polycamEmbedUrl: text("polycam_embed_url"), // Polycam embed URL or capture ID
   modelFile: text("model_file"), // Local 3D model file path (GLB, GLTF, OBJ)
   modelFormat: text("model_format"), // File format: 'glb', 'gltf', 'obj'
   videoFile: text("video_file"), // Video demonstration/walkthrough file path
@@ -77,6 +80,7 @@ export const insertBlogPostSchema = createInsertSchema(blogPosts).pick({
   content: true,
   excerpt: true,
   featuredImage: true,
+  substackEmbedCode: true,
   tags: true,
   published: true,
 });
@@ -85,6 +89,8 @@ export const insertPortfolioItemSchema = createInsertSchema(portfolioItems).pick
   title: true,
   description: true,
   sketchfabModelId: true,
+  lumaEmbedUrl: true,
+  polycamEmbedUrl: true,
   modelFile: true,
   modelFormat: true,
   videoFile: true,

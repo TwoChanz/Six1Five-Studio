@@ -43,8 +43,9 @@ async function initLocalDb() {
     `);
 
     // Contact submissions table
+    sqlite.exec(`DROP TABLE IF EXISTS contact_submissions;`);
     sqlite.exec(`
-      CREATE TABLE IF NOT EXISTS contact_submissions (
+      CREATE TABLE contact_submissions (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         email TEXT NOT NULL,
@@ -55,7 +56,7 @@ async function initLocalDb() {
         budget_range TEXT,
         project_details TEXT NOT NULL,
         reference_files TEXT,
-        submitted_at TEXT DEFAULT CURRENT_TIMESTAMP
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP
       );
     `);
 
@@ -85,6 +86,8 @@ async function initLocalDb() {
         title TEXT NOT NULL,
         description TEXT NOT NULL,
         sketchfab_model_id TEXT,
+        luma_embed_url TEXT,
+        polycam_embed_url TEXT,
         model_file TEXT,
         model_format TEXT,
         video_file TEXT,

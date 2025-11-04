@@ -78,7 +78,7 @@ export default function AIWorkflowShowcase() {
   };
 
   return (
-    <section className="py-20 bg-[hsl(218,11%,15%)]">
+    <section id="ai-workflow" className="py-20 bg-[hsl(218,11%,15%)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
@@ -135,6 +135,8 @@ export default function AIWorkflowShowcase() {
                       src={step.image} 
                       alt={step.title}
                       className="w-full h-64 lg:h-96 object-cover"
+                      loading="lazy"
+                      decoding="async"
                     />
                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
                       <p className="text-white text-sm font-medium">{step.caption}</p>

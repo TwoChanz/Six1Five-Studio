@@ -14,16 +14,18 @@ async function addPortfolioItem() {
   try {
     const now = new Date().toISOString();
     const newItem = {
-      title: "Sample 3D Model",
-      description: "A sample portfolio item. Replace this with your actual project details.",
-      category: "photogrammetry",
-      sketchfabModelId: null, // Add your Sketchfab model ID here (e.g., "abc123def456")
+      title: "Middle TN Clubhouse - Polycam 3D Capture",
+      description: "A detailed 3D capture of a Middle Tennessee clubhouse facility using Polycam technology. This model showcases the architectural features and site layout, demonstrating the versatility of mobile 3D scanning for real estate and construction documentation.",
+      category: "construction",
+      sketchfabModelId: null,
+      lumaEmbedUrl: null,
+      polycamEmbedUrl: "https://poly.cam/capture/f74d19f9-a7f2-4efa-aa04-129282900374",
       modelFile: null,
       modelFormat: null,
       videoFile: null,
       videoFormat: null,
-      tools: ["DJI Mavic 3", "RealityCapture", "Metashape"],
-      services: ["Aerial Mapping", "3D Modeling"],
+      tools: ["Polycam", "Mobile Photogrammetry"],
+      services: ["3D Site Documentation", "Real Estate Capture", "Construction Monitoring"],
       featuredImage: null,
       images: [],
       published: true,
@@ -38,6 +40,7 @@ async function addPortfolioItem() {
       result = await db.run(sql`
         INSERT INTO portfolio_items (
           title, description, category, sketchfab_model_id,
+          luma_embed_url, polycam_embed_url,
           model_file, model_format, video_file, video_format,
           tools, services, featured_image, images,
           published, featured, created_at
@@ -46,6 +49,8 @@ async function addPortfolioItem() {
           ${newItem.description},
           ${newItem.category},
           ${newItem.sketchfabModelId},
+          ${newItem.lumaEmbedUrl},
+          ${newItem.polycamEmbedUrl},
           ${newItem.modelFile},
           ${newItem.modelFormat},
           ${newItem.videoFile},

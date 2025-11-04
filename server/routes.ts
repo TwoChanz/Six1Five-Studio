@@ -8,6 +8,9 @@ import multer from "multer";
 import path from "path";
 import { fileURLToPath } from "url";
 import fs from "fs/promises";
+import { generateContactFormEmail, generateContactFormPlainText } from "./email-templates";
+import { verifyAdminPassword, generateToken, requireAuth } from "./auth";
+import rateLimit from "express-rate-limit";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,32 +21,30 @@ if (process.env.SENDGRID_API_KEY) {
 }
 
 // Configure multer for file uploads
+const uploadDir = path.join(__dirname, 'uploads', 'contact-submissions');
+
 const storage_multer = multer.diskStorage({
   destination: async (req, file, cb) => {
-    const uploadDir = path.join(__dirname, 'uploads', 'contact-submissions');
-    try {
-      await fs.mkdir(uploadDir, { recursive: true });
-      cb(null, uploadDir);
-    } catch (error) {
-      cb(error as Error, uploadDir);
-    }
+    // Ensure upload directory exists
+    await fs.mkdir(uploadDir, { recursive: true }).catch(() => {});
+    cb(null, uploadDir);
   },
   filename: (req, file, cb) => {
-    // Generate unique filename: timestamp-originalname
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    const ext = path.extname(file.originalname);
-    const basename = path.basename(file.originalname, ext);
-    cb(null, `${basename}-${uniqueSuffix}${ext}`);
+    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
   }
 });
 
-// File filter for security
-const fileFilter = (req: any, file: any, cb: any) => {
-  const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'application/pdf', 'text/plain'];
-  if (allowedTypes.includes(file.mimetype)) {
+const fileFilter = (req: any, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
+  const allowedMimes = [
+    'image/jpeg', 'image/png', 'image/gif', 'image/webp',
+    'application/pdf', 'text/plain'
+  ];
+  
+  if (allowedMimes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    cb(new Error(`Invalid file type: ${file.mimetype}. Only images, PDFs, and text files are allowed.`), false);
+    cb(new Error(`Invalid file type: ${file.mimetype}. Only images, PDFs, and text files are allowed.`) as any, false);
   }
 };
 
@@ -56,7 +57,87 @@ const upload = multer({
   fileFilter
 });
 
+// Rate limiter for login attempts
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // 5 attempts per window
+  message: 'Too many login attempts, please try again after 15 minutes',
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// General rate limiter for admin endpoints
+const adminLimiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 100, // 100 requests per minute
+  message: 'Too many requests, please slow down',
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Admin authentication endpoints
+  app.post("/api/admin/login", loginLimiter, async (req, res) => {
+    try {
+      const { password } = req.body;
+      
+      if (!password) {
+        return res.status(400).json({ 
+          error: 'Bad Request',
+          message: 'Password is required' 
+        });
+      }
+
+      const isValid = await verifyAdminPassword(password);
+      
+      if (!isValid) {
+        return res.status(401).json({ 
+          error: 'Unauthorized',
+          message: 'Invalid password' 
+        });
+      }
+
+      // Generate JWT token
+      const token = generateToken();
+      
+      res.json({ 
+        success: true,
+        token,
+        expiresIn: '8h',
+      });
+    } catch (error) {
+      console.error('Login error:', error);
+      res.status(500).json({ 
+        error: 'Internal Server Error',
+        message: 'An error occurred during login' 
+      });
+    }
+  });
+
+  app.post("/api/admin/logout", (req, res) => {
+    // With JWT, logout is handled client-side by removing the token
+    // Could implement token blacklist if needed
+    res.json({ success: true });
+  });
+
+  app.get("/api/admin/verify", requireAuth, (req, res) => {
+    // If middleware passes, token is valid
+    res.json({ valid: true, user: (req as any).user });
+  });
+
+  // Substack RSS feed proxy
+  app.get("/api/substack/feed", async (req, res) => {
+    try {
+      const response = await fetch('https://digitalblueprint.substack.com/feed');
+      const xml = await response.text();
+      res.setHeader('Content-Type', 'application/xml');
+      res.send(xml);
+    } catch (error) {
+      console.error('Failed to fetch Substack feed:', error);
+      res.status(500).json({ error: 'Failed to fetch Substack feed' });
+    }
+  });
+
   // Serve uploaded files statically (protected route - consider adding auth later)
   app.use('/uploads', (req, res, next) => {
     // Simple security: only allow access to contact-submissions
@@ -91,29 +172,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Send email notification if SendGrid is configured
       if (process.env.SENDGRID_API_KEY && process.env.SENDGRID_FROM_EMAIL) {
         try {
-          const emailContent = `
-            <h2>New Contact Form Submission - Six1Five Studio</h2>
-            <p><strong>Name:</strong> ${validatedData.name}</p>
-            <p><strong>Email:</strong> ${validatedData.email}</p>
-            <p><strong>Project Type:</strong> ${validatedData.projectType}</p>
-            <p><strong>Location:</strong> ${validatedData.location}</p>
-            <p><strong>Services Requested:</strong> ${validatedData.services.join(', ')}</p>
-            ${validatedData.timeline ? `<p><strong>Timeline:</strong> ${validatedData.timeline}</p>` : ''}
-            ${validatedData.budgetRange ? `<p><strong>Budget Range:</strong> ${validatedData.budgetRange}</p>` : ''}
-            <p><strong>Project Details:</strong></p>
-            <p>${validatedData.projectDetails}</p>
-            ${validatedData.referenceFiles && validatedData.referenceFiles.length > 0 ? `<p><strong>Reference Files:</strong> ${validatedData.referenceFiles.length} file(s) attached</p><ul>${validatedData.referenceFiles.map(f => `<li>${f}</li>`).join('')}</ul>` : ''}
-          `;
+          const htmlEmail = generateContactFormEmail(validatedData);
+          const plainTextEmail = generateContactFormPlainText(validatedData);
 
           const msg = {
             to: process.env.SENDGRID_TO_EMAIL || process.env.SENDGRID_FROM_EMAIL,
             from: process.env.SENDGRID_FROM_EMAIL,
-            subject: `New Project Inquiry: ${validatedData.projectType} - ${validatedData.name}`,
-            html: emailContent,
+            subject: `🚁 New Project Inquiry: ${validatedData.projectType} - ${validatedData.name}`,
+            html: htmlEmail,
+            text: plainTextEmail,
           };
 
           await sgMail.send(msg);
-          console.log('Email sent successfully to', msg.to);
+          console.log('✅ Email sent successfully to', msg.to);
         } catch (emailError) {
           console.error('Failed to send email:', emailError);
           // Don't fail the request if email fails
@@ -125,10 +196,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ success: true, submission });
     } catch (error) {
       if (error instanceof z.ZodError) {
+        console.error('❌ Validation error:', error.errors);
         res.status(400).json({ message: "Invalid form data", errors: error.errors });
       } else {
-        console.error('Contact form error:', error);
-        res.status(500).json({ message: "Internal server error" });
+        console.error('❌ Contact form error:', error);
+        console.error('Error details:', error instanceof Error ? error.message : String(error));
+        console.error('Stack trace:', error instanceof Error ? error.stack : 'N/A');
+        res.status(500).json({ 
+          message: "Internal server error",
+          error: error instanceof Error ? error.message : String(error)
+        });
       }
     }
   });
@@ -158,9 +235,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { slug } = req.params;
       const post = await storage.getBlogPostBySlug(slug);
+      
       if (!post) {
-        return res.status(404).json({ error: "Post not found" });
+        return res.status(404).json({ error: "Blog post not found" });
       }
+      
       res.json(post);
     } catch (error) {
       console.error("Blog post fetch error:", error);
@@ -170,12 +249,51 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/blog", async (req, res) => {
     try {
-      const post = insertBlogPostSchema.parse(req.body);
-      const result = await storage.createBlogPost(post);
-      res.json(result);
+      const validatedData = insertBlogPostSchema.parse(req.body);
+      const post = await storage.createBlogPost(validatedData);
+      res.json(post);
     } catch (error) {
       console.error("Blog post creation error:", error);
       res.status(400).json({ error: "Invalid blog post data" });
+    }
+  });
+
+  // Admin: Get all blog posts (including unpublished)
+  app.get("/api/admin/blog", adminLimiter, requireAuth, async (req, res) => {
+    try {
+      const posts = await storage.getBlogPosts();
+      res.json(posts);
+    } catch (error) {
+      console.error("Blog posts fetch error:", error);
+      res.status(500).json({ error: "Failed to fetch blog posts" });
+    }
+  });
+
+  // Admin: Update blog post
+  app.put("/api/admin/blog/:id", adminLimiter, requireAuth, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const updates = req.body;
+      const result = await storage.updateBlogPost(parseInt(id), updates);
+      if (!result) {
+        return res.status(404).json({ error: "Blog post not found" });
+      }
+      res.json(result);
+    } catch (error) {
+      console.error("Blog post update error:", error);
+      res.status(400).json({ error: "Failed to update blog post" });
+    }
+  });
+
+  // Admin: Delete blog post
+  app.delete("/api/admin/blog/:id", adminLimiter, requireAuth, async (req, res) => {
+    try {
+      const { id } = req.params;
+      await storage.deleteBlogPost(parseInt(id));
+      res.json({ success: true, message: "Blog post deleted" });
+    } catch (error) {
+      console.error("Blog post deletion error:", error);
+      res.status(500).json({ error: "Failed to delete blog post" });
     }
   });
 
@@ -204,9 +322,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { id } = req.params;
       const item = await storage.getPortfolioItemById(parseInt(id));
+      
       if (!item) {
         return res.status(404).json({ error: "Portfolio item not found" });
       }
+      
       res.json(item);
     } catch (error) {
       console.error("Portfolio item fetch error:", error);
@@ -216,12 +336,52 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/portfolio", async (req, res) => {
     try {
-      const item = insertPortfolioItemSchema.parse(req.body);
-      const result = await storage.createPortfolioItem(item);
-      res.json(result);
+      const validatedData = insertPortfolioItemSchema.parse(req.body);
+      const item = await storage.createPortfolioItem(validatedData);
+      res.json(item);
     } catch (error) {
       console.error("Portfolio item creation error:", error);
       res.status(400).json({ error: "Invalid portfolio item data" });
+    }
+  });
+
+  // Admin: Update portfolio item
+  app.put("/api/admin/portfolio/:id", adminLimiter, requireAuth, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const updates = req.body;
+      const result = await storage.updatePortfolioItem(parseInt(id), updates);
+      if (!result) {
+        return res.status(404).json({ error: "Portfolio item not found" });
+      }
+      res.json(result);
+    } catch (error) {
+      console.error("Portfolio item update error:", error);
+      res.status(400).json({ error: "Failed to update portfolio item" });
+    }
+  });
+
+  // Admin: Delete portfolio item
+  app.delete("/api/admin/portfolio/:id", adminLimiter, requireAuth, async (req, res) => {
+    try {
+      const { id } = req.params;
+      await storage.deletePortfolioItem(parseInt(id));
+      res.json({ success: true, message: "Portfolio item deleted" });
+    } catch (error) {
+      console.error("Portfolio item deletion error:", error);
+      res.status(500).json({ error: "Failed to delete portfolio item" });
+    }
+  });
+
+  // Admin: Delete contact submission
+  app.delete("/api/admin/contact/:id", adminLimiter, requireAuth, async (req, res) => {
+    try {
+      const { id } = req.params;
+      await storage.deleteContactSubmission(parseInt(id));
+      res.json({ success: true, message: "Contact submission deleted" });
+    } catch (error) {
+      console.error("Contact submission deletion error:", error);
+      res.status(500).json({ error: "Failed to delete contact submission" });
     }
   });
 

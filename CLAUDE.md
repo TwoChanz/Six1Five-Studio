@@ -19,11 +19,20 @@ npm run check        # Run TypeScript type checking
 ### Database
 ```bash
 npm run db:push      # Push Drizzle schema changes to database (PostgreSQL or SQLite)
-tsx scripts/init-local-db.ts        # Initialize SQLite database with schema
-tsx scripts/seed-simple.ts          # Seed SQLite with minimal sample data
-tsx scripts/seed-sample-portfolio.ts # Seed SQLite with full sample portfolio
-tsx scripts/add-portfolio-item.ts   # Add a single portfolio item to database
+tsx scripts/init-local-db.ts           # Initialize SQLite database with schema
+tsx scripts/seed-simple.ts             # Seed SQLite with minimal sample data
+tsx scripts/seed-sample-portfolio.ts   # Seed SQLite with full sample portfolio
+tsx scripts/add-portfolio-item.ts      # Add a single portfolio item to database
+tsx scripts/list-portfolio-items.ts    # List all portfolio items in database
+tsx scripts/delete-portfolio-item.ts   # Delete a portfolio item by ID
+tsx scripts/add-multiple-models.ts     # Bulk add multiple portfolio items
 ```
+
+### Admin Dashboard
+- **URL**: `/admin`
+- **Default Password**: `admin615` (change via `VITE_ADMIN_PASSWORD` env var)
+- **Features**: Contact submissions, blog management (publish/unpublish/delete), portfolio management (featured/publish/delete)
+- **Documentation**: See `ADMIN.md` for full guide
 
 ### Environment Variables
 
@@ -66,7 +75,7 @@ Without GA configured, analytics tracking will be skipped. Analytics tracks:
 - **State Management**: TanStack Query (React Query)
 - **Forms**: React Hook Form + Zod validation
 - **UI Components**: Shadcn/ui (Radix UI primitives)
-- **3D Rendering**: Three.js + three-stdlib for local model viewing
+- **3D Rendering**: Sketchfab embeds, Luma AI NeRF embeds, Polycam embeds, + Three.js + three-stdlib for local model viewing
 
 ### Project Structure
 
@@ -104,7 +113,9 @@ scripts/
 - `contact_submissions` - Contact form data with services array, project details, timeline, budget
 - `blog_posts` - Blog content with slug, tags, publish status
 - `portfolio_items` - Portfolio projects with:
-  - Sketchfab model IDs for embedded 3D viewers
+  - **Sketchfab** model IDs for embedded 3D viewers
+  - **Luma AI** embed URLs (NeRF/Gaussian Splatting captures)
+  - **Polycam** embed URLs (photogrammetry models)
   - Local model files (GLB/GLTF/OBJ)
   - Video walkthroughs (MP4/WebM/MOV)
   - Category, tools, services arrays
@@ -136,7 +147,7 @@ scripts/
    - Client → `dist/public` (Vite)
    - Server → `dist/index.js` (esbuild with ES module format)
 3. **Environment**: Uses `NODE_ENV` for dev/production modes
-4. **3D Viewers**: Integrated Sketchfab embeds and local Three.js model viewers
+4. **3D Viewers**: Integrated Sketchfab, Luma AI, and Polycam embeds + local Three.js model viewers with lazy loading
 5. **Design System**: Dark tech-industrial theme with custom Tailwind config
 
 ### File Upload System
@@ -149,14 +160,60 @@ scripts/
 - File paths stored in database (not base64)
 - **Important**: `server/uploads/` is gitignored except for `.gitkeep`
 
+### 3D Viewer Components
+
+The portfolio supports **four types of 3D model display**:
+
+1. **Sketchfab Embeds** (`sketchfabModelId`)
+   - Industry-standard 3D model hosting
+   - Interactive WebGL viewer with annotations
+   - Lazy loading via Intersection Observer
+
+2. **Luma AI Embeds** (`lumaEmbedUrl`)
+   - NeRF and Gaussian Splatting captures
+   - Component: `client/src/components/luma-embed.tsx`
+   - Supports capture IDs or full embed URLs
+   - Lazy loading with IntersectionObserver (100px rootMargin)
+
+3. **Polycam Embeds** (`polycamEmbedUrl`)
+   - Photogrammetry models
+   - Component: `client/src/components/polycam-embed.tsx`
+   - Link-out to poly.cam viewer (no iframe embedding)
+   - Lazy loading placeholder with CTA button
+
+4. **Local Three.js Viewer** (`modelFile` + `modelFormat`)
+   - Self-hosted GLB/GLTF/OBJ models
+   - Custom Three.js viewer with OrbitControls
+   - No external dependencies
+
+**Performance**: All embeds use Intersection Observer for lazy loading to prevent loading heavy 3D viewers until they're near the viewport.
+
 ### Critical Files
 
-- `server/routes.ts` - All API endpoint definitions + multer file upload configuration
+- `server/routes.ts` - All API endpoint definitions + multer file upload configuration + admin endpoints
+- `server/email-templates.ts` - Professional HTML email templates for contact form
 - `shared/schema.ts` - Database schema and validation (source of truth for data structure)
-- `server/storage.ts` - Database query abstraction layer
+- `server/storage.ts` - Database query abstraction layer with CRUD operations
 - `client/src/App.tsx` - Client routing and lazy loading setup
-- `vite.config.ts` - Build configuration and path aliases
+- `client/src/pages/admin.tsx` - Admin dashboard UI (password-protected)
+- `client/src/data/services.json` - Editable services content (no-code)
+- `client/src/data/faq.json` - Editable FAQ content (no-code)
+- `vite.config.ts` - Build configuration, path aliases, and code splitting
 - `server/uploads/` - User-uploaded files (gitignored)
+
+### Content Management
+
+**Services & FAQ (No-Code Editing)**
+- Services data: `client/src/data/services.json`
+- FAQ data: `client/src/data/faq.json`
+- Marketing team can edit content without touching React components
+- Icon names mapped in components (Plane, Camera, etc.)
+
+**Admin Dashboard (Code-Based)**
+- Blog posts: Toggle publish/unpublish, delete
+- Portfolio: Toggle published/featured, delete
+- Contacts: View submissions, delete after processing
+- Future: Rich text editor, image uploads, inline editing
 
 ### User Preferences
 
@@ -203,8 +260,8 @@ scripts/
 
 - **Theme**: Dark tech-industrial aesthetic (concrete gray, drone orange, sky blue, tech green)
 - **Mobile-First**: Responsive design with progressive enhancement
-- **Performance**: Lazy loading for non-critical pages, React Query caching, Intersection Observer for Sketchfab iframes
-- **3D Integration**: Sketchfab embeds + Three.js custom viewers for portfolio models
+- **Performance**: Lazy loading for non-critical pages, React Query caching, Intersection Observer for all 3D embeds (Sketchfab, Luma AI, Polycam)
+- **3D Integration**: Sketchfab, Luma AI NeRF, Polycam embeds + Three.js custom viewers for portfolio models
 - **Accessibility**:
   - WCAG AA compliant text colors (`.text-contrast-low`, `.text-contrast-medium`, `.text-contrast-high`)
   - Visible focus states for keyboard navigation

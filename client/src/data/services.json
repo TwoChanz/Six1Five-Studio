@@ -1,0 +1,87 @@
+{
+  "sectionTitle": "Capture Workflows",
+  "ctaTitle": "Ready to capture your project?",
+  "ctaDescription": "Get a custom quote based on your specific requirements and timeline.",
+  "ctaButtonText": "Get Free Quote →",
+  "services": [
+    {
+      "icon": "CameraIcon",
+      "title": "Photogrammetry",
+      "subtitle": "Transform photos into precise 3D models with millimeter accuracy",
+      "color": "drone-orange",
+      "backContent": "Precise 3D models from aerial photography with sub-centimeter accuracy",
+      "workflow": [
+        "Sub-millimeter accuracy levels",
+        "Texture-mapped 3D models",
+        "Multiple export formats",
+        "Construction documentation"
+      ]
+    },
+    {
+      "icon": "Crosshair",
+      "title": "LiDAR Scanning",
+      "subtitle": "High-resolution point cloud data for detailed site analysis",
+      "color": "sky-blue",
+      "backContent": "Millimeter-precise point clouds for engineering-grade documentation",
+      "workflow": [
+        "FARO & Leica scanner compatibility",
+        "Cloud-to-mesh processing",
+        "Revit & AutoCAD integration",
+        "As-built documentation"
+      ]
+    },
+    {
+      "icon": "Building",
+      "title": "3D Reconstruction",
+      "subtitle": "Convert reality capture data into actionable 3D models",
+      "color": "tech-green",
+      "backContent": "Professional 3D assets ready for CAD, VR, and visualization workflows",
+      "workflow": [
+        "Reality capture data processing",
+        "CAD-ready mesh generation",
+        "Design workflow integration",
+        "Planning optimization"
+      ]
+    },
+    {
+      "icon": "Bot",
+      "title": "Automated Mapping",
+      "subtitle": "Automated drone missions for large-scale site mapping",
+      "color": "drone-orange",
+      "backContent": "Autonomous aerial mapping with repeatable flight paths and progress tracking",
+      "workflow": [
+        "Flight planning & automated execution",
+        "Large-scale site mapping",
+        "Real-time progress monitoring",
+        "Weather-optimized scheduling"
+      ]
+    },
+    {
+      "icon": "Home",
+      "title": "Virtual Tours",
+      "subtitle": "Interactive 3D experiences for real estate marketing",
+      "color": "sky-blue",
+      "backContent": "Immersive 360° experiences with interactive hotspots and measurements",
+      "workflow": [
+        "360° immersive experiences",
+        "Interactive hotspot integration",
+        "Real estate marketing tools",
+        "Facility management solutions"
+      ]
+    },
+    {
+      "icon": "Plane",
+      "title": "Scan-to-BIM",
+      "subtitle": "Convert point clouds to Building Information Models",
+      "color": "tech-green",
+      "backContent": "LOD 300+ BIM models from laser scan data for renovation projects",
+      "workflow": [
+        "Point cloud to BIM conversion",
+        "LOD 300+ model accuracy",
+        "Renovation project support",
+        "Retrofit documentation"
+      ]
+    }
+  ]
+}
+

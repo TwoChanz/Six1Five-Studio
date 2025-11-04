@@ -36,6 +36,37 @@ export default defineConfig({
     // IMPORTANT: Vercel expects "dist". This is the fix.
     outDir: path.resolve(import.meta.dirname, "dist"),
     emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Core React libraries
+          'react-vendor': ['react', 'react-dom', 'react/jsx-runtime'],
+          
+          // Routing and state management
+          'app-core': ['wouter', '@tanstack/react-query', 'react-hook-form', 'zod'],
+          
+          // UI component library (Radix UI)
+          'ui-components': [
+            '@radix-ui/react-dialog',
+            '@radix-ui/react-dropdown-menu',
+            '@radix-ui/react-accordion',
+            '@radix-ui/react-tabs',
+            '@radix-ui/react-select',
+            '@radix-ui/react-toast',
+            '@radix-ui/react-label',
+            '@radix-ui/react-slot',
+            '@radix-ui/react-separator'
+          ],
+          
+          // 3D rendering libraries
+          'three-vendor': ['three', 'three-stdlib'],
+          
+          // Icons and animations
+          'visual-libs': ['lucide-react', 'framer-motion'],
+        },
+      },
+    },
+    chunkSizeWarningLimit: 600, // Increase from default 500KB
   },
 
   server: {
