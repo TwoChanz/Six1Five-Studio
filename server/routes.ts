@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertContactSubmissionSchema, insertBlogPostSchema, insertPortfolioItemSchema, insertReviewSchema } from "@shared/schema";
 import { z } from "zod";
-import sgMail from "@sendgrid/mail";
+import { Resend } from "resend";
 import multer from "multer";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -15,10 +15,8 @@ import rateLimit from "express-rate-limit";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Initialize SendGrid if API key is available
-if (process.env.SENDGRID_API_KEY) {
-  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-}
+// Initialize Resend if API key is available
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 // Configure multer for file uploads
 const uploadDir = path.join(__dirname, 'uploads', 'contact-submissions');
@@ -183,28 +181,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const validatedData = insertContactSubmissionSchema.parse(formData);
       const submission = await storage.createContactSubmission(validatedData);
 
-      // Send email notification if SendGrid is configured
-      if (process.env.SENDGRID_API_KEY && process.env.SENDGRID_FROM_EMAIL) {
+      // Send email notification if Resend is configured
+      if (resend && process.env.RESEND_FROM_EMAIL) {
         try {
           const htmlEmail = generateContactFormEmail(validatedData);
           const plainTextEmail = generateContactFormPlainText(validatedData);
 
-          const msg = {
-            to: process.env.SENDGRID_TO_EMAIL || process.env.SENDGRID_FROM_EMAIL,
-            from: process.env.SENDGRID_FROM_EMAIL,
+          const { data, error } = await resend.emails.send({
+            from: process.env.RESEND_FROM_EMAIL,
+            to: process.env.RESEND_TO_EMAIL || process.env.RESEND_FROM_EMAIL,
             subject: `🚁 New Project Inquiry: ${validatedData.projectType} - ${validatedData.name}`,
             html: htmlEmail,
             text: plainTextEmail,
-          };
+          });
 
-          await sgMail.send(msg);
-          console.log('✅ Email sent successfully to', msg.to);
+          if (error) {
+            console.error('Failed to send email:', error);
+          } else {
+            console.log('✅ Email sent successfully via Resend. ID:', data?.id);
+          }
         } catch (emailError) {
           console.error('Failed to send email:', emailError);
           // Don't fail the request if email fails
         }
       } else {
-        console.warn('SendGrid not configured. Email notification skipped. Set SENDGRID_API_KEY and SENDGRID_FROM_EMAIL environment variables.');
+        console.warn('Resend not configured. Email notification skipped. Set RESEND_API_KEY and RESEND_FROM_EMAIL environment variables.');
       }
 
       res.json({ success: true, submission });
