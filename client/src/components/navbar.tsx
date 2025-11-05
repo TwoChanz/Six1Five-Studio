@@ -1,9 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, X, Shield } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import logoImage from "@/assets/six1five-logo.png";
-import logoHorizontal from "@/assets/logo-matrix-style.webp";
+import ThemeToggle from "@/components/theme-toggle";
 import logoMobile from "@/assets/logo-matrix-style-mobile.webp";
 import logoTablet from "@/assets/logo-matrix-style-tablet.webp";
 import logoDesktop from "@/assets/logo-matrix-style-desktop.webp";
@@ -11,20 +10,6 @@ import logoDesktop from "@/assets/logo-matrix-style-desktop.webp";
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [location] = useLocation();
-  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
-
-  // Check admin auth status
-  useEffect(() => {
-    const checkAuth = () => {
-      const token = localStorage.getItem('adminToken');
-      setIsAdminAuthenticated(!!token);
-    };
-    
-    checkAuth();
-    // Check on storage changes (e.g., login/logout in another tab)
-    window.addEventListener('storage', checkAuth);
-    return () => window.removeEventListener('storage', checkAuth);
-  }, []);
 
   const scrollToSection = (sectionId: string) => {
     if (location !== "/") {
@@ -51,7 +36,7 @@ export default function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-[hsl(218,11%,15%)]/95 backdrop-blur-sm border-b border-[hsl(220,9%,46%)]/20">
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-20 sm:h-24 md:h-28">
-          <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
+          <Link href="/" className="flex items-center hover:opacity-90 transition-opacity">
             <picture>
               <source media="(min-width: 1024px)" srcSet={logoDesktop} />
               <source media="(min-width: 640px)" srcSet={logoTablet} />
@@ -59,6 +44,9 @@ export default function Navbar() {
                 src={logoMobile}
                 alt="Six1Five Studio - Reality Capture Specialists"
                 className="h-16 sm:h-18 md:h-20 max-h-20 w-auto transition-transform hover:scale-105 rounded-lg shadow-lg"
+                style={{
+                  filter: 'brightness(1.15) drop-shadow(0 0 6px var(--logo-blue))'
+                }}
                 loading="eager"
               />
             </picture>
@@ -67,13 +55,13 @@ export default function Navbar() {
           <div className="hidden md:flex items-center space-x-8">
             <button
               onClick={() => scrollToSection("home")}
-              className="relative hover:text-[var(--primary-blue)] transition-colors"
+              className={`relative hover:text-[var(--primary-blue)] transition-colors ${location === "/" ? "text-[var(--primary-blue)] after:absolute after:bottom-[-4px] after:left-0 after:right-0 after:h-0.5 after:bg-[var(--primary-blue)] after:rounded-full" : ""}`}
               aria-label="Navigate to home section"
             >
               Home
             </button>
-            <Link href="/gallery" className="relative hover:text-[var(--primary-blue)] transition-colors">
-              Gallery
+            <Link href="/gallery" className={`relative hover:text-[var(--primary-blue)] transition-colors ${location === "/gallery" ? "text-[var(--primary-blue)] after:absolute after:bottom-[-4px] after:left-0 after:right-0 after:h-0.5 after:bg-[var(--primary-blue)] after:rounded-full" : ""}`}>
+              Portfolio
             </Link>
             <button
               onClick={() => scrollToSection("services")}
@@ -82,32 +70,18 @@ export default function Navbar() {
             >
               Services
             </button>
-            <Link href="/pricing" className="relative hover:text-[var(--primary-blue)] transition-colors">
+            <Link href="/pricing" className={`relative hover:text-[var(--primary-blue)] transition-colors ${location === "/pricing" ? "text-[var(--primary-blue)] after:absolute after:bottom-[-4px] after:left-0 after:right-0 after:h-0.5 after:bg-[var(--primary-blue)] after:rounded-full" : ""}`}>
               Pricing
             </Link>
-            <button
-              onClick={() => scrollToSection("about")}
-              className="relative hover:text-[var(--primary-blue)] transition-colors"
-              aria-label="Navigate to portfolio section"
-            >
-              Portfolio
-            </button>
-            <Link href="/insights" className="relative hover:text-[hsl(199,89%,48%)] transition-colors">
+            <Link href="/resources" className={`relative hover:text-[hsl(158,64%,52%)] transition-colors ${location === "/resources" ? "text-[hsl(158,64%,52%)] after:absolute after:bottom-[-4px] after:left-0 after:right-0 after:h-0.5 after:bg-[hsl(158,64%,52%)] after:rounded-full" : ""}`}>
+              Resources
+            </Link>
+            <Link href="/insights" className={`relative hover:text-[hsl(199,89%,48%)] transition-colors ${location === "/insights" || location.startsWith("/blog") ? "text-[hsl(199,89%,48%)] after:absolute after:bottom-[-4px] after:left-0 after:right-0 after:h-0.5 after:bg-[hsl(199,89%,48%)] after:rounded-full" : ""}`}>
               Insights
             </Link>
-            <Link href="/faq" className="relative hover:text-[hsl(24,95%,53%)] transition-colors">
+            <Link href="/faq" className={`relative hover:text-[hsl(24,95%,53%)] transition-colors ${location === "/faq" ? "text-[hsl(24,95%,53%)] after:absolute after:bottom-[-4px] after:left-0 after:right-0 after:h-0.5 after:bg-[hsl(24,95%,53%)] after:rounded-full" : ""}`}>
               FAQ
             </Link>
-            {isAdminAuthenticated && (
-              <Link 
-                href="/admin" 
-                className="relative hover:text-[hsl(24,95%,53%)] transition-colors flex items-center gap-1"
-                title="Admin Dashboard"
-              >
-                <Shield className="w-4 h-4" />
-                Admin
-              </Link>
-            )}
             <button
               onClick={() => scrollToSection("contact")}
               className="relative hover:text-[var(--primary-blue)] transition-colors"
@@ -115,6 +89,9 @@ export default function Navbar() {
             >
               Contact
             </button>
+            <div className="pr-3">
+              <ThemeToggle />
+            </div>
             <Button
               onClick={() => scrollToSection("contact")}
               className="bg-[var(--primary-blue)] hover:bg-[var(--navy-blue)] text-white px-4 py-2 rounded-lg transition-colors"
@@ -145,12 +122,12 @@ export default function Navbar() {
               >
                 Home
               </button>
-              <Link 
-                href="/gallery" 
+              <Link
+                href="/gallery"
                 className="text-left hover:text-[var(--primary-blue)] transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Gallery
+                Portfolio
               </Link>
               <button
                 onClick={() => scrollToSection("services")}
@@ -166,37 +143,27 @@ export default function Navbar() {
               >
                 Pricing
               </Link>
-              <button
-                onClick={() => scrollToSection("about")}
-                className="text-left hover:text-[var(--primary-blue)] transition-colors"
-                aria-label="Navigate to portfolio section"
+              <Link
+                href="/resources"
+                className="text-left hover:text-[hsl(158,64%,52%)] transition-colors"
+                onClick={() => setIsMenuOpen(false)}
               >
-                Portfolio
-              </button>
-              <Link 
-                href="/insights" 
+                Resources
+              </Link>
+              <Link
+                href="/insights"
                 className="text-left hover:text-[hsl(199,89%,48%)] transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Insights
               </Link>
-              <Link 
+              <Link
                 href="/faq"
                 className="text-left hover:text-[var(--primary-blue)] transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
                 FAQ
               </Link>
-              {isAdminAuthenticated && (
-                <Link 
-                  href="/admin"
-                  className="text-left hover:text-[hsl(24,95%,53%)] transition-colors flex items-center gap-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <Shield className="w-4 h-4" />
-                  Admin Dashboard
-                </Link>
-              )}
               <button
                 onClick={() => scrollToSection("contact")}
                 className="text-left hover:text-[var(--primary-blue)] transition-colors"
@@ -204,6 +171,10 @@ export default function Navbar() {
               >
                 Contact
               </button>
+              <div className="flex items-center gap-3 pt-3">
+                <span className="text-sm text-gray-400">Theme:</span>
+                <ThemeToggle />
+              </div>
               <button
                 onClick={() => scrollToSection("contact")}
                 className="bg-[var(--primary-blue)] hover:bg-[var(--navy-blue)] text-white px-4 py-2 rounded-lg transition-colors w-full text-center mt-4"

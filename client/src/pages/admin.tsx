@@ -9,17 +9,19 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { 
-  Trash2, 
-  Edit, 
-  Eye, 
-  EyeOff, 
-  Mail, 
-  FileText, 
-  Folder, 
+import {
+  Trash2,
+  Edit,
+  Eye,
+  EyeOff,
+  Mail,
+  FileText,
+  Folder,
   Lock,
   LogOut,
-  PlusCircle
+  PlusCircle,
+  Star,
+  MessageSquare
 } from "lucide-react";
 
 type BlogPost = {
@@ -55,6 +57,20 @@ type ContactSubmission = {
   budgetRange?: string | null;
   projectDetails: string;
   referenceFiles?: string[];
+  createdAt: string;
+};
+
+type Review = {
+  id: number;
+  name: string;
+  email?: string | null;
+  company?: string | null;
+  role?: string | null;
+  rating: number;
+  reviewText: string;
+  projectType: string;
+  approved: boolean;
+  featured: boolean;
   createdAt: string;
 };
 
@@ -265,6 +281,10 @@ export default function Admin() {
               <Mail className="w-4 h-4 mr-2" />
               Contact Submissions
             </TabsTrigger>
+            <TabsTrigger value="reviews" className="data-[state=active]:bg-[hsl(24,95%,53%)]">
+              <MessageSquare className="w-4 h-4 mr-2" />
+              Reviews
+            </TabsTrigger>
             <TabsTrigger value="blog" className="data-[state=active]:bg-[hsl(24,95%,53%)]">
               <FileText className="w-4 h-4 mr-2" />
               Blog Posts
@@ -278,6 +298,11 @@ export default function Admin() {
           {/* Contact Submissions Tab */}
           <TabsContent value="contacts">
             <ContactsManager />
+          </TabsContent>
+
+          {/* Reviews Tab */}
+          <TabsContent value="reviews">
+            <ReviewsManager />
           </TabsContent>
 
           {/* Blog Posts Tab */}
@@ -331,6 +356,18 @@ function ContactsManager() {
         <h2 className="text-2xl font-bold">Contact Submissions</h2>
         <Badge variant="secondary">{contacts?.length || 0} total</Badge>
       </div>
+
+      {(!contacts || contacts.length === 0) && (
+        <Card className="bg-gray-800 border-gray-700">
+          <CardContent className="flex flex-col items-center justify-center py-16 text-center">
+            <Mail className="w-16 h-16 text-gray-600 mb-4" />
+            <h3 className="text-xl font-semibold text-white mb-2">No contact submissions yet</h3>
+            <p className="text-gray-400 max-w-md">
+              When potential clients submit the contact form on your website, their inquiries will appear here for you to review and respond to.
+            </p>
+          </CardContent>
+        </Card>
+      )}
 
       {contacts?.map((contact) => (
         <Card key={contact.id} className="bg-gray-800 border-gray-700">
@@ -434,6 +471,15 @@ function BlogManager() {
 
   const { data: posts, isLoading } = useQuery<BlogPost[]>({
     queryKey: ["/api/admin/blog"],
+    queryFn: async () => {
+      const response = await fetch("/api/admin/blog", {
+        headers: getAuthHeaders(),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch blog posts");
+      }
+      return response.json();
+    },
   });
 
   const deleteMutation = useMutation({
@@ -522,6 +568,25 @@ function BlogManager() {
           Add New Post
         </Button>
       </div>
+
+      {(!posts || posts.length === 0) && (
+        <Card className="bg-gray-800 border-gray-700">
+          <CardContent className="flex flex-col items-center justify-center py-16 text-center">
+            <FileText className="w-16 h-16 text-gray-600 mb-4" />
+            <h3 className="text-xl font-semibold text-white mb-2">No blog posts yet</h3>
+            <p className="text-gray-400 mb-6 max-w-md">
+              Start publishing insights and thought leadership to engage your audience. Click "Add New Post" to create your first blog post.
+            </p>
+            <Button
+              onClick={() => setIsAddDialogOpen(true)}
+              className="bg-[hsl(24,95%,53%)] hover:bg-[hsl(24,95%,48%)]"
+            >
+              <PlusCircle className="w-4 h-4 mr-2" />
+              Create Your First Post
+            </Button>
+          </CardContent>
+        </Card>
+      )}
 
       {posts?.map((post) => (
         <Card key={post.id} className="bg-gray-800 border-gray-700">
@@ -1019,6 +1084,25 @@ function PortfolioManager() {
         </Button>
       </div>
 
+      {(!items || items.length === 0) && (
+        <Card className="bg-gray-800 border-gray-700">
+          <CardContent className="flex flex-col items-center justify-center py-16 text-center">
+            <Folder className="w-16 h-16 text-gray-600 mb-4" />
+            <h3 className="text-xl font-semibold text-white mb-2">No portfolio items yet</h3>
+            <p className="text-gray-400 mb-6 max-w-md">
+              Showcase your best work to potential clients. Add your first portfolio item to start building your showcase.
+            </p>
+            <Button
+              onClick={() => setIsAddDialogOpen(true)}
+              className="bg-[hsl(24,95%,53%)] hover:bg-[hsl(24,95%,48%)]"
+            >
+              <PlusCircle className="w-4 h-4 mr-2" />
+              Add Your First Project
+            </Button>
+          </CardContent>
+        </Card>
+      )}
+
       {items?.map((item) => (
         <Card key={item.id} className="bg-gray-800 border-gray-700">
           <CardHeader>
@@ -1345,6 +1429,172 @@ function AddPortfolioItemDialog({
         </div>
       </DialogContent>
     </Dialog>
+  );
+}
+
+function ReviewsManager() {
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+
+  const { data: reviews, isLoading } = useQuery<Review[]>({
+    queryKey: ['/api/admin/reviews'],
+    queryFn: async () => {
+      const response = await fetch('/api/admin/reviews', {
+        headers: getAuthHeaders(),
+      });
+      if (!response.ok) {
+        throw new Error('Failed to fetch reviews');
+      }
+      return response.json();
+    },
+  });
+
+  const approveReview = useMutation({
+    mutationFn: async (id: number) => {
+      const response = await fetch(`/api/admin/reviews/${id}/approve`, {
+        method: 'PUT',
+        headers: getAuthHeaders(),
+      });
+      if (!response.ok) {
+        throw new Error('Failed to approve review');
+      }
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/reviews'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/reviews'] });
+      toast({ title: "Review approved and published" });
+    },
+  });
+
+  const toggleFeatured = useMutation({
+    mutationFn: async (id: number) => {
+      const response = await fetch(`/api/admin/reviews/${id}/featured`, {
+        method: 'PUT',
+        headers: getAuthHeaders(),
+      });
+      if (!response.ok) {
+        throw new Error('Failed to toggle featured status');
+      }
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/reviews'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/reviews/featured'] });
+      toast({ title: "Featured status updated" });
+    },
+  });
+
+  const deleteReview = useMutation({
+    mutationFn: async (id: number) => {
+      const response = await fetch(`/api/admin/reviews/${id}`, {
+        method: 'DELETE',
+        headers: getAuthHeaders(),
+      });
+      if (!response.ok) {
+        throw new Error('Failed to delete review');
+      }
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/reviews'] });
+      toast({ title: "Review deleted" });
+    },
+  });
+
+  if (isLoading) {
+    return <div className="text-center py-12">Loading reviews...</div>;
+  }
+
+  const pendingReviews = reviews?.filter(r => !r.approved) || [];
+  const approvedReviews = reviews?.filter(r => r.approved) || [];
+
+  return (
+    <div className="space-y-8">
+      <Card>
+        <CardHeader>
+          <CardTitle>Pending Reviews ({pendingReviews.length})</CardTitle>
+          <CardDescription>Reviews awaiting approval</CardDescription>
+        </CardHeader>
+        <CardContent>
+          {pendingReviews.length === 0 ? (
+            <p className="text-gray-400 text-center py-4">No pending reviews</p>
+          ) : (
+            <div className="space-y-4">
+              {pendingReviews.map((review) => (
+                <div key={review.id} className="border border-gray-700 rounded-lg p-4 bg-gray-800">
+                  <div className="flex justify-between items-start mb-2">
+                    <div>
+                      <h3 className="font-semibold text-white">{review.name}</h3>
+                      {review.company && <p className="text-sm text-gray-400">{review.role && `${review.role}, `}{review.company}</p>}
+                      <div className="flex items-center mt-1">
+                        {Array.from({ length: review.rating }).map((_, i) => (
+                          <Star key={i} className="w-4 h-4 fill-[hsl(24,95%,53%)] text-[hsl(24,95%,53%)]" />
+                        ))}
+                        <Badge variant="outline" className="ml-2 text-xs">{review.projectType}</Badge>
+                      </div>
+                    </div>
+                    <div className="flex gap-2">
+                      <Button size="sm" onClick={() => approveReview.mutate(review.id)} className="bg-green-600 hover:bg-green-700" disabled={approveReview.isPending}>
+                        <Eye className="w-4 h-4 mr-1" />
+                        Approve
+                      </Button>
+                      <Button size="sm" variant="destructive" onClick={() => deleteReview.mutate(review.id)} disabled={deleteReview.isPending}>
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  </div>
+                  <p className="text-gray-300 mt-2">"{review.reviewText}"</p>
+                  <p className="text-xs text-gray-500 mt-2">Submitted {new Date(review.createdAt).toLocaleDateString()}</p>
+                </div>
+              ))}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Approved Reviews ({approvedReviews.length})</CardTitle>
+          <CardDescription>Published reviews visible to customers</CardDescription>
+        </CardHeader>
+        <CardContent>
+          {approvedReviews.length === 0 ? (
+            <p className="text-gray-400 text-center py-4">No approved reviews</p>
+          ) : (
+            <div className="space-y-4">
+              {approvedReviews.map((review) => (
+                <div key={review.id} className="border border-gray-700 rounded-lg p-4 bg-gray-800">
+                  <div className="flex justify-between items-start mb-2">
+                    <div>
+                      <h3 className="font-semibold text-white">{review.name}</h3>
+                      {review.company && <p className="text-sm text-gray-400">{review.role && `${review.role}, `}{review.company}</p>}
+                      <div className="flex items-center mt-1">
+                        {Array.from({ length: review.rating }).map((_, i) => (
+                          <Star key={i} className="w-4 h-4 fill-[hsl(24,95%,53%)] text-[hsl(24,95%,53%)]" />
+                        ))}
+                        <Badge variant="outline" className="ml-2 text-xs">{review.projectType}</Badge>
+                        {review.featured && <Badge className="ml-2 text-xs bg-[hsl(24,95%,53%)]">Featured</Badge>}
+                      </div>
+                    </div>
+                    <div className="flex gap-2">
+                      <Button size="sm" variant={review.featured ? "secondary" : "outline"} onClick={() => toggleFeatured.mutate(review.id)} disabled={toggleFeatured.isPending}>
+                        <Star className={`w-4 h-4 ${review.featured ? 'fill-current' : ''}`} />
+                      </Button>
+                      <Button size="sm" variant="destructive" onClick={() => deleteReview.mutate(review.id)} disabled={deleteReview.isPending}>
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  </div>
+                  <p className="text-gray-300 mt-2">"{review.reviewText}"</p>
+                  <p className="text-xs text-gray-500 mt-2">Published {new Date(review.createdAt).toLocaleDateString()}</p>
+                </div>
+              ))}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
   );
 }
 

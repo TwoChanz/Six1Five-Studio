@@ -1,49 +1,11 @@
 import { Star, Shield, Award, Quote } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { analytics } from "@/lib/analytics";
-
-interface Testimonial {
-  name: string;
-  role: string;
-  company: string;
-  content: string;
-  rating: number;
-  projectType: string;
-  imageUrl?: string;
-}
-
-// PLACEHOLDER TESTIMONIALS - Replace with real client testimonials
-// To add real testimonials:
-// 1. Reach out to past clients
-// 2. Request permission to use their feedback
-// 3. Update the array below with actual names, companies, and quotes
-// 4. Optional: Add client headshot images to imageUrl field
-const testimonials: Testimonial[] = [
-  {
-    name: "Client Name",
-    role: "Project Manager",
-    company: "Construction Company",
-    content: "Outstanding service and precision. The 3D models and site maps exceeded our expectations and provided invaluable insights for our construction project.",
-    rating: 5,
-    projectType: "Construction Site Mapping",
-  },
-  {
-    name: "Client Name",
-    role: "Facilities Director",
-    company: "Commercial Real Estate",
-    content: "The LiDAR scanning gave us incredibly accurate as-built documentation. The turnaround time was impressive and the team was professional throughout.",
-    rating: 5,
-    projectType: "Interior Documentation",
-  },
-  {
-    name: "Client Name",
-    role: "Historic Preservation Lead",
-    company: "Heritage Organization",
-    content: "The photogrammetry work captured intricate details we never thought possible. This digital preservation will serve our community for generations.",
-    rating: 5,
-    projectType: "Heritage Documentation",
-  },
-];
+import { useQuery } from "@tanstack/react-query";
+import { getQueryFn } from "@/lib/queryClient";
+import type { Review } from "@shared/schema";
+import ReviewDialog from "@/components/review-dialog";
+import logoCircular from "@/assets/logo-circular-large.webp";
 
 const trustSignals = [
   {
@@ -64,6 +26,12 @@ const trustSignals = [
 ];
 
 export default function TestimonialsSection() {
+  // Fetch approved reviews from the API
+  const { data: reviews, isLoading } = useQuery<Review[]>({
+    queryKey: ['/api/reviews'],
+    queryFn: getQueryFn({ on401: "returnNull" }),
+  });
+
   const scrollToContact = () => {
     const element = document.getElementById("contact");
     if (element) {
@@ -111,57 +79,80 @@ export default function TestimonialsSection() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
-            <div key={index} className="bg-gray-800 rounded-xl p-6 border border-gray-700 relative hover:border-[hsl(199,89%,48%)] transition-colors">
-              <Quote className="absolute top-4 right-4 w-8 h-8 text-[hsl(199,89%,48%)]/20" />
+        {isLoading ? (
+          <div className="flex flex-col items-center justify-center py-16">
+            <img
+              src={logoCircular}
+              alt="Six1Five Studio Loading"
+              className="w-24 h-24 mb-4 animate-pulse"
+            />
+            <p className="text-gray-400">Loading client reviews...</p>
+          </div>
+        ) : reviews && reviews.length > 0 ? (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {reviews.map((review) => (
+              <div key={review.id} className="bg-gray-800 rounded-xl p-6 border border-gray-700 relative hover:border-[hsl(199,89%,48%)] transition-colors flex flex-col min-h-[320px]">
+                <Quote className="absolute top-4 right-4 w-8 h-8 text-[hsl(199,89%,48%)]/20" />
 
-              <div className="mb-4">
-                <div className="flex items-center mb-2">
-                  {Array.from({ length: testimonial.rating }).map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-[hsl(24,95%,53%)] text-[hsl(24,95%,53%)]" />
-                  ))}
+                <div className="mb-4">
+                  <div className="flex items-center mb-2">
+                    {Array.from({ length: review.rating }).map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-[hsl(24,95%,53%)] text-[hsl(24,95%,53%)]" />
+                    ))}
+                  </div>
+                  <Badge variant="outline" className="text-xs border-gray-400 text-gray-200">
+                    {review.projectType}
+                  </Badge>
                 </div>
-                <Badge variant="outline" className="text-xs border-gray-400 text-gray-200">
-                  {testimonial.projectType}
-                </Badge>
-              </div>
 
-              <blockquote className="text-gray-300 mb-6 relative z-10">
-                "{testimonial.content}"
-              </blockquote>
+                <blockquote className="text-gray-300 mb-6 relative z-10 flex-grow">
+                  "{review.reviewText}"
+                </blockquote>
 
-              <div className="flex items-center border-t border-gray-700 pt-4">
-                {testimonial.imageUrl ? (
-                  <img
-                    src={testimonial.imageUrl}
-                    alt={testimonial.name}
-                    className="w-12 h-12 rounded-full mr-4 object-cover"
-                  />
-                ) : (
+                <div className="flex items-center border-t border-gray-700 pt-4 mt-auto">
                   <div className="w-12 h-12 rounded-full mr-4 bg-[hsl(199,89%,48%)]/20 flex items-center justify-center">
                     <span className="text-[hsl(199,89%,48%)] font-semibold text-lg">
-                      {testimonial.name.split(' ').map(n => n[0]).join('')}
+                      {review.name.split(' ').map(n => n[0]).join('')}
                     </span>
                   </div>
-                )}
-                <div>
-                  <div className="font-semibold text-white">{testimonial.name}</div>
-                  <div className="text-sm text-gray-400">
-                    {testimonial.role}, {testimonial.company}
+                  <div>
+                    <div className="font-semibold text-white">{review.name}</div>
+                    <div className="text-sm text-gray-400">
+                      {review.role && review.company ? (
+                        `${review.role}, ${review.company}`
+                      ) : review.role || review.company || 'Client'}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center py-16">
+            <img
+              src={logoCircular}
+              alt="Six1Five Studio"
+              className="w-24 h-24 mb-6 opacity-50"
+            />
+            <p className="text-gray-400 mb-4">No reviews yet. Be the first to share your experience!</p>
+            <ReviewDialog />
+          </div>
+        )}
 
-        {/* Placeholder Note */}
-        <div className="mt-8 text-center">
-          <p className="text-xs text-gray-500 italic">
-            Note: Replace placeholder testimonials with real client feedback in testimonials-section.tsx
-          </p>
-        </div>
+        {/* Add Review Button & CTA */}
+        {reviews && reviews.length > 0 && (
+          <div className="mt-12">
+            <div className="bg-gray-800/50 border border-gray-700 rounded-xl p-8 text-center">
+              <h3 className="text-2xl font-bold text-white mb-3">
+                Have you worked with us?
+              </h3>
+              <p className="text-gray-400 mb-6 max-w-xl mx-auto">
+                Share your experience and help others understand the quality and professionalism they can expect from Six1Five Studio.
+              </p>
+              <ReviewDialog />
+            </div>
+          </div>
+        )}
 
         {/* Call to Action */}
         <div className="text-center mt-12">

@@ -83,10 +83,19 @@ function ServiceCard({ service }: ServiceCardProps) {
           </ul>
           
           <button
-            onClick={() => {
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
               const contactElement = document.getElementById('contact');
               if (contactElement) {
-                contactElement.scrollIntoView({ behavior: 'smooth' });
+                const nav = document.querySelector('nav');
+                const navHeight = nav?.getBoundingClientRect().height ?? 80;
+                const offsetTop = contactElement.offsetTop - navHeight - 20;
+                window.scrollTo({
+                  top: offsetTop,
+                  behavior: 'smooth'
+                });
               }
             }}
             className="text-[hsl(199,89%,48%)] hover:text-white text-xs font-medium transition-colors"
@@ -126,10 +135,19 @@ export default function ServicesSection() {
               {servicesData.ctaDescription}
             </p>
             <button
-              onClick={() => {
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
                 const contactElement = document.getElementById('contact');
                 if (contactElement) {
-                  contactElement.scrollIntoView({ behavior: 'smooth' });
+                  const nav = document.querySelector('nav');
+                  const navHeight = nav?.getBoundingClientRect().height ?? 80;
+                  const offsetTop = contactElement.offsetTop - navHeight - 20;
+                  window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                  });
                 }
               }}
               className="bg-[hsl(24,95%,53%)] hover:bg-[hsl(24,95%,48%)] text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1"

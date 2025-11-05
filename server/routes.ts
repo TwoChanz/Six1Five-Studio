@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertContactSubmissionSchema, insertBlogPostSchema, insertPortfolioItemSchema } from "@shared/schema";
+import { insertContactSubmissionSchema, insertBlogPostSchema, insertPortfolioItemSchema, insertReviewSchema } from "@shared/schema";
 import { z } from "zod";
 import sgMail from "@sendgrid/mail";
 import multer from "multer";
@@ -73,6 +73,20 @@ const adminLimiter = rateLimit({
   message: 'Too many requests, please slow down',
   standardHeaders: true,
   legacyHeaders: false,
+});
+
+// Rate limiter for contact form (prevent spam)
+const contactLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 3, // 3 submissions per 15 minutes per IP
+  message: {
+    error: 'Too Many Requests',
+    message: 'You can only submit the contact form 3 times per 15 minutes. Please try again later.',
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+  // Skip rate limiting in development for easier testing
+  skip: (req) => process.env.NODE_ENV === 'development',
 });
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -149,7 +163,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   }, (await import('express')).static(path.join(__dirname, 'uploads')));
 
   // Contact form submission with file uploads
-  app.post("/api/contact", upload.array('referenceFiles', 5), async (req, res) => {
+  app.post("/api/contact", contactLimiter, upload.array('referenceFiles', 5), async (req, res) => {
     try {
       // Parse services as JSON array if it's a string
       const services = typeof req.body.services === 'string'
@@ -382,6 +396,101 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Contact submission deletion error:", error);
       res.status(500).json({ error: "Failed to delete contact submission" });
+    }
+  });
+
+  // Reviews routes
+  // Public: Get approved reviews (for display on site)
+  app.get("/api/reviews", async (req, res) => {
+    try {
+      const reviews = await storage.getApprovedReviews();
+      res.json(reviews);
+    } catch (error) {
+      console.error("Reviews fetch error:", error);
+      res.status(500).json({ error: "Failed to fetch reviews" });
+    }
+  });
+
+  // Public: Get featured reviews (for homepage)
+  app.get("/api/reviews/featured", async (req, res) => {
+    try {
+      const reviews = await storage.getFeaturedReviews();
+      res.json(reviews);
+    } catch (error) {
+      console.error("Featured reviews fetch error:", error);
+      res.status(500).json({ error: "Failed to fetch featured reviews" });
+    }
+  });
+
+  // Public: Submit a new review
+  app.post("/api/reviews", async (req, res) => {
+    try {
+      const validatedData = insertReviewSchema.parse(req.body);
+      const review = await storage.createReview(validatedData);
+      res.json({
+        success: true,
+        message: "Review submitted successfully! It will be published after approval.",
+        review
+      });
+    } catch (error) {
+      console.error("Review submission error:", error);
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ error: "Invalid review data", details: error.errors });
+      }
+      res.status(500).json({ error: "Failed to submit review" });
+    }
+  });
+
+  // Admin: Get all reviews (including pending)
+  app.get("/api/admin/reviews", adminLimiter, requireAuth, async (req, res) => {
+    try {
+      const reviews = await storage.getReviews();
+      res.json(reviews);
+    } catch (error) {
+      console.error("Admin reviews fetch error:", error);
+      res.status(500).json({ error: "Failed to fetch reviews" });
+    }
+  });
+
+  // Admin: Approve a review
+  app.put("/api/admin/reviews/:id/approve", adminLimiter, requireAuth, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const review = await storage.approveReview(parseInt(id));
+      if (!review) {
+        return res.status(404).json({ error: "Review not found" });
+      }
+      res.json(review);
+    } catch (error) {
+      console.error("Review approval error:", error);
+      res.status(500).json({ error: "Failed to approve review" });
+    }
+  });
+
+  // Admin: Toggle featured status
+  app.put("/api/admin/reviews/:id/featured", adminLimiter, requireAuth, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const review = await storage.toggleFeaturedReview(parseInt(id));
+      if (!review) {
+        return res.status(404).json({ error: "Review not found" });
+      }
+      res.json(review);
+    } catch (error) {
+      console.error("Review featured toggle error:", error);
+      res.status(500).json({ error: "Failed to toggle featured status" });
+    }
+  });
+
+  // Admin: Delete a review
+  app.delete("/api/admin/reviews/:id", adminLimiter, requireAuth, async (req, res) => {
+    try {
+      const { id } = req.params;
+      await storage.deleteReview(parseInt(id));
+      res.json({ success: true, message: "Review deleted" });
+    } catch (error) {
+      console.error("Review deletion error:", error);
+      res.status(500).json({ error: "Failed to delete review" });
     }
   });
 

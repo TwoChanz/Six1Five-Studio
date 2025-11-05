@@ -15,7 +15,7 @@ export default function Footer() {
                 className="h-auto w-full max-w-[180px] md:max-w-[220px]"
                 style={{
                   mixBlendMode: 'screen',
-                  filter: 'drop-shadow(0 0 4px var(--logo-blue))'
+                  filter: 'brightness(1.3) drop-shadow(0 0 8px var(--logo-blue)) drop-shadow(0 0 12px var(--logo-blue))'
                 }}
               />
             </div>
@@ -73,8 +73,8 @@ export default function Footer() {
             <h4 className="font-semibold mb-4">Contact</h4>
             <ul className="space-y-2 text-gray-400">
               <li>Nashville, Tennessee</li>
-              <li>(931) 588-8997</li>
-              <li>admin@six1fivestudio.com</li>
+              <li><a href="tel:+19315888997" className="hover:text-[var(--primary-blue)] transition-colors">(931) 588-8997</a></li>
+              <li><a href="mailto:admin@six1fivestudio.com" className="hover:text-[var(--primary-blue)] transition-colors underline decoration-transparent hover:decoration-[var(--primary-blue)] transition-all">admin@six1fivestudio.com</a></li>
             </ul>
           </div>
         </div>

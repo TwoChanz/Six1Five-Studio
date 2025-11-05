@@ -1,49 +1,41 @@
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
 import { Sun, Moon } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
 
   useEffect(() => {
-    // Check for saved theme preference or default to dark
-    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' || 'dark';
-    setTheme(savedTheme);
-    
-    // Apply theme to document
-    if (savedTheme === 'light') {
-      document.documentElement.classList.remove('dark');
+    // Check localStorage for saved theme preference
+    const savedTheme = localStorage.getItem("theme") as "dark" | "light" | null;
+    if (savedTheme) {
+      setTheme(savedTheme);
+      document.documentElement.classList.toggle("light", savedTheme === "light");
     } else {
-      document.documentElement.classList.add('dark');
+      // Default to dark theme
+      setTheme("dark");
     }
   }, []);
 
   const toggleTheme = () => {
-    const newTheme = theme === 'dark' ? 'light' : 'dark';
+    const newTheme = theme === "dark" ? "light" : "dark";
     setTheme(newTheme);
-    localStorage.setItem('theme', newTheme);
-    
-    if (newTheme === 'light') {
-      document.documentElement.classList.remove('dark');
-    } else {
-      document.documentElement.classList.add('dark');
-    }
+    localStorage.setItem("theme", newTheme);
+    document.documentElement.classList.toggle("light", newTheme === "light");
   };
 
   return (
     <Button
       variant="ghost"
-      size="sm"
+      size="icon"
       onClick={toggleTheme}
-      className="text-gray-400 hover:text-white p-2"
-      aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+      className="w-9 h-9 rounded-md hover:bg-gray-700/50 transition-colors"
+      aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
     >
-      {/* Show sun icon when in dark mode (to switch to light) */}
-      {/* Show moon icon when in light mode (to switch to dark) */}
-      {theme === 'dark' ? (
-        <Sun className="w-5 h-5" />
+      {theme === "dark" ? (
+        <Sun className="h-5 w-5 text-yellow-400" />
       ) : (
-        <Moon className="w-5 h-5" />
+        <Moon className="h-5 w-5 text-gray-700" />
       )}
     </Button>
   );

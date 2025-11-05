@@ -9,6 +9,7 @@ import { Calendar, Clock, ArrowRight } from "lucide-react";
 import { getQueryFn } from "@/lib/queryClient";
 import { format } from "date-fns";
 import type { BlogPost } from "@shared/schema";
+import logoCircular from "@/assets/logo-circular-large.webp";
 
 export default function Blog() {
   useEffect(() => {
@@ -51,37 +52,13 @@ export default function Blog() {
           </div>
 
           {isLoading ? (
-            <div className="space-y-8">
-              {/* Featured Post Skeleton */}
-              <div className="bg-gray-800 rounded-xl overflow-hidden border border-gray-700">
-                <Skeleton className="h-64 bg-gray-700" />
-                <div className="p-8">
-                  <Skeleton className="h-8 mb-4 bg-gray-700" />
-                  <Skeleton className="h-4 mb-4 bg-gray-700" />
-                  <div className="flex gap-2 mb-4">
-                    <Skeleton className="h-6 w-20 bg-gray-700" />
-                    <Skeleton className="h-6 w-16 bg-gray-700" />
-                  </div>
-                  <Skeleton className="h-4 bg-gray-700" />
-                </div>
-              </div>
-              
-              {/* Other Posts Skeleton */}
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {Array.from({ length: 6 }).map((_, i) => (
-                  <div key={i} className="bg-gray-800 rounded-xl overflow-hidden border border-gray-700">
-                    <Skeleton className="h-48 bg-gray-700" />
-                    <div className="p-6">
-                      <Skeleton className="h-6 mb-3 bg-gray-700" />
-                      <Skeleton className="h-4 mb-4 bg-gray-700" />
-                      <div className="flex justify-between items-center">
-                        <Skeleton className="h-4 w-20 bg-gray-700" />
-                        <Skeleton className="h-4 w-16 bg-gray-700" />
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+            <div className="flex flex-col items-center justify-center py-20">
+              <img
+                src={logoCircular}
+                alt="Six1Five Studio Loading"
+                className="w-32 h-32 mb-6 animate-pulse"
+              />
+              <p className="text-gray-400 text-lg">Loading insights...</p>
             </div>
           ) : blogPosts && Array.isArray(blogPosts) && blogPosts.length > 0 ? (
             <div className="space-y-12">
@@ -123,7 +100,7 @@ export default function Blog() {
                     
                     <div className="flex flex-wrap gap-2 mb-6">
                       {featuredPost.tags?.map((tag: string, i: number) => (
-                        <Badge key={i} variant="secondary" className="bg-[hsl(24,95%,53%)] text-white">
+                        <Badge key={i} variant="secondary" className="bg-[hsl(24,95%,53%)]/90 hover:bg-[hsl(24,95%,53%)] text-white font-semibold px-3 py-1 shadow-sm transition-colors">
                           {tag}
                         </Badge>
                       ))}
@@ -143,7 +120,7 @@ export default function Blog() {
               {otherPosts.length > 0 && (
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {otherPosts.map((post: BlogPost) => (
-                    <article key={post.id} className="bg-gray-800 rounded-xl overflow-hidden shadow-lg border border-gray-700 hover:border-gray-600 transition-colors">
+                    <article key={post.id} className="bg-gray-800 rounded-xl overflow-hidden shadow-lg border border-gray-700 hover:border-[hsl(199,89%,48%)]/50 hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 cursor-pointer">
                       {post.featuredImage ? (
                         <img 
                           src={post.featuredImage} 
@@ -177,12 +154,12 @@ export default function Blog() {
                         {post.tags && post.tags.length > 0 && (
                           <div className="flex flex-wrap gap-1 mb-4">
                             {post.tags.slice(0, 2).map((tag, i) => (
-                              <Badge key={i} variant="outline" className="text-xs border-gray-600 text-gray-300">
+                              <Badge key={i} variant="outline" className="text-xs border-[hsl(199,89%,48%)]/60 bg-[hsl(199,89%,48%)]/10 text-gray-200 font-medium hover:bg-[hsl(199,89%,48%)]/20 transition-colors">
                                 {tag}
                               </Badge>
                             ))}
                             {post.tags.length > 2 && (
-                              <Badge variant="outline" className="text-xs border-gray-600 text-gray-300">
+                              <Badge variant="outline" className="text-xs border-[hsl(199,89%,48%)]/60 bg-[hsl(199,89%,48%)]/10 text-gray-200 font-medium">
                                 +{post.tags.length - 2}
                               </Badge>
                             )}

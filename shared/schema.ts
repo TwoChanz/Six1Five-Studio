@@ -57,6 +57,20 @@ export const portfolioItems = pgTable("portfolio_items", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+export const reviews = pgTable("reviews", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  email: text("email"),
+  company: text("company"),
+  role: text("role"),
+  rating: integer("rating").notNull(), // 1-5 stars
+  reviewText: text("review_text").notNull(),
+  projectType: text("project_type").notNull(), // Service they used
+  approved: boolean("approved").default(false), // Admin moderation
+  featured: boolean("featured").default(false), // Highlight on homepage
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
   password: true,
@@ -104,6 +118,19 @@ export const insertPortfolioItemSchema = createInsertSchema(portfolioItems).pick
   featured: true,
 });
 
+export const insertReviewSchema = createInsertSchema(reviews).pick({
+  name: true,
+  email: true,
+  company: true,
+  role: true,
+  rating: true,
+  reviewText: true,
+  projectType: true,
+}).extend({
+  rating: z.number().min(1).max(5),
+  reviewText: z.string().min(10).max(1000),
+});
+
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 export type InsertContactSubmission = z.infer<typeof insertContactSubmissionSchema>;
@@ -112,3 +139,5 @@ export type InsertBlogPost = z.infer<typeof insertBlogPostSchema>;
 export type BlogPost = typeof blogPosts.$inferSelect;
 export type InsertPortfolioItem = z.infer<typeof insertPortfolioItemSchema>;
 export type PortfolioItem = typeof portfolioItems.$inferSelect;
+export type InsertReview = z.infer<typeof insertReviewSchema>;
+export type Review = typeof reviews.$inferSelect;

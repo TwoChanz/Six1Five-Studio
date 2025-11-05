@@ -153,7 +153,7 @@ export default function Gallery() {
               {filteredItems.map((item: PortfolioItem, index: number) => {
                 const externalLink = getExternalLink(item);
                 const platformName = getPlatformName(item);
-                const hasFeatured3D = item.featured && has3DModel(item);
+                const hasModel = has3DModel(item);
                 const visibleTags = item.tools?.slice(0, 2) || [];
                 const remainingTagsCount = (item.tools?.length || 0) - 2;
 
@@ -214,28 +214,28 @@ export default function Gallery() {
 
                       {/* Action Buttons */}
                       <div className="flex flex-col gap-2">
-                        {hasFeatured3D && (
+                        {hasModel && (
                           <Button
                             onClick={() => {
                               setSelectedModel(item);
                               setIsModelDialogOpen(true);
-                              analytics.ctaClick('View 3D Model', 'gallery_featured');
+                              analytics.ctaClick('View 3D Model', 'gallery_item');
                             }}
-                            className="w-full bg-[hsl(199,89%,48%)] hover:bg-[hsl(199,89%,43%)] text-white font-semibold"
+                            className="w-full bg-[hsl(199,89%,48%)] hover:bg-[hsl(199,89%,43%)] text-white font-semibold shadow-lg hover:shadow-xl transition-all"
                           >
                             <Eye className="w-4 h-4 mr-2" />
-                            View 3D
+                            View 3D Model
                           </Button>
                         )}
                         {externalLink && (
                           <Button
-                            variant={hasFeatured3D ? "outline" : "default"}
+                            variant={hasModel ? "outline" : "default"}
                             onClick={() => {
                               window.open(externalLink, '_blank');
                               analytics.externalLink(externalLink, platformName);
                             }}
-                            className={hasFeatured3D
-                              ? "w-full border-gray-500 text-gray-300 hover:bg-gray-700"
+                            className={hasModel
+                              ? "w-full border-gray-500 text-gray-300 hover:bg-gray-700 hover:text-white transition-colors"
                               : "w-full bg-[hsl(199,89%,48%)] hover:bg-[hsl(199,89%,43%)] text-white font-semibold"
                             }
                           >

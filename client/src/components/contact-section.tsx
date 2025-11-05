@@ -13,6 +13,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { Phone, Mail, MapPin, Upload, X } from "lucide-react";
+import nashvilleSvg from "@/assets/nashville-region-outline.svg";
 
 const contactSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -521,6 +522,29 @@ export default function ContactSection() {
               </div>
             </div>
 
+            {/* Nashville Service Area Map */}
+            <div className="mt-8 pt-6 border-t border-gray-700">
+              <h4 className="text-sm font-semibold mb-4 text-gray-300">Primary Service Area</h4>
+              <div className="relative bg-gray-900 rounded-lg p-6 border border-gray-700">
+                <img
+                  src={nashvilleSvg}
+                  alt="Nashville and Middle Tennessee Service Area"
+                  className="w-full h-auto opacity-80 hover:opacity-100 transition-opacity"
+                  style={{
+                    filter: 'drop-shadow(0 0 10px rgba(37, 211, 102, 0.3))'
+                  }}
+                />
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div className="text-center">
+                    <div className="w-3 h-3 bg-[hsl(158,64%,52%)] rounded-full mx-auto mb-2 animate-pulse"></div>
+                    <p className="text-xs text-white font-semibold bg-gray-900/80 px-2 py-1 rounded">Nashville Metro</p>
+                  </div>
+                </div>
+              </div>
+              <p className="text-xs text-gray-400 mt-3 text-center">
+                Serving Nashville, Middle Tennessee, and surrounding regions. Regional travel available.
+              </p>
+            </div>
           </div>
         </div>
       </div>

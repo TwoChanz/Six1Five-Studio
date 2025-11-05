@@ -4,6 +4,7 @@ import {
   contactSubmissions,
   blogPosts,
   portfolioItems,
+  reviews,
   type User,
   type InsertUser,
   type ContactSubmission,
@@ -11,7 +12,9 @@ import {
   type BlogPost,
   type InsertBlogPost,
   type PortfolioItem,
-  type InsertPortfolioItem
+  type InsertPortfolioItem,
+  type Review,
+  type InsertReview
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, sql } from "drizzle-orm";
@@ -84,11 +87,33 @@ function deserializePortfolioItem(item: PortfolioItem | undefined): PortfolioIte
 }
 
 /**
+ * Map SQLite column names (snake_case) to TypeScript properties (camelCase) for blog posts
+ */
+function mapBlogPostColumns(post: any): BlogPost {
+  if (!useSqlite) return post;
+
+  return {
+    id: post.id,
+    title: post.title,
+    slug: post.slug,
+    content: post.content,
+    excerpt: post.excerpt,
+    featuredImage: post.featured_image,
+    substackEmbedCode: post.substack_embed_code,
+    tags: post.tags,
+    published: Boolean(post.published),
+    createdAt: post.created_at,
+    updatedAt: post.updated_at,
+  } as BlogPost;
+}
+
+/**
  * Deserialize blog post arrays
  */
 function deserializeBlogPost(post: BlogPost | undefined): BlogPost | undefined {
   if (!post) return undefined;
-  return deserializeArrayFields(post, ['tags']);
+  const mapped = mapBlogPostColumns(post);
+  return deserializeArrayFields(mapped, ['tags']);
 }
 
 /**
@@ -97,6 +122,27 @@ function deserializeBlogPost(post: BlogPost | undefined): BlogPost | undefined {
 function deserializeContactSubmission(submission: ContactSubmission | undefined): ContactSubmission | undefined {
   if (!submission) return undefined;
   return deserializeArrayFields(submission, ['services', 'referenceFiles']);
+}
+
+/**
+ * Map SQLite column names (snake_case) to TypeScript properties (camelCase) for reviews
+ */
+function mapReviewColumns(review: any): Review {
+  if (!useSqlite) return review;
+
+  return {
+    id: review.id,
+    name: review.name,
+    email: review.email,
+    company: review.company,
+    role: review.role,
+    rating: review.rating,
+    reviewText: review.review_text,
+    projectType: review.project_type,
+    approved: Boolean(review.approved),
+    featured: Boolean(review.featured),
+    createdAt: review.created_at,
+  } as Review;
 }
 
 export interface IStorage {
@@ -123,6 +169,15 @@ export interface IStorage {
   createPortfolioItem(item: InsertPortfolioItem): Promise<PortfolioItem>;
   updatePortfolioItem(id: number, updates: Partial<InsertPortfolioItem>): Promise<PortfolioItem | undefined>;
   deletePortfolioItem(id: number): Promise<void>;
+
+  // Review methods
+  getReviews(): Promise<Review[]>;
+  getApprovedReviews(): Promise<Review[]>;
+  getFeaturedReviews(): Promise<Review[]>;
+  createReview(review: InsertReview): Promise<Review>;
+  approveReview(id: number): Promise<Review | undefined>;
+  toggleFeaturedReview(id: number): Promise<Review | undefined>;
+  deleteReview(id: number): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -183,6 +238,10 @@ export class DatabaseStorage implements IStorage {
 
   // Blog methods
   async getBlogPosts(): Promise<BlogPost[]> {
+    if (useSqlite) {
+      const results = await db.all(sql`SELECT * FROM blog_posts ORDER BY created_at DESC`) as any[];
+      return results.map(p => deserializeBlogPost(p as BlogPost)!);
+    }
     const results = await db
       .select()
       .from(blogPosts)
@@ -191,6 +250,10 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getPublishedBlogPosts(): Promise<BlogPost[]> {
+    if (useSqlite) {
+      const results = await db.all(sql`SELECT * FROM blog_posts WHERE published = 1 ORDER BY created_at DESC`) as any[];
+      return results.map(p => deserializeBlogPost(p as BlogPost)!);
+    }
     const results = await db
       .select()
       .from(blogPosts)
@@ -200,6 +263,10 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getBlogPostBySlug(slug: string): Promise<BlogPost | undefined> {
+    if (useSqlite) {
+      const results = await db.all(sql`SELECT * FROM blog_posts WHERE slug = ${slug}`) as any[];
+      return deserializeBlogPost(results[0] as BlogPost);
+    }
     const [post] = await db.select().from(blogPosts).where(eq(blogPosts.slug, slug));
     return deserializeBlogPost(post);
   }
@@ -292,6 +359,120 @@ export class DatabaseStorage implements IStorage {
 
   async deletePortfolioItem(id: number): Promise<void> {
     await db.delete(portfolioItems).where(eq(portfolioItems.id, id));
+  }
+
+  // Review methods
+  async getReviews(): Promise<Review[]> {
+    if (useSqlite) {
+      const results = await db.all(sql`SELECT * FROM reviews ORDER BY created_at DESC`) as any[];
+      return results.map(r => mapReviewColumns(r));
+    }
+    const results = await db
+      .select()
+      .from(reviews)
+      .orderBy(desc(reviews.createdAt));
+    return results;
+  }
+
+  async getApprovedReviews(): Promise<Review[]> {
+    if (useSqlite) {
+      const results = await db.all(sql`SELECT * FROM reviews WHERE approved = 1 ORDER BY created_at DESC`) as any[];
+      return results.map(r => mapReviewColumns(r));
+    }
+    const results = await db
+      .select()
+      .from(reviews)
+      .where(eq(reviews.approved, true))
+      .orderBy(desc(reviews.createdAt));
+    return results;
+  }
+
+  async getFeaturedReviews(): Promise<Review[]> {
+    if (useSqlite) {
+      const results = await db.all(sql`SELECT * FROM reviews WHERE approved = 1 AND featured = 1 ORDER BY created_at DESC`) as any[];
+      return results.map(r => mapReviewColumns(r));
+    }
+    const results = await db
+      .select()
+      .from(reviews)
+      .where(eq(reviews.approved, true))
+      .where(eq(reviews.featured, true))
+      .orderBy(desc(reviews.createdAt));
+    return results;
+  }
+
+  async createReview(insertReview: InsertReview): Promise<Review> {
+    if (useSqlite) {
+      const now = new Date().toISOString();
+      const result = await db.run(sql`
+        INSERT INTO reviews (
+          name, email, company, role, rating, review_text,
+          project_type, approved, featured, created_at
+        ) VALUES (
+          ${insertReview.name},
+          ${insertReview.email || null},
+          ${insertReview.company || null},
+          ${insertReview.role || null},
+          ${insertReview.rating},
+          ${insertReview.reviewText},
+          ${insertReview.projectType},
+          0,
+          0,
+          ${now}
+        )
+      `);
+
+      const [inserted] = await db.all(sql`SELECT * FROM reviews WHERE id = ${result.lastInsertRowid}`) as any[];
+      return mapReviewColumns(inserted);
+    }
+
+    const [review] = await db
+      .insert(reviews)
+      .values(insertReview)
+      .returning();
+    return review;
+  }
+
+  async approveReview(id: number): Promise<Review | undefined> {
+    if (useSqlite) {
+      await db.run(sql`UPDATE reviews SET approved = 1 WHERE id = ${id}`);
+      const [updated] = await db.all(sql`SELECT * FROM reviews WHERE id = ${id}`) as any[];
+      return mapReviewColumns(updated);
+    }
+
+    const [updated] = await db
+      .update(reviews)
+      .set({ approved: true })
+      .where(eq(reviews.id, id))
+      .returning();
+    return updated;
+  }
+
+  async toggleFeaturedReview(id: number): Promise<Review | undefined> {
+    if (useSqlite) {
+      await db.run(sql`UPDATE reviews SET featured = NOT featured WHERE id = ${id}`);
+      const [updated] = await db.all(sql`SELECT * FROM reviews WHERE id = ${id}`) as any[];
+      return mapReviewColumns(updated);
+    }
+
+    // For PostgreSQL, we need to get the current value first
+    const [current] = await db.select().from(reviews).where(eq(reviews.id, id));
+    if (!current) return undefined;
+
+    const [updated] = await db
+      .update(reviews)
+      .set({ featured: !current.featured })
+      .where(eq(reviews.id, id))
+      .returning();
+    return updated;
+  }
+
+  async deleteReview(id: number): Promise<void> {
+    if (useSqlite) {
+      await db.run(sql`DELETE FROM reviews WHERE id = ${id}`);
+    } else {
+      await db.delete(reviews).where(eq(reviews.id, id));
+    }
   }
 }
 
