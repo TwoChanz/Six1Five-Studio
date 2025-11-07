@@ -17,6 +17,7 @@ const BlogPost = lazy(() => import("@/pages/blog-post"));
 const Insights = lazy(() => import("@/pages/insights"));
 const FAQ = lazy(() => import("@/pages/faq"));
 const Resources = lazy(() => import("@/pages/resources"));
+const CaseStudyParthenon = lazy(() => import("@/pages/case-study-parthenon"));
 const Admin = lazy(() => import("@/pages/admin"));
 const NotFound = lazy(() => import("@/pages/not-found"));
 
@@ -78,6 +79,13 @@ function Router() {
           <Suspense fallback={<div className="min-h-screen bg-[hsl(218,11%,15%)] flex items-center justify-center"><div className="text-white">Loading...</div></div>}>
             <ErrorBoundary>
               <Resources />
+            </ErrorBoundary>
+          </Suspense>
+        </Route>
+        <Route path="/case-study/parthenon">
+          <Suspense fallback={<div className="min-h-screen bg-[hsl(218,11%,15%)] flex items-center justify-center"><div className="text-white">Loading...</div></div>}>
+            <ErrorBoundary>
+              <CaseStudyParthenon />
             </ErrorBoundary>
           </Suspense>
         </Route>

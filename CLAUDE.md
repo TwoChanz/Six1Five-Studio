@@ -30,7 +30,10 @@ tsx scripts/add-multiple-models.ts     # Bulk add multiple portfolio items
 
 ### Admin Dashboard
 - **URL**: `/admin`
-- **Default Password**: `admin615` (change via `VITE_ADMIN_PASSWORD` env var)
+- **Authentication**: JWT-based with bcrypt password hashing
+  - Development: Set `ADMIN_PASSWORD` in `.env` (plain text)
+  - Production: Set `ADMIN_PASSWORD_HASH` with bcrypt hash (generate via `npx tsx scripts/hash-password.ts`)
+  - JWT Secret: Required in `JWT_SECRET` env var (generate with `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`)
 - **Features**: Contact submissions, blog management (publish/unpublish/delete), portfolio management (featured/publish/delete)
 - **Documentation**: See `ADMIN.md` for full guide
 
@@ -53,11 +56,11 @@ The project supports **dual database modes** for flexibility:
    - Use `drizzle.config.ts` for schema management
 
 **Email Notifications (Optional but recommended)**
-- `SENDGRID_API_KEY` - SendGrid API key for sending contact form emails
-- `SENDGRID_FROM_EMAIL` - Verified sender email address (e.g., admin@six1fivestudio.com)
-- `SENDGRID_TO_EMAIL` - Recipient email (defaults to SENDGRID_FROM_EMAIL if not set)
+- `RESEND_API_KEY` - Resend API key for sending contact form emails (3,000 emails/month free at https://resend.com)
+- `RESEND_FROM_EMAIL` - Sender email address (e.g., contact@six1fivestudio.com, use onboarding@resend.dev for testing)
+- `RESEND_TO_EMAIL` - Recipient email for notifications (defaults to RESEND_FROM_EMAIL if not set)
 
-Without SendGrid configured, contact submissions will still be saved to the database but no email notifications will be sent.
+Without Resend configured, contact submissions will still be saved to the database but no email notifications will be sent.
 
 **Analytics (Optional but recommended)**
 - `VITE_GA_MEASUREMENT_ID` - Google Analytics 4 measurement ID (e.g., G-XXXXXXXXXX)
@@ -267,3 +270,76 @@ The portfolio supports **four types of 3D model display**:
   - Visible focus states for keyboard navigation
   - Comprehensive ARIA labels on interactive elements
   - React Error Boundaries to prevent full app crashes
+
+### SEO Implementation
+
+**Status**: In Progress (see `SEO_TODO.md` for detailed tracking)
+
+**Completed:**
+- Gallery page (`client/src/pages/gallery.tsx`) - Full SEO meta tags, structured data, canonical URLs
+
+**Pending:**
+- Home, Pricing, Blog, Blog Post, Resources, FAQ pages
+- Admin and 404 pages need `noindex` meta tags
+
+**SEO Component**: `client/src/components/seo-head.tsx`
+- Provides reusable SEO meta tags (title, description, keywords, OG tags)
+- Includes `getCanonicalUrl()` helper for canonical URL generation
+- Usage pattern documented in `SEO_TODO.md`
+
+**SEO Infrastructure:**
+- `client/public/robots.txt` - Search engine crawling rules
+- `client/public/sitemap.xml` - URL structure for search engines
+
+### Production Deployment
+
+**Hosting Platform**: Vercel (optimized configuration)
+
+**Critical Build Configuration**:
+- Vite output directory MUST be `dist` (not `dist/public`)
+- Configured in `vite.config.ts:37` to align with Vercel's expectations
+- Previous `dist/public` configuration caused deployment failures
+
+**Build Process**:
+1. Client build: `vite build` → outputs to `dist/`
+2. Server build: `esbuild server/index.ts` → outputs to `dist/index.js`
+3. Production server serves static files from `dist/` via Express
+
+**Performance Optimizations** (vite.config.ts):
+- Manual code splitting for optimal bundle sizes:
+  - `react-vendor` chunk: React core libraries
+  - `app-core` chunk: Routing and state management
+  - `ui-components` chunk: Radix UI primitives
+  - `three-vendor` chunk: 3D rendering libraries
+  - `visual-libs` chunk: Icons and animations
+- Chunk size limit: 600KB (increased from default 500KB)
+
+**Environment Configuration**:
+- Set `NODE_ENV=production` for production builds
+- Configure all required env vars per `.env.example`
+- Use PostgreSQL in production (SQLite for local dev only)
+
+### Credentials & Certifications
+
+**Storage Location**: `client/public/credentials/`
+
+**Current Files**:
+- `TRUST_Certification.pdf` - FAA-recognized aeronautical knowledge and safety test
+- Publicly accessible at `/credentials/TRUST_Certification.pdf`
+
+**Recommended Display Locations**:
+1. **Testimonials Section** (`client/src/components/testimonials-section.tsx:6-17`)
+   - Update trust signals with link to TRUST certification
+   - Replace "FAA Certified" placeholder with actual credentials
+
+2. **About/Credentials Page** (future enhancement)
+   - Dedicated page showcasing all certifications, insurance, professional affiliations
+   - Include FAA Part 107 Remote Pilot Certificate (if applicable)
+
+3. **Portfolio Items** (future enhancement)
+   - Add certification badges to relevant projects
+   - Shows compliance and professionalism
+
+4. **Contact Form Auto-Response** (future enhancement)
+   - Include certification details in email templates (`server/email-templates.ts`)
+   - Builds immediate trust with prospective clients

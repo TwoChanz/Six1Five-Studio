@@ -19,6 +19,20 @@ export default function Resources() {
 
   const resourceCategories = [
     {
+      title: "Case Studies",
+      icon: Newspaper,
+      color: "hsl(24,95%,53%)",
+      items: [
+        {
+          title: "Nashville Parthenon Solar Analysis",
+          description: "Conceptual study demonstrating solar path analysis, structural assessment, and photovoltaic retrofit methodology for historic landmarks.",
+          type: "Case Study",
+          link: "/case-study/parthenon",
+          internal: true
+        }
+      ]
+    },
+    {
       title: "Downloadable Guides",
       icon: FileText,
       color: "hsl(24,95%,53%)",
@@ -174,7 +188,7 @@ export default function Resources() {
                         <CardHeader>
                           <div className="flex items-start justify-between mb-2">
                             <CardTitle className="text-lg text-white">{item.title}</CardTitle>
-                            {item.status && (
+                            {'status' in item && item.status && (
                               <Badge variant="outline" className="text-xs border-gray-600 text-gray-400">
                                 {item.status}
                               </Badge>
@@ -189,21 +203,33 @@ export default function Resources() {
                             <Badge variant="secondary" className="text-xs bg-gray-700 text-gray-300">
                               {item.type}
                             </Badge>
-                            {item.link ? (
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                className="border-gray-600"
-                                onClick={() => window.open(item.link, '_blank')}
-                              >
-                                <ExternalLink className="w-4 h-4" />
-                              </Button>
+                            {'link' in item && item.link ? (
+                              'internal' in item && item.internal ? (
+                                <Link href={item.link}>
+                                  <Button
+                                    size="sm"
+                                    variant="outline"
+                                    className="border-gray-600"
+                                  >
+                                    View Case Study
+                                  </Button>
+                                </Link>
+                              ) : (
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  className="border-gray-600"
+                                  onClick={() => window.open(item.link, '_blank')}
+                                >
+                                  <ExternalLink className="w-4 h-4" />
+                                </Button>
+                              )
                             ) : (
                               <Button
                                 size="sm"
                                 variant="outline"
                                 className="border-gray-600"
-                                disabled={item.status === "Coming Soon"}
+                                disabled={'status' in item && item.status === "Coming Soon"}
                               >
                                 <Download className="w-4 h-4" />
                               </Button>

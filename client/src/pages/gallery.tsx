@@ -5,6 +5,7 @@ import { analytics } from "@/lib/analytics";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import { ModelViewDialog } from "@/components/model-view-dialog";
+import { SEOHead, getCanonicalUrl } from "@/components/seo-head";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -17,15 +18,6 @@ export default function Gallery() {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [selectedModel, setSelectedModel] = useState<PortfolioItem | null>(null);
   const [isModelDialogOpen, setIsModelDialogOpen] = useState(false);
-
-  useEffect(() => {
-    document.title = "3D Model Gallery - Six1Five Studio | Reality Capture Portfolio";
-
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute("content", "Explore our complete collection of 3D models, photogrammetry captures, and LiDAR scans. Interactive Sketchfab viewers for AEC, construction, and heritage documentation projects.");
-    }
-  }, []);
 
   // Smooth transition effect when changing filters
   useEffect(() => {
@@ -80,6 +72,13 @@ export default function Gallery() {
 
   return (
     <div className="min-h-screen bg-[hsl(218,11%,15%)] text-white font-sans">
+      <SEOHead
+        title="Portfolio Gallery - Six1Five Studio | Reality Capture Projects"
+        description="Explore our portfolio of drone mapping, LiDAR scanning, and photogrammetry projects for construction, real estate, agriculture, and historic preservation."
+        keywords="reality capture portfolio, drone mapping projects, LiDAR scans, photogrammetry gallery, 3D model viewer, construction surveying, AEC technology"
+        canonicalUrl={getCanonicalUrl('/gallery')}
+        ogImage="/images/og-gallery.jpg"
+      />
       <Navbar />
       
       <main className="pt-20 pb-16">
