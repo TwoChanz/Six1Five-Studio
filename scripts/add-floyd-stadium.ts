@@ -32,9 +32,8 @@ async function addFloydStadium() {
 
     console.log("📍 Adding Floyd Stadium – MTSU portfolio item...");
 
-    let result;
     if (useSqlite) {
-      result = await db.run(sql`
+      await db.run(sql`
         INSERT INTO portfolio_items (
           title, description, category, sketchfab_model_id,
           luma_embed_url, polycam_embed_url,
@@ -62,33 +61,12 @@ async function addFloydStadium() {
         )
       `);
     } else {
-      result = await db.run(sql`
-        INSERT INTO portfolio_items (
-          title, description, category, sketchfab_model_id,
-          luma_embed_url, polycam_embed_url,
-          model_file, model_format, video_file, video_format,
-          tools, services, featured_image, images,
-          published, featured, created_at
-        ) VALUES (
-          ${newItem.title},
-          ${newItem.description},
-          ${newItem.category},
-          ${newItem.sketchfabModelId},
-          ${newItem.lumaEmbedUrl},
-          ${newItem.polycamEmbedUrl},
-          ${newItem.modelFile},
-          ${newItem.modelFormat},
-          ${newItem.videoFile},
-          ${newItem.videoFormat},
-          ${newItem.tools},
-          ${newItem.services},
-          ${newItem.featuredImage},
-          ${newItem.images},
-          ${newItem.published},
-          ${newItem.featured},
-          ${now}
-        )
-      `);
+      // For PostgreSQL: use Drizzle ORM with array support
+      const { portfolioItems } = await import("../shared/schema.js");
+      await db.insert(portfolioItems).values({
+        ...newItem,
+        createdAt: new Date(now)
+      });
     }
 
     console.log("✅ Floyd Stadium added successfully!");

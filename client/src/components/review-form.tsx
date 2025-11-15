@@ -106,6 +106,7 @@ export default function ReviewForm({ onSuccess }: ReviewFormProps) {
             {...register("name")}
             placeholder="Your full name"
             className="bg-gray-800 border-gray-700"
+            autoComplete="name"
           />
           {errors.name && (
             <p className="text-sm text-red-500">{errors.name.message}</p>
@@ -121,6 +122,7 @@ export default function ReviewForm({ onSuccess }: ReviewFormProps) {
             {...register("email")}
             placeholder="your@email.com"
             className="bg-gray-800 border-gray-700"
+            autoComplete="email"
           />
           {errors.email && (
             <p className="text-sm text-red-500">{errors.email.message}</p>
@@ -135,6 +137,7 @@ export default function ReviewForm({ onSuccess }: ReviewFormProps) {
             {...register("company")}
             placeholder="Your company name"
             className="bg-gray-800 border-gray-700"
+            autoComplete="organization"
           />
         </div>
 
@@ -146,6 +149,7 @@ export default function ReviewForm({ onSuccess }: ReviewFormProps) {
             {...register("role")}
             placeholder="e.g., Project Manager, Architect"
             className="bg-gray-800 border-gray-700"
+            autoComplete="organization-title"
           />
         </div>
 
@@ -155,7 +159,7 @@ export default function ReviewForm({ onSuccess }: ReviewFormProps) {
             Service Used <span className="text-red-500">*</span>
           </Label>
           <Select onValueChange={(value) => setValue("projectType", value, { shouldValidate: true })}>
-            <SelectTrigger className="bg-gray-800 border-gray-700">
+            <SelectTrigger id="projectType" className="bg-gray-800 border-gray-700">
               <SelectValue placeholder="Select the service you used" />
             </SelectTrigger>
             <SelectContent>
@@ -174,10 +178,10 @@ export default function ReviewForm({ onSuccess }: ReviewFormProps) {
 
         {/* Rating */}
         <div className="space-y-2">
-          <Label>
+          <Label id="rating-label">
             Rating <span className="text-red-500">*</span>
           </Label>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2" role="radiogroup" aria-labelledby="rating-label" aria-required="true">
             {[1, 2, 3, 4, 5].map((rating) => (
               <button
                 key={rating}
@@ -186,6 +190,9 @@ export default function ReviewForm({ onSuccess }: ReviewFormProps) {
                 onMouseEnter={() => setHoverRating(rating)}
                 onMouseLeave={() => setHoverRating(0)}
                 className="focus:outline-none focus:ring-2 focus:ring-[var(--primary-blue)] rounded"
+                role="radio"
+                aria-checked={selectedRating === rating}
+                aria-label={`${rating} star${rating !== 1 ? 's' : ''}`}
               >
                 <Star
                   className={`w-8 h-8 transition-colors ${
@@ -197,13 +204,13 @@ export default function ReviewForm({ onSuccess }: ReviewFormProps) {
               </button>
             ))}
             {selectedRating > 0 && (
-              <span className="ml-2 text-sm text-gray-400">
+              <span className="ml-2 text-sm text-gray-400" aria-live="polite">
                 {selectedRating} star{selectedRating !== 1 ? "s" : ""}
               </span>
             )}
           </div>
           {errors.rating && (
-            <p className="text-sm text-red-500">{errors.rating.message}</p>
+            <p className="text-sm text-red-500" role="alert">{errors.rating.message}</p>
           )}
         </div>
 

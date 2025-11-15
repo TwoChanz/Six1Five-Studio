@@ -135,6 +135,25 @@ export default function ParthenonCaseStudy() {
         ref={scrollContainerRef}
         className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16"
       >
+        {/* Study Introduction */}
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/30 rounded-lg p-6">
+            <div className="flex items-start gap-3">
+              <div className="p-2 rounded-lg bg-purple-500/20">
+                <svg className="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                </svg>
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg font-semibold text-purple-400 mb-2">Concept Study: Exploratory Analysis</h3>
+                <p className="text-sm text-contrast-medium leading-relaxed">
+                  This study explores architectural site analysis techniques including sun path modeling, structural load assessment, and sustainable retrofit strategies. While not a traditional reality capture project, it demonstrates the analytical and visualization expertise that complements our scanning services — showcasing how environmental analysis and building systems knowledge inform comprehensive site documentation workflows.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Section 1: Site Context */}
         <section
           ref={(el) => { sectionRefs.current[0] = el }}
@@ -541,6 +560,30 @@ export default function ParthenonCaseStudy() {
               Next
               <ChevronRight className="w-5 h-5" />
             </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* Closing CTA */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+        <div className="max-w-4xl mx-auto bg-gradient-to-r from-orange-500/10 to-blue-500/10 border border-orange-500/30 rounded-lg p-8 text-center">
+          <h3 className="text-2xl font-bold text-contrast-high mb-4">
+            Interested in Reality Capture Services?
+          </h3>
+          <p className="text-contrast-medium mb-6 max-w-2xl mx-auto">
+            This concept study demonstrates our analytical approach to site documentation. Explore our portfolio of drone mapping, LiDAR scanning, and photogrammetry projects — or get in touch to discuss your next project.
+          </p>
+          <div className="flex flex-wrap gap-4 justify-center">
+            <Link href="/gallery">
+              <Button className="bg-orange-500 hover:bg-orange-600 text-white">
+                View Portfolio Projects
+              </Button>
+            </Link>
+            <Link href="/#contact">
+              <Button variant="outline" className="border-orange-500 text-orange-400 hover:bg-orange-500/10">
+                Get in Touch
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

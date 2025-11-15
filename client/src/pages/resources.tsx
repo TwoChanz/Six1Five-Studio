@@ -5,7 +5,7 @@ import Footer from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { FileText, Download, ExternalLink, BookOpen, Video, Wrench, Shield, Newspaper } from "lucide-react";
+import { FileText, Download, ExternalLink, BookOpen, Video, Wrench, Shield, Newspaper, Lightbulb } from "lucide-react";
 
 export default function Resources() {
   useEffect(() => {
@@ -19,14 +19,15 @@ export default function Resources() {
 
   const resourceCategories = [
     {
-      title: "Case Studies",
-      icon: Newspaper,
-      color: "hsl(24,95%,53%)",
+      title: "Concept Studies",
+      icon: Lightbulb,
+      color: "hsl(280,70%,60%)",
+      description: "Experimental design studies blending Reality Capture workflows with environmental analysis and digital visualization. Exploratory projects that showcase technical expertise beyond traditional scanning services.",
       items: [
         {
           title: "Nashville Parthenon Solar Analysis",
-          description: "Conceptual study demonstrating solar path analysis, structural assessment, and photovoltaic retrofit methodology for historic landmarks.",
-          type: "Case Study",
+          description: "Architectural analysis exploring sun path modeling, structural load paths, and conceptual solar retrofit integration — demonstrating site analysis expertise complementary to reality capture services.",
+          type: "Concept Study",
           link: "/case-study/parthenon",
           internal: true
         }
@@ -179,7 +180,12 @@ export default function Resources() {
                     <div className="p-3 rounded-lg bg-gray-800 border border-gray-700">
                       <IconComponent className="w-6 h-6" style={{ color: category.color }} />
                     </div>
-                    <h2 className="text-2xl font-bold">{category.title}</h2>
+                    <div>
+                      <h2 className="text-2xl font-bold">{category.title}</h2>
+                      {'description' in category && (
+                        <p className="text-sm text-gray-400 mt-1 max-w-3xl">{category.description}</p>
+                      )}
+                    </div>
                   </div>
 
                   <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -209,9 +215,9 @@ export default function Resources() {
                                   <Button
                                     size="sm"
                                     variant="outline"
-                                    className="border-gray-600"
+                                    className="border-gray-600 hover:border-[hsl(280,70%,60%)] hover:text-[hsl(280,70%,60%)]"
                                   >
-                                    View Case Study
+                                    Explore Study
                                   </Button>
                                 </Link>
                               ) : (

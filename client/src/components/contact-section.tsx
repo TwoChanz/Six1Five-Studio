@@ -264,12 +264,14 @@ export default function ContactSection() {
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-sm font-medium">Name</FormLabel>
+                      <FormLabel htmlFor="contact-name" className="text-sm font-medium">Name</FormLabel>
                       <FormControl>
-                        <Input 
-                          {...field} 
+                        <Input
+                          {...field}
+                          id="contact-name"
                           placeholder="Your name"
                           className="bg-gray-700 border-gray-600 focus:border-[hsl(24,95%,53%)] text-white"
+                          autoComplete="name"
                         />
                       </FormControl>
                       <FormMessage />
@@ -282,13 +284,15 @@ export default function ContactSection() {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-sm font-medium">Email</FormLabel>
+                      <FormLabel htmlFor="contact-email" className="text-sm font-medium">Email</FormLabel>
                       <FormControl>
-                        <Input 
-                          {...field} 
+                        <Input
+                          {...field}
+                          id="contact-email"
                           type="email"
                           placeholder="your@email.com"
                           className="bg-gray-700 border-gray-600 focus:border-[hsl(24,95%,53%)] text-white"
+                          autoComplete="email"
                         />
                       </FormControl>
                       <FormMessage />
@@ -301,10 +305,10 @@ export default function ContactSection() {
                   name="projectType"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-sm font-medium">Project Type</FormLabel>
+                      <FormLabel htmlFor="contact-projectType" className="text-sm font-medium">Project Type</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
-                          <SelectTrigger className="bg-gray-700 border-gray-600 focus:border-[hsl(24,95%,53%)] text-white">
+                          <SelectTrigger id="contact-projectType" className="bg-gray-700 border-gray-600 focus:border-[hsl(24,95%,53%)] text-white">
                             <SelectValue placeholder="Select project type" />
                           </SelectTrigger>
                         </FormControl>
@@ -326,12 +330,14 @@ export default function ContactSection() {
                   name="location"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-sm font-medium">Project Location</FormLabel>
+                      <FormLabel htmlFor="contact-location" className="text-sm font-medium">Project Location</FormLabel>
                       <FormControl>
-                        <Input 
-                          {...field} 
+                        <Input
+                          {...field}
+                          id="contact-location"
                           placeholder="City, State (e.g., Nashville, TN)"
                           className="bg-gray-700 border-gray-600 focus:border-[hsl(24,95%,53%)] text-white"
+                          autoComplete="address-level2"
                         />
                       </FormControl>
                       <FormMessage />
@@ -355,6 +361,7 @@ export default function ContactSection() {
                               <FormItem className="flex items-center space-x-2 space-y-0">
                                 <FormControl>
                                   <Checkbox
+                                    id={`service-${service.id}`}
                                     checked={field.value?.includes(service.id)}
                                     onCheckedChange={(checked) => {
                                       return checked
@@ -366,7 +373,7 @@ export default function ContactSection() {
                                     className="border-gray-600 data-[state=checked]:bg-[hsl(24,95%,53%)]"
                                   />
                                 </FormControl>
-                                <FormLabel className="text-sm font-normal cursor-pointer">
+                                <FormLabel htmlFor={`service-${service.id}`} className="text-sm font-normal cursor-pointer">
                                   {service.label}
                                 </FormLabel>
                               </FormItem>
@@ -384,10 +391,11 @@ export default function ContactSection() {
                   name="projectDetails"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-sm font-medium">Project Details</FormLabel>
+                      <FormLabel htmlFor="contact-projectDetails" className="text-sm font-medium">Project Details</FormLabel>
                       <FormControl>
-                        <Textarea 
-                          {...field} 
+                        <Textarea
+                          {...field}
+                          id="contact-projectDetails"
                           placeholder="Tell me about your project..."
                           className="bg-gray-700 border-gray-600 focus:border-[hsl(24,95%,53%)] h-32 text-white"
                         />
@@ -403,10 +411,10 @@ export default function ContactSection() {
                     name="timeline"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-sm font-medium">Project Timeline</FormLabel>
+                        <FormLabel htmlFor="contact-timeline" className="text-sm font-medium">Project Timeline</FormLabel>
                         <Select onValueChange={field.onChange} value={field.value}>
                           <FormControl>
-                            <SelectTrigger className="bg-gray-700 border-gray-600 focus:border-[hsl(24,95%,53%)] text-white">
+                            <SelectTrigger id="contact-timeline" className="bg-gray-700 border-gray-600 focus:border-[hsl(24,95%,53%)] text-white">
                               <SelectValue placeholder="Select timeline" />
                             </SelectTrigger>
                           </FormControl>
@@ -428,10 +436,10 @@ export default function ContactSection() {
                     name="budgetRange"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-sm font-medium">Budget Range</FormLabel>
+                        <FormLabel htmlFor="contact-budgetRange" className="text-sm font-medium">Budget Range</FormLabel>
                         <Select onValueChange={field.onChange} value={field.value}>
                           <FormControl>
-                            <SelectTrigger className="bg-gray-700 border-gray-600 focus:border-[hsl(24,95%,53%)] text-white">
+                            <SelectTrigger id="contact-budgetRange" className="bg-gray-700 border-gray-600 focus:border-[hsl(24,95%,53%)] text-white">
                               <SelectValue placeholder="Select budget" />
                             </SelectTrigger>
                           </FormControl>
@@ -454,6 +462,7 @@ export default function ContactSection() {
                   <div className="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center">
                     <input
                       type="file"
+                      name="referenceFiles"
                       multiple
                       accept="image/jpeg,image/png,image/gif,image/webp,.pdf,.txt"
                       onChange={handleFileUpload}

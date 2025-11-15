@@ -1,0 +1,499 @@
+﻿Cleanup Log - 11/10/2025 01:07:50
+Mode: LIVE
+================================================================================
+
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules (438.58 MB)
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@esbuild-kit\core-utils\node_modules (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@esbuild-kit\core-utils\node_modules' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@tailwindcss\node\node_modules (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@tailwindcss\node\node_modules' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@tailwindcss\typography\node_modules (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@tailwindcss\typography\node_modules' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@tailwindcss\vite\node_modules (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@tailwindcss\vite\node_modules' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\body-parser\node_modules (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\body-parser\node_modules' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\chokidar\node_modules (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\chokidar\node_modules' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\drizzle-kit\node_modules (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\drizzle-kit\node_modules' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\express\node_modules (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\express\node_modules' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\express-session\node_modules (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\express-session\node_modules' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\fast-glob\node_modules (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\fast-glob\node_modules' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\finalhandler\node_modules (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\finalhandler\node_modules' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\jsonwebtoken\node_modules (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\jsonwebtoken\node_modules' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\memorystore\node_modules (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\memorystore\node_modules' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\node-abi\node_modules (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\node-abi\node_modules' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\path-scurry\node_modules (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\path-scurry\node_modules' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\pg\node_modules (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\pg\node_modules' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\postcss\node_modules (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\postcss\node_modules' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\prop-types\node_modules (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\prop-types\node_modules' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\resolve\test\resolver\symlinked\_\node_modules (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\resolve\test\resolver\symlinked\_\node_modules' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\resolve\test\shadowed_core\node_modules (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\resolve\test\shadowed_core\node_modules' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\send\node_modules (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\send\node_modules' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\send\node_modules\debug\node_modules (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\send\node_modules\debug\node_modules' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\sharp\node_modules (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\sharp\node_modules' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\string-width-cjs\node_modules (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\string-width-cjs\node_modules' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\strip-ansi-cjs\node_modules (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\strip-ansi-cjs\node_modules' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\svix\node_modules (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\svix\node_modules' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\three-stdlib\node_modules (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\three-stdlib\node_modules' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\tsx\node_modules (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\tsx\node_modules' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\vite\node_modules (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\vite\node_modules' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\wrap-ansi-cjs\node_modules (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\wrap-ansi-cjs\node_modules' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\dist (31.89 MB)
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@ampproject\remapping\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@ampproject\remapping\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@epic-web\invariant\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@epic-web\invariant\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@esbuild-kit\core-utils\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@esbuild-kit\core-utils\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@esbuild-kit\esm-loader\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@esbuild-kit\esm-loader\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@floating-ui\core\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@floating-ui\core\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@floating-ui\dom\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@floating-ui\dom\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@floating-ui\react-dom\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@floating-ui\react-dom\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@floating-ui\utils\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@floating-ui\utils\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\ajv\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\ajv\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\arktype\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\arktype\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\class-validator\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\class-validator\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\computed-types\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\computed-types\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\effect-ts\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\effect-ts\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\fluentvalidation-ts\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\fluentvalidation-ts\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\io-ts\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\io-ts\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\joi\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\joi\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\nope\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\nope\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\superstruct\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\superstruct\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\typanion\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\typanion\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\typebox\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\typebox\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\typeschema\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\typeschema\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\valibot\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\valibot\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\vest\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\vest\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\vine\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\vine\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\yup\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\yup\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\zod\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@hookform\resolvers\zod\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@jridgewell\gen-mapping\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@jridgewell\gen-mapping\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@jridgewell\resolve-uri\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@jridgewell\resolve-uri\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@jridgewell\set-array\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@jridgewell\set-array\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@jridgewell\sourcemap-codec\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@jridgewell\sourcemap-codec\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@jridgewell\trace-mapping\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@jridgewell\trace-mapping\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\number\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\number\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\primitive\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\primitive\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-accordion\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-accordion\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-alert-dialog\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-alert-dialog\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-arrow\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-arrow\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-aspect-ratio\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-aspect-ratio\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-avatar\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-avatar\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-checkbox\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-checkbox\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-collapsible\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-collapsible\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-collection\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-collection\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-compose-refs\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-compose-refs\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-context\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-context\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-context-menu\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-context-menu\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-dialog\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-dialog\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-direction\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-direction\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-dismissable-layer\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-dismissable-layer\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-dropdown-menu\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-dropdown-menu\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-focus-guards\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-focus-guards\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-focus-scope\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-focus-scope\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-hover-card\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-hover-card\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-id\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-id\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-label\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-label\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-menu\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-menu\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-menubar\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-menubar\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-navigation-menu\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-navigation-menu\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-popover\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-popover\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-popper\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-popper\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-portal\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-portal\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-presence\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-presence\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-primitive\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-primitive\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-progress\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-progress\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-radio-group\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-radio-group\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-roving-focus\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-roving-focus\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-scroll-area\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-scroll-area\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-select\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-select\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-separator\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-separator\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-slider\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-slider\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-slot\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-slot\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-switch\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-switch\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-tabs\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-tabs\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-toast\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-toast\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-toggle\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-toggle\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-toggle-group\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-toggle-group\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-tooltip\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-tooltip\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-use-callback-ref\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-use-callback-ref\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-use-controllable-state\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-use-controllable-state\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-use-escape-keydown\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-use-escape-keydown\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-use-layout-effect\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-use-layout-effect\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-use-previous\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-use-previous\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-use-rect\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-use-rect\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-use-size\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-use-size\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-visually-hidden\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\react-visually-hidden\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\rect\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@radix-ui\rect\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@replit\vite-plugin-cartographer\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@replit\vite-plugin-cartographer\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@replit\vite-plugin-runtime-error-modal\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@replit\vite-plugin-runtime-error-modal\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@tailwindcss\node\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@tailwindcss\node\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@tailwindcss\node\node_modules\jiti\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@tailwindcss\node\node_modules\jiti\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@tailwindcss\node\node_modules\tailwindcss\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@tailwindcss\node\node_modules\tailwindcss\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@tailwindcss\typography\node_modules\postcss-selector-parser\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@tailwindcss\typography\node_modules\postcss-selector-parser\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@tailwindcss\vite\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@tailwindcss\vite\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@tailwindcss\vite\node_modules\tailwindcss\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@tailwindcss\vite\node_modules\tailwindcss\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@tweenjs\tween.js\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@tweenjs\tween.js\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@vitejs\plugin-react\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@vitejs\plugin-react\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@webgpu\types\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@webgpu\types\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\aria-hidden\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\aria-hidden\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\caniuse-lite\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\caniuse-lite\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\class-variance-authority\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\class-variance-authority\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\clsx\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\clsx\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\cmdk\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\cmdk\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\cross-env\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\cross-env\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\d3-array\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\d3-array\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\d3-color\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\d3-color\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\d3-ease\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\d3-ease\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\d3-format\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\d3-format\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\d3-interpolate\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\d3-interpolate\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\d3-path\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\d3-path\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\d3-scale\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\d3-scale\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\d3-shape\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\d3-shape\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\d3-time\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\d3-time\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\d3-time-format\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\d3-time-format\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\d3-timer\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\d3-timer\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\dlv\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\dlv\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\es6-promise\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\es6-promise\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\esbuild-register\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\esbuild-register\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\escalade\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\escalade\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\express-rate-limit\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\express-rate-limit\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\fast-equals\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\fast-equals\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\foreground-child\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\foreground-child\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\framer-motion\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\framer-motion\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\get-nonce\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\get-nonce\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\get-tsconfig\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\get-tsconfig\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\glob\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\glob\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\gsap\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\gsap\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\input-otp\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\input-otp\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\internmap\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\internmap\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\ip-address\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\ip-address\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\jackspeak\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\jackspeak\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\jiti\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\jiti\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\json5\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\json5\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\lenis\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\lenis\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\lucide-react\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\lucide-react\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\magic-string\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\magic-string\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\minimatch\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\minimatch\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\minipass\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\minipass\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\mitt\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\mitt\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\modern-screenshot\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\modern-screenshot\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\motion-dom\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\motion-dom\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\motion-utils\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\motion-utils\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\next-themes\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\next-themes\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\object-hash\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\object-hash\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\package-json-from-dist\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\package-json-from-dist\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\path-scurry\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\path-scurry\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\path-scurry\node_modules\lru-cache\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\path-scurry\node_modules\lru-cache\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\pg-cloudflare\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\pg-cloudflare\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\pg-protocol\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\pg-protocol\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\postcss-selector-parser\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\postcss-selector-parser\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\qs\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\qs\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\react-day-picker\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\react-day-picker\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\react-hook-form\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\react-hook-form\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\react-remove-scroll\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\react-remove-scroll\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\react-remove-scroll-bar\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\react-remove-scroll-bar\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\react-resizable-panels\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\react-resizable-panels\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\react-style-singleton\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\react-style-singleton\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\react-transition-group\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\react-transition-group\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\regexparam\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\regexparam\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\resend\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\resend\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\resolve-pkg-maps\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\resolve-pkg-maps\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\rollup\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\rollup\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\signal-exit\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\signal-exit\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\source-map\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\source-map\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\sucrase\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\sucrase\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\svix\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\svix\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\tailwind-merge\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\tailwind-merge\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\tiny-invariant\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\tiny-invariant\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\ts-interface-checker\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\ts-interface-checker\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\tsx\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\tsx\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\tw-animate-css\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\tw-animate-css\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\url-parse\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\url-parse\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\use-callback-ref\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\use-callback-ref\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\use-sidecar\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\use-sidecar\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\uuid\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\uuid\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\vaul\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\vaul\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\vite\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\vite\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\yaml\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\yaml\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\yaml\browser\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\yaml\browser\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\zod-validation-error\dist (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\zod-validation-error\dist' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@isaacs\cliui\build (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@isaacs\cliui\build' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@tanstack\query-core\build (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@tanstack\query-core\build' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@tanstack\react-query\build (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@tanstack\react-query\build' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@types\three\build (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@types\three\build' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\better-sqlite3\build (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\better-sqlite3\build' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\lines-and-columns\build (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\lines-and-columns\build' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\tailwindcss\lib\cli\build (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\tailwindcss\lib\cli\build' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\tailwindcss\src\cli\build (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\tailwindcss\src\cli\build' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\three\build (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\three\build' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\.git\logs (0.07 MB)
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@babel\parser\bin (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@babel\parser\bin' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@esbuild-kit\core-utils\node_modules\esbuild\bin (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\@esbuild-kit\core-utils\node_modules\esbuild\bin' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\autoprefixer\bin (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\autoprefixer\bin' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\bcryptjs\bin (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\bcryptjs\bin' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\cross-env\dist\bin (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\cross-env\dist\bin' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\cssesc\bin (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\cssesc\bin' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\drizzle-kit\node_modules\esbuild\bin (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\drizzle-kit\node_modules\esbuild\bin' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\esbuild\bin (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\esbuild\bin' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\jiti\bin (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\jiti\bin' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\jsesc\bin (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\jsesc\bin' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\jsonwebtoken\node_modules\semver\bin (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\jsonwebtoken\node_modules\semver\bin' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\mkdirp\bin (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\mkdirp\bin' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\nanoid\bin (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\nanoid\bin' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\node-abi\node_modules\semver\bin (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\node-abi\node_modules\semver\bin' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\postcss\node_modules\nanoid\bin (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\postcss\node_modules\nanoid\bin' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\resolve\bin (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\resolve\bin' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\rollup\dist\bin (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\rollup\dist\bin' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\semver\bin (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\semver\bin' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\sharp\node_modules\semver\bin (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\sharp\node_modules\semver\bin' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\sucrase\bin (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\sucrase\bin' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\tsx\node_modules\esbuild\bin (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\tsx\node_modules\esbuild\bin' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\typescript\bin (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\typescript\bin' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\uuid\dist\bin (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\uuid\dist\bin' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\vite\bin (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\vite\bin' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\vite\node_modules\esbuild\bin (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\vite\node_modules\esbuild\bin' because it does not exist.
+DIR: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\which\bin (0 MB)
+  ERROR: Cannot find path 'C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\node_modules\which\bin' because it does not exist.
+
+================================================================================
+Summary:
+  Directories removed: 3
+  Files removed: 0
+  Space freed: 0.46 GB

@@ -6,6 +6,23 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Six1Five Studio Reality Capture Portfolio - A professional portfolio website for a reality capture company specializing in drone mapping, LiDAR scanning, and photogrammetry for AEC (Architecture, Engineering, Construction), real estate, and historic preservation industries.
 
+## 🚀 PRIORITY: Production Deployment
+
+**Current Status:** Ready to deploy, needs production services setup
+
+**Quick Deploy Guides:**
+- `QUICK_DEPLOY.md` - 45-minute deployment walkthrough
+- `DEPLOY_CHECKLIST.md` - Printable checklist
+
+**Required for Production:**
+1. PostgreSQL database (Neon/Railway) - 10 min
+2. Resend email service - 10 min
+3. Google Analytics 4 - 5 min
+4. Admin password hash - 2 min
+5. Vercel deployment - 15 min
+
+**Total setup time:** ~45 minutes
+
 ## Commands
 
 ### Development
@@ -19,13 +36,40 @@ npm run check        # Run TypeScript type checking
 ### Database
 ```bash
 npm run db:push      # Push Drizzle schema changes to database (PostgreSQL or SQLite)
+
+# Database Initialization & Seeding
 tsx scripts/init-local-db.ts           # Initialize SQLite database with schema
 tsx scripts/seed-simple.ts             # Seed SQLite with minimal sample data
 tsx scripts/seed-sample-portfolio.ts   # Seed SQLite with full sample portfolio
+tsx scripts/setup-database.ts          # Complete database setup (init + seed)
+tsx scripts/migrate-database.ts        # Run database migrations
+
+# Portfolio Management
 tsx scripts/add-portfolio-item.ts      # Add a single portfolio item to database
+tsx scripts/add-multiple-models.ts     # Bulk add multiple portfolio items
 tsx scripts/list-portfolio-items.ts    # List all portfolio items in database
 tsx scripts/delete-portfolio-item.ts   # Delete a portfolio item by ID
-tsx scripts/add-multiple-models.ts     # Bulk add multiple portfolio items
+
+# Blog Management
+tsx scripts/add-blog-post.ts           # Add a new blog post
+tsx scripts/list-blog-posts.ts         # List all blog posts
+tsx scripts/delete-blog-post.ts        # Delete a blog post by ID
+
+# Review System
+tsx scripts/add-reviews-table.ts       # Add reviews table to database
+tsx scripts/seed-reviews.ts            # Seed sample review data
+tsx scripts/list-reviews.ts            # List all reviews
+
+# Utilities
+tsx scripts/hash-password.ts           # Generate bcrypt hash for admin password
+tsx scripts/verify-db.ts               # Verify database connection and schema
+```
+
+### PowerShell Utilities (Windows)
+```powershell
+.\run-live.ps1                # Start development server (PowerShell wrapper)
+.\run-portfolio-transfer.ps1  # Transfer portfolio data between environments
+.\optimize-projects.ps1       # Optimize project images and assets
 ```
 
 ### Admin Dashboard
@@ -109,12 +153,35 @@ scripts/
 - `@shared/*` → `shared/*`
 - `@assets/*` → `attached_assets/*` (in Vite config only)
 
+### Drizzle ORM Configuration
+
+The project uses **two separate Drizzle config files** for dual database support:
+
+1. **`drizzle.config.ts`** - PostgreSQL configuration (production)
+   - Used when `USE_SQLITE=false` or in production
+   - Connects to PostgreSQL via `DATABASE_URL`
+   - Run commands: `npm run db:push` (auto-detects config)
+
+2. **`drizzle.config.local.ts`** - SQLite configuration (development)
+   - Used when `USE_SQLITE=true`
+   - Connects to `local.db` file in project root
+   - Run commands: `npm run db:push` (auto-detects config)
+
+3. **`drizzle-push-auto.config.ts`** - Auto-detection wrapper
+   - Automatically selects correct config based on `USE_SQLITE` env var
+   - Used by `npm run db:push` command
+
+**Schema Management:**
+- Schema defined in `shared/schema.ts` (single source of truth)
+- Arrays stored as JSON strings in SQLite, native arrays in PostgreSQL
+- Database connection logic in `server/db.ts` handles both modes
+
 ### Database Schema
 
 **Tables:**
-- `users` - Basic user authentication (future expansion)
-- `contact_submissions` - Contact form data with services array, project details, timeline, budget
-- `blog_posts` - Blog content with slug, tags, publish status
+- `users` - Admin user authentication with JWT tokens
+- `contact_submissions` - Contact form data with services array, project details, timeline, budget, reference files
+- `blog_posts` - Blog content with slug, tags, publish status, cover images
 - `portfolio_items` - Portfolio projects with:
   - **Sketchfab** model IDs for embedded 3D viewers
   - **Luma AI** embed URLs (NeRF/Gaussian Splatting captures)
@@ -123,31 +190,61 @@ scripts/
   - Video walkthroughs (MP4/WebM/MOV)
   - Category, tools, services arrays
   - Featured flag for homepage
+  - Published flag for visibility control
+- `reviews` - Client testimonials and reviews with approval workflow
 
 **Validation**: All insert operations use Zod schemas exported from `shared/schema.ts`
+
+**Array Handling**:
+- PostgreSQL: Native array support (`text[]`)
+- SQLite: JSON string serialization (requires deserialization on read)
+- Storage layer (`server/storage.ts`) handles conversion automatically
 
 ### API Routes
 
 **Contact:**
 - `POST /api/contact` - Submit contact form
 - `GET /api/contact` - Get all submissions (admin)
+- `DELETE /api/contact/:id` - Delete submission (admin)
 
 **Blog:**
 - `GET /api/blog` - Get published posts
 - `GET /api/blog/:slug` - Get post by slug
-- `POST /api/blog` - Create new post
+- `POST /api/blog` - Create new post (admin)
+- `PATCH /api/blog/:id` - Update post (admin)
+- `PATCH /api/blog/:id/publish` - Toggle publish status (admin)
+- `DELETE /api/blog/:id` - Delete post (admin)
 
 **Portfolio:**
 - `GET /api/portfolio` - Get published items
 - `GET /api/portfolio/featured` - Get featured items
 - `GET /api/portfolio/:id` - Get item by ID
-- `POST /api/portfolio` - Create new item
+- `POST /api/portfolio` - Create new item (admin)
+- `PATCH /api/portfolio/:id` - Update item (admin)
+- `PATCH /api/portfolio/:id/featured` - Toggle featured status (admin)
+- `PATCH /api/portfolio/:id/publish` - Toggle publish status (admin)
+- `DELETE /api/portfolio/:id` - Delete item (admin)
+
+**Reviews:**
+- `GET /api/reviews` - Get all approved reviews
+- `POST /api/reviews` - Submit new review
+- `PATCH /api/reviews/:id/approve` - Approve review (admin)
+- `DELETE /api/reviews/:id` - Delete review (admin)
+
+**Admin Authentication:**
+- `POST /api/admin/login` - Admin login (returns JWT)
+- `POST /api/admin/logout` - Admin logout
+- `GET /api/admin/verify` - Verify JWT token
+
+**File Uploads:**
+- `POST /api/upload` - Upload files (contact form, max 5 files, 10MB each)
+- Served via `/uploads/contact-submissions/:filename` static route
 
 ### Key Technical Details
 
 1. **Development Server**: Port 5000 serves both API and client via Vite middleware
 2. **Production Build**:
-   - Client → `dist/public` (Vite)
+   - Client → `dist/` (Vite) - **CRITICAL**: Must output to `dist/`, NOT `dist/public` (Vercel requirement)
    - Server → `dist/index.js` (esbuild with ES module format)
 3. **Environment**: Uses `NODE_ENV` for dev/production modes
 4. **3D Viewers**: Integrated Sketchfab, Luma AI, and Polycam embeds + local Three.js model viewers with lazy loading
@@ -270,6 +367,44 @@ The portfolio supports **four types of 3D model display**:
   - Visible focus states for keyboard navigation
   - Comprehensive ARIA labels on interactive elements
   - React Error Boundaries to prevent full app crashes
+
+### UI/UX Status & Recommendations
+
+**Navigation Audit: ✅ ALL WORKING CORRECTLY** (see `NAVIGATION_AUDIT.md`)
+- All internal links, CTAs, and scroll targets verified
+- Cross-page scrolling functions properly
+- Mobile menu and desktop nav fully functional
+- External links open with proper security (`rel="noopener noreferrer"`)
+- Zero broken links or dead-end pages
+
+**Performance Optimizations Complete:**
+- 67% reduction in initial bundle size (309KB → 107KB core)
+- Manual code splitting: `react-vendor`, `ui-components`, `three-vendor`, `app-core`, `visual-libs`
+- Route-based lazy loading: Admin (2.72KB), Gallery (4.33KB), Blog (2.10KB)
+- Image optimization: Native lazy loading + `decoding="async"` on all images
+- 3D viewer lazy loading: Intersection Observer with 100px rootMargin
+
+**Content Management:**
+- **No-Code Editing**: Marketing team can update without developer
+  - Services: `client/src/data/services.json`
+  - FAQ: `client/src/data/faq.json`
+- **Admin Dashboard**: `/admin` for portfolio, blog, and contact management
+
+**Minor UI/UX Improvements to Consider** (non-critical):
+1. **Analytics Enhancement**: Add `analytics.externalLink()` to all external buttons (some already tracked)
+2. **Loading States**: Add skeleton loaders for route transitions (currently instant)
+3. **Scroll Position Memory**: Preserve scroll position when navigating back
+4. **Admin Dashboard Enhancements** (future):
+   - Rich text editor (TipTap/Quill) for blog posts
+   - Image upload with drag-and-drop
+   - Inline editing for quick updates
+   - Bulk actions (multi-select, delete all)
+   - Search and filtering for large datasets
+
+**Navigation Patterns:**
+- **Same-page scrolling**: `scrollToSection(sectionId)` - Smooth scroll with navbar offset
+- **Cross-page navigation**: `window.location.href = "/#section"` - Works from any page
+- **External links**: Always `target="_blank"` with security attributes
 
 ### SEO Implementation
 

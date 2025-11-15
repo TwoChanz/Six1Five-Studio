@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -9,18 +9,46 @@ import logoDesktop from "@/assets/logo-matrix-style-desktop.webp";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [location] = useLocation();
+  const [location, setLocation] = useLocation();
+  const pendingScrollRef = useRef<string | null>(null);
+
+  // Handle pending scroll after navigation to home page
+  useEffect(() => {
+    if (location === "/" && pendingScrollRef.current) {
+      const targetId = pendingScrollRef.current;
+      pendingScrollRef.current = null;
+
+      // Wait for page to render, then scroll
+      const timeoutId = setTimeout(() => {
+        const element = document.getElementById(targetId);
+        if (element) {
+          const nav = document.querySelector('nav');
+          const navHeight = nav?.getBoundingClientRect().height ?? 80;
+          const offsetTop = element.offsetTop - navHeight - 20;
+          window.scrollTo({
+            top: offsetTop,
+            behavior: "smooth"
+          });
+        }
+      }, 150);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [location]);
 
   const scrollToSection = (sectionId: string) => {
+    setIsMenuOpen(false);
+
     if (location !== "/") {
-      // Navigate to home first, then scroll
-      window.location.href = `/#${sectionId}`;
+      // Store the target and navigate to home
+      pendingScrollRef.current = sectionId;
+      setLocation("/");
       return;
     }
-    
+
+    // Already on home page, scroll immediately
     const element = document.getElementById(sectionId);
     if (element) {
-      // Calculate offset dynamically based on actual navbar height
       const nav = document.querySelector('nav');
       const navHeight = nav?.getBoundingClientRect().height ?? 80;
       const offsetTop = element.offsetTop - navHeight - 20;
@@ -28,7 +56,6 @@ export default function Navbar() {
         top: offsetTop,
         behavior: "smooth"
       });
-      setIsMenuOpen(false);
     }
   };
 
