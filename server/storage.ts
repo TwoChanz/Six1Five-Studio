@@ -15,7 +15,7 @@ import {
   type InsertPortfolioItem,
   type Review,
   type InsertReview
-} from "@shared/schema";
+} from "../shared/schema.js";
 import { db } from "./db.js";
 import { eq, desc, sql } from "drizzle-orm";
 
