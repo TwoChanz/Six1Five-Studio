@@ -1,6 +1,6 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
-import { storage } from "./storage";
+import { storage } from "./storage.js";
 import { insertContactSubmissionSchema, insertBlogPostSchema, insertPortfolioItemSchema, insertReviewSchema } from "@shared/schema";
 import { z } from "zod";
 import { Resend } from "resend";
@@ -8,8 +8,8 @@ import multer from "multer";
 import path from "path";
 import { fileURLToPath } from "url";
 import fs from "fs/promises";
-import { generateContactFormEmail, generateContactFormPlainText } from "./email-templates";
-import { verifyAdminPassword, generateToken, requireAuth } from "./auth";
+import { generateContactFormEmail, generateContactFormPlainText } from "./email-templates.js";
+import { verifyAdminPassword, generateToken, requireAuth } from "./auth.js";
 import rateLimit from "express-rate-limit";
 
 const __filename = fileURLToPath(import.meta.url);

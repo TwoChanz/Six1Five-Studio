@@ -16,7 +16,7 @@ import {
   type Review,
   type InsertReview
 } from "@shared/schema";
-import { db } from "./db";
+import { db } from "./db.js";
 import { eq, desc, sql } from "drizzle-orm";
 
 // Check if using SQLite (arrays stored as JSON strings)
