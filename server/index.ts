@@ -37,7 +37,8 @@ app.use((req, res, next) => {
   next();
 });
 
-(async () => {
+// Initialize the app for both development and production
+async function initializeApp() {
   const server = await registerRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
@@ -57,18 +58,33 @@ app.use((req, res, next) => {
     serveStatic(app);
   }
 
-  // ALWAYS serve the app on port 5000
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
-  const port = 5000;
-  const env = app.get("env");
-  const host = "0.0.0.0";
+  return server;
+}
 
-  server.listen(port, host, () => {
-    log(`\n🚀 Six1Five Studio Portfolio Server`);
-    log(`📍 Environment: ${env}`);
-    log(`🌐 Local: http://localhost:${port}`);
-    log(`🌐 Network: http://${host}:${port}`);
-    log(`\n✨ Server ready and listening...\n`);
-  });
-})();
+// Only start the server if running directly (not imported by Vercel)
+if (import.meta.url === `file://${process.argv[1]}`) {
+  (async () => {
+    const server = await initializeApp();
+
+    // ALWAYS serve the app on port 5000
+    // this serves both the API and the client.
+    // It is the only port that is not firewalled.
+    const port = 5000;
+    const env = app.get("env");
+    const host = "0.0.0.0";
+
+    server.listen(port, host, () => {
+      log(`\n🚀 Six1Five Studio Portfolio Server`);
+      log(`📍 Environment: ${env}`);
+      log(`🌐 Local: http://localhost:${port}`);
+      log(`🌐 Network: http://${host}:${port}`);
+      log(`\n✨ Server ready and listening...\n`);
+    });
+  })();
+} else {
+  // Initialize app for Vercel serverless
+  await initializeApp();
+}
+
+// Export the app for Vercel serverless
+export default app;
