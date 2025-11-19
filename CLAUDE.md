@@ -6,6 +6,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Six1Five Studio Reality Capture Portfolio - A professional portfolio website for a reality capture company specializing in drone mapping, LiDAR scanning, and photogrammetry for AEC (Architecture, Engineering, Construction), real estate, and historic preservation industries.
 
+**Tech Stack**: React 18 + Vite + TypeScript + Express.js + Drizzle ORM (PostgreSQL/SQLite) + Wouter routing + TailwindCSS
+
+**Quick Start**:
+```bash
+npm install           # Install dependencies
+npm run dev           # Start dev server (localhost:5000)
+npm run build         # Build for production
+npm run db:push       # Sync database schema
+```
+
 ## 🚀 PRIORITY: Production Deployment
 
 **Current Status:** Ready to deploy, needs production services setup
@@ -115,14 +125,16 @@ Without GA configured, analytics tracking will be skipped. Analytics tracks:
 ## Architecture
 
 ### Stack Overview
-- **Frontend**: React 18 + TypeScript + Vite + Tailwind CSS
+- **Frontend**: React 18 + TypeScript + Vite + Tailwind CSS (NOT Next.js)
 - **Backend**: Express.js + TypeScript (ES modules)
 - **Database**: PostgreSQL OR SQLite with Drizzle ORM (dual mode support)
-- **Routing**: Wouter (client-side)
+- **Routing**: Wouter (client-side, React Router-like)
 - **State Management**: TanStack Query (React Query)
 - **Forms**: React Hook Form + Zod validation
 - **UI Components**: Shadcn/ui (Radix UI primitives)
 - **3D Rendering**: Sketchfab embeds, Luma AI NeRF embeds, Polycam embeds, + Three.js + three-stdlib for local model viewing
+
+**Important**: This is a **Vite + React SPA**, not Next.js. Navigation uses Wouter's `<Link>` component, not Next.js `<Link>`.
 
 ### Project Structure
 
@@ -440,6 +452,13 @@ The portfolio supports **four types of 3D model display**:
 2. Server build: `esbuild server/index.ts` → outputs to `dist/index.js`
 3. Production server serves static files from `dist/` via Express
 
+**Vercel Serverless Configuration** (`vercel.json`):
+- API routes rewritten to `/dist/index.js` serverless function
+- All other routes serve from `index.html` for client-side routing
+- `server/index.ts` exports the Express app for serverless (line 84)
+- Server only starts locally when `VERCEL` env var is not set (line 65)
+- Runtime: Node.js 20.x
+
 **Performance Optimizations** (vite.config.ts):
 - Manual code splitting for optimal bundle sizes:
   - `react-vendor` chunk: React core libraries
@@ -453,6 +472,7 @@ The portfolio supports **four types of 3D model display**:
 - Set `NODE_ENV=production` for production builds
 - Configure all required env vars per `.env.example`
 - Use PostgreSQL in production (SQLite for local dev only)
+- Vercel automatically sets `VERCEL=true` in serverless environment
 
 ### Credentials & Certifications
 
@@ -478,3 +498,34 @@ The portfolio supports **four types of 3D model display**:
 4. **Contact Form Auto-Response** (future enhancement)
    - Include certification details in email templates (`server/email-templates.ts`)
    - Builds immediate trust with prospective clients
+
+### Troubleshooting
+
+**Development Server Issues:**
+- **Port 5000 already in use**: Kill the process or change port in `server/index.ts:69`
+  - Windows: `netstat -ano | findstr :5000` then `taskkill /PID <PID> /F`
+  - Mac/Linux: `lsof -ti:5000 | xargs kill -9`
+- **Vite middleware errors**: Ensure `NODE_ENV=development` is set
+- **Module resolution errors**: Clear `node_modules` and reinstall (`rm -rf node_modules && npm install`)
+
+**Database Issues:**
+- **SQLite locked**: Close other connections or delete `local.db` and reinitialize
+- **PostgreSQL connection fails**: Verify `DATABASE_URL` format and network access
+- **Schema mismatch**: Run `npm run db:push` to sync schema changes
+- **Array deserialization errors**: Check `server/storage.ts` for JSON.parse/stringify in SQLite mode
+
+**Build Issues:**
+- **Vercel deployment fails**: Verify `dist/` output exists after build
+- **Missing dependencies**: Check that all imports resolve to installed packages
+- **Type errors**: Run `npm run check` to diagnose TypeScript issues
+- **Large bundle size**: Review `vite.config.ts` manual chunks configuration
+
+**Authentication Issues:**
+- **Admin login fails**: Verify `JWT_SECRET` is set and password hash is correct
+- **JWT verification errors**: Ensure consistent `JWT_SECRET` across environments
+- **Session expires immediately**: Check JWT expiration in `server/routes.ts`
+
+**File Upload Issues:**
+- **Upload fails**: Check `server/uploads/contact-submissions/` directory exists and is writable
+- **Files not displaying**: Verify static file serving in `server/routes.ts`
+- **File size errors**: Multer limit is 10MB per file, 5 files max (configurable in `server/routes.ts`)

@@ -66,8 +66,8 @@ export default function NotFound() {
                 Pricing
               </Link>
               <span className="text-gray-600">•</span>
-              <Link href="/insights" className="text-[hsl(199,89%,48%)] hover:underline text-sm">
-                Insights
+              <Link href="/blog" className="text-[hsl(199,89%,48%)] hover:underline text-sm">
+                Blog
               </Link>
               <span className="text-gray-600">•</span>
               <Link href="/faq" className="text-[hsl(199,89%,48%)] hover:underline text-sm">

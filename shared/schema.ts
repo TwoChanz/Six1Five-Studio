@@ -54,6 +54,7 @@ export const portfolioItems = pgTable("portfolio_items", {
   images: text("images").array().default([]),
   published: boolean("published").default(false),
   featured: boolean("featured").default(false),
+  isConceptStudy: boolean("is_concept_study").default(false),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
@@ -68,6 +69,16 @@ export const reviews = pgTable("reviews", {
   projectType: text("project_type").notNull(), // Service they used
   approved: boolean("approved").default(false), // Admin moderation
   featured: boolean("featured").default(false), // Highlight on homepage
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const leads = pgTable("leads", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  email: text("email").notNull(),
+  company: text("company"),
+  source: text("source").notNull(), // Where they downloaded from (pricing, portfolio, etc.)
+  resourceRequested: text("resource_requested").notNull(), // What they downloaded
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
@@ -116,6 +127,7 @@ export const insertPortfolioItemSchema = createInsertSchema(portfolioItems).pick
   images: true,
   published: true,
   featured: true,
+  isConceptStudy: true,
 });
 
 export const insertReviewSchema = createInsertSchema(reviews).pick({
@@ -131,6 +143,14 @@ export const insertReviewSchema = createInsertSchema(reviews).pick({
   reviewText: z.string().min(10).max(1000),
 });
 
+export const insertLeadSchema = createInsertSchema(leads).pick({
+  name: true,
+  email: true,
+  company: true,
+  source: true,
+  resourceRequested: true,
+});
+
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 export type InsertContactSubmission = z.infer<typeof insertContactSubmissionSchema>;
@@ -141,3 +161,5 @@ export type InsertPortfolioItem = z.infer<typeof insertPortfolioItemSchema>;
 export type PortfolioItem = typeof portfolioItems.$inferSelect;
 export type InsertReview = z.infer<typeof insertReviewSchema>;
 export type Review = typeof reviews.$inferSelect;
+export type InsertLead = z.infer<typeof insertLeadSchema>;
+export type Lead = typeof leads.$inferSelect;

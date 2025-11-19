@@ -103,8 +103,8 @@ export default function Navbar() {
             <Link href="/resources" className={`relative hover:text-[hsl(158,64%,52%)] transition-colors ${location === "/resources" ? "text-[hsl(158,64%,52%)] after:absolute after:bottom-[-4px] after:left-0 after:right-0 after:h-0.5 after:bg-[hsl(158,64%,52%)] after:rounded-full" : ""}`}>
               Resources
             </Link>
-            <Link href="/insights" className={`relative hover:text-[hsl(199,89%,48%)] transition-colors ${location === "/insights" || location.startsWith("/blog") ? "text-[hsl(199,89%,48%)] after:absolute after:bottom-[-4px] after:left-0 after:right-0 after:h-0.5 after:bg-[hsl(199,89%,48%)] after:rounded-full" : ""}`}>
-              Insights
+            <Link href="/blog" className={`relative hover:text-[hsl(199,89%,48%)] transition-colors ${location === "/blog" || location.startsWith("/blog/") ? "text-[hsl(199,89%,48%)] after:absolute after:bottom-[-4px] after:left-0 after:right-0 after:h-0.5 after:bg-[hsl(199,89%,48%)] after:rounded-full" : ""}`}>
+              Blog
             </Link>
             <Link href="/faq" className={`relative hover:text-[hsl(24,95%,53%)] transition-colors ${location === "/faq" ? "text-[hsl(24,95%,53%)] after:absolute after:bottom-[-4px] after:left-0 after:right-0 after:h-0.5 after:bg-[hsl(24,95%,53%)] after:rounded-full" : ""}`}>
               FAQ
@@ -178,11 +178,11 @@ export default function Navbar() {
                 Resources
               </Link>
               <Link
-                href="/insights"
+                href="/blog"
                 className="text-left hover:text-[hsl(199,89%,48%)] transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Insights
+                Blog
               </Link>
               <Link
                 href="/faq"

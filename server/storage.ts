@@ -5,6 +5,7 @@ import {
   blogPosts,
   portfolioItems,
   reviews,
+  leads,
   type User,
   type InsertUser,
   type ContactSubmission,
@@ -14,7 +15,9 @@ import {
   type PortfolioItem,
   type InsertPortfolioItem,
   type Review,
-  type InsertReview
+  type InsertReview,
+  type Lead,
+  type InsertLead
 } from "../shared/schema.js";
 import { db } from "./db.js";
 import { eq, desc, sql } from "drizzle-orm";
@@ -320,7 +323,13 @@ export class DatabaseStorage implements IStorage {
 
   async getFeaturedPortfolioItems(): Promise<PortfolioItem[]> {
     if (useSqlite) {
-      const results = await db.all(sql`SELECT * FROM portfolio_items WHERE featured = 1 ORDER BY created_at DESC`) as any[];
+      const results = await db.all(sql`
+        SELECT * FROM portfolio_items
+        WHERE featured = 1
+        ORDER BY
+          CASE WHEN id = 6 THEN 0 ELSE 1 END,
+          created_at DESC
+      `) as any[];
       return results.map(i => deserializePortfolioItem(i as PortfolioItem)!);
     }
     const results = await db
@@ -328,7 +337,15 @@ export class DatabaseStorage implements IStorage {
       .from(portfolioItems)
       .where(eq(portfolioItems.featured, true))
       .orderBy(desc(portfolioItems.createdAt));
-    return results.map(i => deserializePortfolioItem(i)!);
+
+    // Prioritize Floyd Stadium (ID: 6) to appear first
+    return results
+      .map(i => deserializePortfolioItem(i)!)
+      .sort((a, b) => {
+        if (a.id === 6) return -1;
+        if (b.id === 6) return 1;
+        return 0;
+      });
   }
 
   async getPortfolioItemById(id: number): Promise<PortfolioItem | undefined> {
@@ -472,6 +489,25 @@ export class DatabaseStorage implements IStorage {
       await db.run(sql`DELETE FROM reviews WHERE id = ${id}`);
     } else {
       await db.delete(reviews).where(eq(reviews.id, id));
+    }
+  }
+
+  // Lead magnet methods
+  async createLead(insertLead: InsertLead): Promise<Lead> {
+    const [lead] = await db.insert(leads).values(insertLead).returning();
+    return lead;
+  }
+
+  async getLeads(): Promise<Lead[]> {
+    const allLeads = await db.select().from(leads).orderBy(desc(leads.createdAt));
+    return allLeads;
+  }
+
+  async deleteLead(id: number): Promise<void> {
+    if (useSqlite) {
+      await db.run(sql`DELETE FROM leads WHERE id = ${id}`);
+    } else {
+      await db.delete(leads).where(eq(leads.id, id));
     }
   }
 }
