@@ -1,9 +1,11 @@
 import 'dotenv/config';
-import express, { type Request, Response, NextFunction } from "express";
+import type { Express } from "express";
+import express from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import type { Request, Response, NextFunction } from "express";
 
-const app = express();
+const app: Express = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -37,7 +39,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Initialize the app for both development and production
+// Initialize the app
 async function initializeApp() {
   const server = await registerRoutes(app);
 
@@ -49,9 +51,6 @@ async function initializeApp() {
     throw err;
   });
 
-  // importantly only setup vite in development and after
-  // setting up all the other routes so the catch-all route
-  // doesn't interfere with the other routes
   if (app.get("env") === "development") {
     await setupVite(app, server);
   } else {
@@ -61,14 +60,12 @@ async function initializeApp() {
   return server;
 }
 
-// Only start the server if running directly (not imported by Vercel)
-if (import.meta.url === `file://${process.argv[1]}`) {
+// Start the server when running locally (not in Vercel serverless)
+// Vercel sets the VERCEL env variable, so we can use that to detect serverless environment
+if (!process.env.VERCEL) {
   (async () => {
     const server = await initializeApp();
 
-    // ALWAYS serve the app on port 5000
-    // this serves both the API and the client.
-    // It is the only port that is not firewalled.
     const port = 5000;
     const env = app.get("env");
     const host = "0.0.0.0";
@@ -81,9 +78,6 @@ if (import.meta.url === `file://${process.argv[1]}`) {
       log(`\n✨ Server ready and listening...\n`);
     });
   })();
-} else {
-  // Initialize app for Vercel serverless
-  await initializeApp();
 }
 
 // Export the app for Vercel serverless
