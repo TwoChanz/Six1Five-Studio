@@ -1,5 +1,4 @@
-// Import the bundled Express app
-import app from '../dist/index.js';
+// Vercel Serverless Function Entry Point
+// This imports and re-exports the built server from dist/index.js
 
-// Export for Vercel serverless
-export default app;
+export { default } from '../dist/index.js';
