@@ -80,5 +80,18 @@ if (!process.env.VERCEL) {
   })();
 }
 
+// Initialize and export the app for Vercel serverless
+let appInstance: any = null;
+
+async function getApp() {
+  if (!appInstance) {
+    appInstance = await initializeApp();
+  }
+  return appInstance;
+}
+
 // Export the app for Vercel serverless
-export default app;
+export default async function handler(req: any, res: any) {
+  const server = await getApp();
+  return server(req, res);
+}
