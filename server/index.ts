@@ -106,8 +106,9 @@ async function getExpressApp() {
   return expressApp;
 }
 
-// Export the Express app for Vercel serverless
+// Export handler for Vercel serverless
 export default async function handler(req: any, res: any) {
-  const expressApp = await getExpressApp();
-  return expressApp(req, res);
+  const app = await getExpressApp();
+  // Express apps are callable as request handlers
+  app(req, res);
 }
