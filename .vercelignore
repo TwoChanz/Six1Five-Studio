@@ -1,0 +1,12 @@
+# Large asset files (too big for deployment)
+client/public/assets/church/church-model.glb
+client/public/assets/church/church-walkthrough.mp4
+
+# Development files
+node_modules
+.git
+*.log
+.env
+.env.local
+local.db*
+server/uploads
