@@ -80,12 +80,10 @@ if (!process.env.VERCEL) {
   })();
 }
 
-// Initialize and export the app for Vercel serverless
-let expressApp: Express | null = null;
-
-async function getExpressApp() {
-  if (!expressApp) {
-    // Initialize routes but we don't need the HTTP server for serverless
+// Initialize app for Vercel serverless (only runs once on cold start)
+(async () => {
+  if (process.env.VERCEL) {
+    // Initialize routes for serverless
     await registerRoutes(app);
 
     // Error handler
@@ -93,22 +91,13 @@ async function getExpressApp() {
       const status = err.status || err.statusCode || 500;
       const message = err.message || "Internal Server Error";
       res.status(status).json({ message });
-      throw err;
+      console.error('Error:', err);
     });
 
     // Serve static files in production
-    if (app.get("env") !== "development") {
-      serveStatic(app);
-    }
-
-    expressApp = app;
+    serveStatic(app);
   }
-  return expressApp;
-}
+})();
 
-// Export handler for Vercel serverless
-export default async function handler(req: any, res: any) {
-  const app = await getExpressApp();
-  // Express apps are callable as request handlers
-  app(req, res);
-}
+// Export the Express app directly for Vercel
+export default app;
