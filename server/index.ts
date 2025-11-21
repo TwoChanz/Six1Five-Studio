@@ -1,11 +1,14 @@
 import 'dotenv/config';
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
-import { setupVite, serveStatic, log } from "./vite";
+// Don't import vite at top level - it pulls in rollup which breaks serverless
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// Simple logger that doesn't depend on vite
+const log = (...args: any[]) => console.log(...args);
 
 app.use((req, res, next) => {
   const start = Date.now();
@@ -53,8 +56,12 @@ async function initializeApp() {
   // setting up all the other routes so the catch-all route
   // doesn't interfere with the other routes
   if (app.get("env") === "development") {
+    // Dynamic import to avoid loading vite/rollup in production
+    const { setupVite } = await import("./vite.js");
     await setupVite(app, server);
   } else {
+    // Dynamic import for production static serving
+    const { serveStatic } = await import("./vite.js");
     serveStatic(app);
   }
 
