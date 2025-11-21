@@ -101,6 +101,15 @@ const leadLimiter = rateLimit({
 });
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Health check endpoint (no database)
+  app.get("/api/health", (req, res) => {
+    res.json({
+      status: "ok",
+      timestamp: new Date().toISOString(),
+      environment: process.env.VERCEL ? "vercel" : "local"
+    });
+  });
+
   // Legacy route redirects (301 permanent redirect for SEO)
   app.get("/insights", (req, res) => {
     res.redirect(301, "/blog");
