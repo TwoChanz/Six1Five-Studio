@@ -60,8 +60,27 @@ async function initializeApp() {
   return server;
 }
 
+// For Vercel serverless, register routes immediately (synchronously)
+if (process.env.VERCEL) {
+  log('🌐 Initializing for Vercel serverless...');
+  // Don't await - register routes synchronously
+  registerRoutes(app).catch(err => {
+    log('❌ Error registering routes:', err);
+  });
+
+  // Error handler
+  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+    const status = err.status || err.statusCode || 500;
+    const message = err.message || "Internal Server Error";
+    res.status(status).json({ message });
+    log('Error:', err);
+  });
+
+  // Serve static files
+  serveStatic(app);
+}
+
 // Start the server when running locally (not in Vercel serverless)
-// Vercel sets the VERCEL env variable, so we can use that to detect serverless environment
 if (!process.env.VERCEL) {
   (async () => {
     const server = await initializeApp();
@@ -78,9 +97,6 @@ if (!process.env.VERCEL) {
       log(`\n✨ Server ready and listening...\n`);
     });
   })();
-} else {
-  // Initialize app for Vercel serverless (top-level await)
-  await initializeApp();
 }
 
 // Export the Express app for Vercel serverless
