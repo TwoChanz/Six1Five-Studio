@@ -24,7 +24,14 @@ if (useSqlite) {
   db = drizzleSqlite({ client: sqliteDb, schema });
 } else {
   // Use PostgreSQL/Neon for production
-  neonConfig.webSocketConstructor = ws;
+  // For Vercel serverless, use HTTP fetch instead of WebSockets
+  if (process.env.VERCEL) {
+    console.log('🌐 Configuring Neon for Vercel serverless (HTTP mode)');
+    neonConfig.fetchConnectionCache = true;
+  } else {
+    // Use WebSocket for local development with PostgreSQL
+    neonConfig.webSocketConstructor = ws;
+  }
 
   if (!process.env.DATABASE_URL) {
     throw new Error(
