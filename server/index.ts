@@ -78,43 +78,10 @@ if (!process.env.VERCEL) {
       log(`\n✨ Server ready and listening...\n`);
     });
   })();
+} else {
+  // Initialize app for Vercel serverless (top-level await)
+  await initializeApp();
 }
 
-// For Vercel serverless, create a wrapper that initializes on first request
-let isInitialized = false;
-let initPromise: Promise<void> | null = null;
-
-async function ensureInitialized() {
-  if (isInitialized) return;
-
-  if (initPromise) {
-    await initPromise;
-    return;
-  }
-
-  initPromise = (async () => {
-    // Initialize routes for serverless
-    await registerRoutes(app);
-
-    // Error handler
-    app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
-      const status = err.status || err.statusCode || 500;
-      const message = err.message || "Internal Server Error";
-      res.status(status).json({ message });
-      console.error('Serverless error:', err);
-    });
-
-    // Serve static files in production
-    serveStatic(app);
-
-    isInitialized = true;
-  })();
-
-  await initPromise;
-}
-
-// Export async handler for Vercel
-export default async function handler(req: any, res: any) {
-  await ensureInitialized();
-  return app(req, res);
-}
+// Export the Express app for Vercel serverless
+export default app;
