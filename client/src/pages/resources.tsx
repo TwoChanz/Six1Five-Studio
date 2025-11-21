@@ -5,7 +5,7 @@ import Footer from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { FileText, Download, ExternalLink, BookOpen, Video, Wrench, Shield, Newspaper, Lightbulb } from "lucide-react";
+import { FileText, Download, ExternalLink, BookOpen, Video, Wrench, Shield, Newspaper, Lightbulb, Database } from "lucide-react";
 
 export default function Resources() {
   useEffect(() => {
@@ -55,6 +55,21 @@ export default function Resources() {
           description: "Technical comparison to help you choose the right capture method for your project.",
           type: "PDF Guide",
           status: "Coming Soon"
+        }
+      ]
+    },
+    {
+      title: "Sample Datasets",
+      icon: Database,
+      color: "hsl(158,64%,52%)",
+      description: "Free photogrammetry datasets for testing, learning, and evaluating reality capture workflows. Complete with aerial imagery and ground control points.",
+      items: [
+        {
+          title: "Stockpile Photogrammetry Dataset",
+          description: "28 high-resolution DJI aerial photos (~4-5MB each) with GCP files. Perfect for learning photogrammetry processing in RealityCapture, Pix4D, or Agisoft Metashape.",
+          type: "ZIP (109 MB)",
+          link: "/downloads/stockpile-photogrammetry-sample-dataset.zip",
+          downloadable: true
         }
       ]
     },
@@ -210,7 +225,18 @@ export default function Resources() {
                               {item.type}
                             </Badge>
                             {'link' in item && item.link ? (
-                              'internal' in item && item.internal ? (
+                              'downloadable' in item && item.downloadable ? (
+                                <a href={item.link} download>
+                                  <Button
+                                    size="sm"
+                                    variant="outline"
+                                    className="border-[hsl(158,64%,52%)] text-[hsl(158,64%,52%)] hover:bg-[hsl(158,64%,52%)] hover:text-white"
+                                  >
+                                    <Download className="w-4 h-4 mr-2" />
+                                    Download
+                                  </Button>
+                                </a>
+                              ) : 'internal' in item && item.internal ? (
                                 <Link href={item.link}>
                                   <Button
                                     size="sm"
