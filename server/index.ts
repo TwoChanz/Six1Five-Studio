@@ -1,7 +1,8 @@
 import 'dotenv/config';
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
-// Don't import vite at top level - it pulls in rollup which breaks serverless
+import fs from "fs";
+import path from "path";
 
 const app = express();
 app.use(express.json());
@@ -9,6 +10,25 @@ app.use(express.urlencoded({ extended: false }));
 
 // Simple logger that doesn't depend on vite
 const log = (...args: any[]) => console.log(...args);
+
+// Production static file serving (moved from vite.ts to avoid loading vite module)
+function serveStatic(app: express.Express) {
+  // In production, the built server is in dist/index.js, and Vite outputs to dist/ directly
+  const distPath = import.meta.dirname;
+
+  if (!fs.existsSync(distPath)) {
+    throw new Error(
+      `Could not find the build directory: ${distPath}, make sure to build the client first`,
+    );
+  }
+
+  app.use(express.static(distPath));
+
+  // fall through to index.html if the file doesn't exist
+  app.use("*", (_req, res) => {
+    res.sendFile(path.resolve(distPath, "index.html"));
+  });
+}
 
 app.use((req, res, next) => {
   const start = Date.now();
@@ -60,8 +80,7 @@ async function initializeApp() {
     const { setupVite } = await import("./vite.js");
     await setupVite(app, server);
   } else {
-    // Dynamic import for production static serving
-    const { serveStatic } = await import("./vite.js");
+    // Serve static files in production (doesn't use vite module)
     serveStatic(app);
   }
 
