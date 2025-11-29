@@ -1,6 +1,13 @@
 # Large asset files (too big for deployment)
 client/public/assets/church/church-model.glb
+client/public/assets/church/church-model.obj
+client/public/assets/church/church-model.mtl
+client/public/assets/church/church-texture.png
 client/public/assets/church/church-walkthrough.mp4
+client/public/assets/parthenon/
+
+# Large downloads directory
+attached_assets/downloads/
 
 # Development files
 node_modules
