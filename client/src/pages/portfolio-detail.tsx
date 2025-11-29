@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ModelViewDialog } from "@/components/model-view-dialog";
+import ConceptStudyTimeline from "@/components/concept-study-timeline";
 import { getQueryFn } from "@/lib/queryClient";
 import { analytics } from "@/lib/analytics";
 import type { PortfolioItem } from "@shared/schema";
@@ -151,48 +152,56 @@ export default function PortfolioDetail() {
 
       {/* Main Content */}
       <main className="container mx-auto px-6 py-16">
-        {/* Featured Image / 3D Model */}
+        {/* Concept Study Timeline OR Featured Image / 3D Model */}
         <div className="mb-16">
-          <div className="relative aspect-video rounded-xl overflow-hidden bg-gray-900 shadow-2xl">
-            {item.featuredImage ? (
-              <img
-                src={item.featuredImage}
-                alt={item.title}
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[hsl(24,95%,53%)] to-[hsl(199,89%,48%)]">
-                <div className="text-center text-white">
-                  <Package className="w-16 h-16 mx-auto mb-4 opacity-50" />
-                  <p className="text-lg font-semibold">{item.title}</p>
-                </div>
+          {item.isConceptStudy && item.images && item.images.length > 1 ? (
+            /* Interactive Phase Timeline for Concept Studies */
+            <ConceptStudyTimeline images={item.images} title={item.title} />
+          ) : (
+            /* Standard Featured Image Display */
+            <>
+              <div className="relative aspect-video rounded-xl overflow-hidden bg-gray-900 shadow-2xl">
+                {item.featuredImage ? (
+                  <img
+                    src={item.featuredImage}
+                    alt={item.title}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[hsl(24,95%,53%)] to-[hsl(199,89%,48%)]">
+                    <div className="text-center text-white">
+                      <Package className="w-16 h-16 mx-auto mb-4 opacity-50" />
+                      <p className="text-lg font-semibold">{item.title}</p>
+                    </div>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
 
-          {/* 3D Model CTA */}
-          {hasModel && (
-            <div className="mt-6 flex flex-wrap gap-4">
-              <Button
-                onClick={() => {
-                  setSelectedModel(item);
-                  setIsModelDialogOpen(true);
-                }}
-                className="bg-[hsl(199,89%,48%)] hover:bg-[hsl(199,89%,43%)]"
-              >
-                View 3D Model
-              </Button>
-              {externalLink && (
-                <Button
-                  variant="outline"
-                  className="border-gray-400 text-gray-200 hover:bg-gray-700"
-                  onClick={() => window.open(externalLink, '_blank')}
-                >
-                  Open in Viewer
-                  <ExternalLink className="w-4 h-4 ml-2" />
-                </Button>
+              {/* 3D Model CTA */}
+              {hasModel && (
+                <div className="mt-6 flex flex-wrap gap-4">
+                  <Button
+                    onClick={() => {
+                      setSelectedModel(item);
+                      setIsModelDialogOpen(true);
+                    }}
+                    className="bg-[hsl(199,89%,48%)] hover:bg-[hsl(199,89%,43%)]"
+                  >
+                    View 3D Model
+                  </Button>
+                  {externalLink && (
+                    <Button
+                      variant="outline"
+                      className="border-gray-400 text-gray-200 hover:bg-gray-700"
+                      onClick={() => window.open(externalLink, '_blank')}
+                    >
+                      Open in Viewer
+                      <ExternalLink className="w-4 h-4 ml-2" />
+                    </Button>
+                  )}
+                </div>
               )}
-            </div>
+            </>
           )}
         </div>
 
