@@ -51,6 +51,7 @@ npm run db:push      # Push Drizzle schema changes to database (PostgreSQL or SQ
 tsx scripts/init-local-db.ts           # Initialize SQLite database with schema
 tsx scripts/seed-simple.ts             # Seed SQLite with minimal sample data
 tsx scripts/seed-sample-portfolio.ts   # Seed SQLite with full sample portfolio
+tsx scripts/quick-seed.ts              # Quick seed for testing
 tsx scripts/setup-database.ts          # Complete database setup (init + seed)
 tsx scripts/migrate-database.ts        # Run database migrations
 
@@ -59,6 +60,8 @@ tsx scripts/add-portfolio-item.ts      # Add a single portfolio item to database
 tsx scripts/add-multiple-models.ts     # Bulk add multiple portfolio items
 tsx scripts/list-portfolio-items.ts    # List all portfolio items in database
 tsx scripts/delete-portfolio-item.ts   # Delete a portfolio item by ID
+tsx scripts/copy-featured-to-sqlite.ts # Copy featured items between database modes
+tsx scripts/unfeatured-no-images.ts    # Unfeature portfolio items without images
 
 # Blog Management
 tsx scripts/add-blog-post.ts           # Add a new blog post
@@ -73,6 +76,7 @@ tsx scripts/list-reviews.ts            # List all reviews
 # Utilities
 tsx scripts/hash-password.ts           # Generate bcrypt hash for admin password
 tsx scripts/verify-db.ts               # Verify database connection and schema
+tsx scripts/optimize-images.ts         # Optimize portfolio images for web
 ```
 
 ### PowerShell Utilities (Windows)
@@ -264,13 +268,20 @@ The project uses **two separate Drizzle config files** for dual database support
 
 ### File Upload System
 
-**Local File Storage** - Contact form reference files
+**Contact Form Uploads** - User-submitted reference files
 - Uploaded files saved to `server/uploads/contact-submissions/`
 - Configured with multer middleware (max 5 files, 10MB each)
 - Allowed types: JPEG, PNG, GIF, WebP, PDF, TXT
 - Files served via `/uploads/contact-submissions/` static route
 - File paths stored in database (not base64)
 - **Important**: `server/uploads/` is gitignored except for `.gitkeep`
+
+**Large Asset Storage** - Portfolio sample files and datasets
+- Location: `attached_assets/downloads/`
+- Contains large photogrammetry datasets, sample models, training data
+- Files NOT tracked in git (size limitations)
+- Used for: Free sample datasets, client deliverables, portfolio source files
+- **Note**: Create this directory manually if needed for storing large training datasets or client deliverables
 
 ### 3D Viewer Components
 
@@ -306,12 +317,15 @@ The portfolio supports **four types of 3D model display**:
 - `server/email-templates.ts` - Professional HTML email templates for contact form
 - `shared/schema.ts` - Database schema and validation (source of truth for data structure)
 - `server/storage.ts` - Database query abstraction layer with CRUD operations
+- `server/db.ts` - Database connection with dual SQLite/PostgreSQL support
 - `client/src/App.tsx` - Client routing and lazy loading setup
 - `client/src/pages/admin.tsx` - Admin dashboard UI (password-protected)
 - `client/src/data/services.json` - Editable services content (no-code)
 - `client/src/data/faq.json` - Editable FAQ content (no-code)
 - `vite.config.ts` - Build configuration, path aliases, and code splitting
+- `vercel.json` - Vercel serverless configuration
 - `server/uploads/` - User-uploaded files (gitignored)
+- `attached_assets/downloads/` - Large sample files (see Downloads section)
 
 ### Content Management
 
@@ -474,6 +488,19 @@ The portfolio supports **four types of 3D model display**:
 - Use PostgreSQL in production (SQLite for local dev only)
 - Vercel automatically sets `VERCEL=true` in serverless environment
 
+### Asset Optimization
+
+**Performance Best Practices** for large 3D models and videos:
+- 3D models should be converted from OBJ to GLB format with Draco compression (85-88% size reduction)
+- Videos should be compressed using FFmpeg with H.265 codec (96-97% size reduction)
+- Target sizes: Models <30 MB, Videos <75 MB for optimal web performance
+- **Documentation**: See `ASSET_OPTIMIZATION_GUIDE.md` for detailed optimization workflows
+
+**Tools**:
+- Blender (OBJ → GLB conversion with Draco compression)
+- FFmpeg (video compression and optimization)
+- gltf-pipeline CLI (automated GLB optimization)
+
 ### Credentials & Certifications
 
 **Storage Location**: `client/public/credentials/`
@@ -516,6 +543,9 @@ The portfolio supports **four types of 3D model display**:
 
 **Build Issues:**
 - **Vercel deployment fails**: Verify `dist/` output exists after build
+  - Common fix: Ensure vite.js is externalized in esbuild config (see `package.json:8`)
+  - Check that `dist/index.js` doesn't import `./vite.js` (serverless incompatible)
+- **Rollup/Vite import errors in production**: Use `--external:./vite.js` flag in esbuild
 - **Missing dependencies**: Check that all imports resolve to installed packages
 - **Type errors**: Run `npm run check` to diagnose TypeScript issues
 - **Large bundle size**: Review `vite.config.ts` manual chunks configuration
