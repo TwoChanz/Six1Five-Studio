@@ -18,32 +18,32 @@ interface ConceptStudyTimelineProps {
 // Phase metadata for the Parthenon study
 const phaseMetadata: Record<number, { title: string; description: string }> = {
   1: {
-    title: "East Elevation Photo",
-    description: "Original photographic documentation of the Parthenon's iconic east façade, capturing current conditions and architectural details."
+    title: "Sun Position Diagrams",
+    description: "Solar orientation study showing sun positions at key times of day (8AM, 12PM, 6PM) to analyze light exposure on the east façade."
   },
   2: {
-    title: "Line Drawing Analysis",
-    description: "Technical line drawing highlighting key structural elements, proportions, and classical architectural features."
+    title: "Solar Bearing Analysis",
+    description: "Technical axonometric diagram with sun direction bearings, showing precise solar angles relative to the building's orientation."
   },
   3: {
-    title: "Axonometric View",
-    description: "Three-dimensional axonometric projection revealing the building's volumetric form and spatial relationships."
+    title: "Axonometric Solar Study",
+    description: "Three-dimensional axonometric projection showing the building under different sun conditions - morning, noon, and evening light scenarios."
   },
   4: {
     title: "Structural Load Paths",
     description: "Analysis of structural load distribution through columns, walls, and foundation systems using color-coded load path visualization."
   },
   5: {
-    title: "Solar Study",
-    description: "Comprehensive solar analysis showing sun exposure patterns throughout the day - morning, noon, and evening conditions."
+    title: "Shadow Study Sketch",
+    description: "Hand-drawn solar analysis illustrating shadow patterns, roof geometry, and sun direction throughout the day-long study period."
   },
   6: {
-    title: "Sun Path Plan",
-    description: "Plan view diagram mapping solar trajectories and shadow patterns across different seasons and times of day."
+    title: "Elevation Line Drawing",
+    description: "Clean architectural elevation drawing showing the building's proportions and classical design elements in technical detail."
   },
   8: {
     title: "Solar Retrofit Concept",
-    description: "Conceptual integration of modern photovoltaic technology with historic architecture - exploring sustainable adaptation."
+    description: "Conceptual integration of modern photovoltaic panels with historic architecture - exploring sustainable adaptation while respecting heritage."
   }
 };
 
