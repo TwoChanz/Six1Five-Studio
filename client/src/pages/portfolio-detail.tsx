@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ModelViewDialog } from "@/components/model-view-dialog";
 import ConceptStudyTimeline from "@/components/concept-study-timeline";
+import { ImageComparisonSlider } from "@/components/image-comparison-slider";
 import { getQueryFn } from "@/lib/queryClient";
 import { analytics } from "@/lib/analytics";
 import type { PortfolioItem } from "@shared/schema";
@@ -204,6 +205,29 @@ export default function PortfolioDetail() {
             </>
           )}
         </div>
+
+        {/* Before/After Comparison Slider - for projects with comparison images */}
+        {item.images && item.images.length >= 2 && 
+         item.images.some(img => img.includes('reference') || img.includes('baseline')) &&
+         item.images.some(img => img.includes('satellite-overlay') || img.includes('orthomosaic')) && (
+          <div className="mb-16">
+            <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
+              <span className="w-2 h-8 bg-gradient-to-b from-[hsl(24,95%,53%)] to-[hsl(199,89%,48%)] rounded-full"></span>
+              Satellite vs. Drone Capture Comparison
+            </h2>
+            <p className="text-gray-400 mb-6 max-w-3xl">
+              Drag the slider to compare standard satellite imagery with our high-resolution drone orthomosaic. 
+              Notice the dramatic improvement in detail, clarity, and accuracy.
+            </p>
+            <ImageComparisonSlider
+              beforeImage={item.images.find(img => img.includes('reference') || img.includes('baseline')) || item.images[0]}
+              afterImage={item.images.find(img => img.includes('satellite-overlay') || img.includes('orthomosaic')) || item.images[1]}
+              beforeLabel="Google Satellite"
+              afterLabel="Drone Orthomosaic"
+              className="max-w-4xl mx-auto shadow-2xl"
+            />
+          </div>
+        )}
 
         {/* Project Details Grid */}
         <div className="grid md:grid-cols-2 gap-8 mb-16">
