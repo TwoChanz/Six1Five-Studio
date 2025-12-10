@@ -1,6 +1,10 @@
 import { neon } from "@neondatabase/serverless";
 
-const DATABASE_URL = "postgresql://neondb_owner:npg_kOU1iKlwVS5e@ep-bold-forest-aem4u633-pooler.c-2.us-east-2.aws.neon.tech/neondb?sslmode=require";
+const DATABASE_URL = process.env.DATABASE_URL;
+if (!DATABASE_URL) {
+  console.error("ERROR: DATABASE_URL environment variable is required");
+  process.exit(1);
+}
 
 async function updateAthleticField() {
   try {

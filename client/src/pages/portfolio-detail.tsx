@@ -153,8 +153,8 @@ export default function PortfolioDetail() {
       {/* Main Content */}
       <main className="container mx-auto px-6 py-16">
         {/* Concept Study Timeline OR Featured Image / 3D Model */}
-        {/* Skip featured image for Wolverines project - handled in custom layout below */}
-        {item.id !== 25 && (
+        {/* Skip featured image for projects with custom layout */}
+        {!item.hasCustomLayout && (
           <div className="mb-16">
             {item.isConceptStudy && item.images && item.images.length > 1 ? (
               /* Interactive Phase Timeline for Concept Studies */
@@ -208,8 +208,8 @@ export default function PortfolioDetail() {
           </div>
         )}
 
-        {/* Wolverines Track & Field - Professional Layout */}
-        {item.id === 25 && (
+        {/* Custom Layout for Projects with hasCustomLayout flag */}
+        {item.hasCustomLayout && (
           <div className="mb-16 space-y-16">
             {/* A. Hero Image - Drone Orthomosaic Overlay */}
             <div>
@@ -344,8 +344,9 @@ export default function PortfolioDetail() {
                 size="lg"
                 className="bg-[hsl(199,89%,48%)] hover:bg-[hsl(199,89%,43%)] text-white px-8"
                 onClick={() => {
-                  window.open('/assets/lhs-field/Wolverines_Report_Renamed.pdf', '_blank');
-                  analytics.externalLink('Wolverines Project Report PDF');
+                  const pdfUrl = '/assets/lhs-field/Wolverines_Report_Renamed.pdf';
+                  window.open(pdfUrl, '_blank');
+                  analytics.externalLink(pdfUrl, 'Wolverines Project Report PDF');
                 }}
               >
                 <Download className="w-5 h-5 mr-2" />

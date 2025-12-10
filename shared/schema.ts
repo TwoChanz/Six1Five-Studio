@@ -55,6 +55,7 @@ export const portfolioItems = pgTable("portfolio_items", {
   published: boolean("published").default(false),
   featured: boolean("featured").default(false),
   isConceptStudy: boolean("is_concept_study").default(false),
+  hasCustomLayout: boolean("has_custom_layout").default(false), // Enable custom layout rendering for specific projects
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
@@ -128,6 +129,7 @@ export const insertPortfolioItemSchema = createInsertSchema(portfolioItems).pick
   published: true,
   featured: true,
   isConceptStudy: true,
+  hasCustomLayout: true,
 });
 
 export const insertReviewSchema = createInsertSchema(reviews).pick({

@@ -76,6 +76,8 @@ function mapPortfolioColumns(item: any): PortfolioItem {
     images: item.images,
     published: Boolean(item.published),
     featured: Boolean(item.featured),
+    isConceptStudy: Boolean(item.is_concept_study),
+    hasCustomLayout: Boolean(item.has_custom_layout),
     createdAt: item.created_at,
   } as PortfolioItem;
 }
