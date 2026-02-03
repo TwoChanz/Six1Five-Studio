@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { Home, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { SEOHead } from "@/components/seo-head";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import logoCircular from "@/assets/logo-circular-large.webp";
@@ -8,6 +9,11 @@ import logoCircular from "@/assets/logo-circular-large.webp";
 export default function NotFound() {
   return (
     <div className="min-h-screen bg-[hsl(218,11%,15%)] text-white font-sans flex flex-col">
+      <SEOHead
+        title="Page Not Found - Six1Five Studio"
+        description="The page you're looking for doesn't exist. Return to Six1Five Studio for professional reality capture services."
+        noindex={true}
+      />
       <Navbar />
 
       <main className="flex-grow flex items-center justify-center px-6 pt-20">

@@ -1,9 +1,9 @@
-import { useEffect } from "react";
 import { Link } from "wouter";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import CostCalculator from "@/components/cost-calculator";
 import LeadMagnetTrigger from "@/components/lead-magnet-trigger";
+import { SEOHead, getCanonicalUrl } from "@/components/seo-head";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Check, AlertCircle, ArrowRight } from "lucide-react";
@@ -132,17 +132,14 @@ const faqs = [
 ];
 
 export default function Pricing() {
-  useEffect(() => {
-    document.title = "Pricing - Six1Five Studio | Reality Capture Services";
-
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute("content", "Transparent pricing for drone mapping, photogrammetry, and LiDAR scanning services. Custom quotes for construction, real estate, and heritage documentation projects.");
-    }
-  }, []);
-
   return (
     <div className="min-h-screen bg-[hsl(218,11%,15%)] text-white font-sans">
+      <SEOHead
+        title="Pricing - Six1Five Studio | Drone Mapping & LiDAR Services Nashville"
+        description="Transparent pricing for drone mapping, photogrammetry, and LiDAR scanning services in Nashville and Middle Tennessee. Get custom quotes for construction, real estate, and heritage documentation projects."
+        keywords="drone mapping pricing, LiDAR scanning cost, photogrammetry services Nashville, reality capture pricing, construction documentation cost"
+        canonicalUrl={getCanonicalUrl('/pricing')}
+      />
       <Navbar />
 
       <main className="pt-20 pb-16">

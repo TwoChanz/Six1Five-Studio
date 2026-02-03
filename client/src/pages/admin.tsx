@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { SEOHead } from "@/components/seo-head";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -256,6 +257,11 @@ export default function Admin() {
 
   return (
     <div className="min-h-screen bg-[hsl(218,11%,15%)] text-white">
+      <SEOHead
+        title="Admin Dashboard - Six1Five Studio"
+        description="Admin dashboard for Six1Five Studio content management."
+        noindex={true}
+      />
       <header className="bg-gray-800 border-b border-gray-700 sticky top-0 z-50">
         <div className="container mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">

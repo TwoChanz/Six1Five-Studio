@@ -1,18 +1,18 @@
-import { useEffect } from "react";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import { SEOHead, getCanonicalUrl } from "@/components/seo-head";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { 
-  Plane, 
-  FileText, 
-  DollarSign, 
-  Clock, 
-  MapPin, 
-  Camera, 
-  Settings, 
+import {
+  Plane,
+  FileText,
+  DollarSign,
+  Clock,
+  MapPin,
+  Camera,
+  Settings,
   Shield,
   HelpCircle,
   Phone,
@@ -36,17 +36,14 @@ const iconMap: Record<string, LucideIcon> = {
 
 
 export default function FAQ() {
-  useEffect(() => {
-    document.title = "FAQ - Six1Five Studio | Reality Capture Questions & Answers";
-    
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute("content", "Get answers to common questions about drone mapping, LiDAR scanning, regulations, pricing, and project timelines. Expert reality capture services in Tennessee.");
-    }
-  }, []);
-
   return (
     <div className="min-h-screen bg-[hsl(218,11%,15%)] text-white font-sans">
+      <SEOHead
+        title="FAQ - Six1Five Studio | Reality Capture Questions & Answers"
+        description="Get answers to common questions about drone mapping, LiDAR scanning, FAA regulations, pricing, and project timelines. Expert reality capture services in Nashville and Middle Tennessee."
+        keywords="drone mapping FAQ, LiDAR scanning questions, reality capture answers, photogrammetry help, FAA Part 107 regulations, Tennessee drone services"
+        canonicalUrl={getCanonicalUrl('/faq')}
+      />
       <Navbar />
       
       <main className="pt-20 pb-16">

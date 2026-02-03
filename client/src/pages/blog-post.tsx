@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams, Link } from "wouter";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import { SEOHead, getCanonicalUrl } from "@/components/seo-head";
 import { SubstackEmbed } from "@/components/substack-embed";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -21,14 +22,53 @@ export default function BlogPostPage() {
     enabled: !!slug,
   });
 
+  // Add Article structured data for blog posts
   useEffect(() => {
     if (post) {
-      document.title = `${post.title} - Six1Five Studio Blog | Reality Capture Insights`;
-      
-      const metaDescription = document.querySelector('meta[name="description"]');
-      if (metaDescription) {
-        metaDescription.setAttribute("content", post.excerpt || "Blog post from Six1Five Studio");
+      // Remove any existing article structured data
+      const existingScript = document.querySelector('script[data-type="article-schema"]');
+      if (existingScript) {
+        existingScript.remove();
       }
+
+      // Create Article structured data
+      const articleSchema = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": post.title,
+        "description": post.excerpt || "Blog post from Six1Five Studio",
+        "author": {
+          "@type": "Organization",
+          "name": "Six1Five Studio"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Six1Five Studio",
+          "url": "https://six1fivestudio.com"
+        },
+        "datePublished": post.createdAt,
+        "dateModified": post.updatedAt || post.createdAt,
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": `https://six1fivestudio.com/blog/${post.slug}`
+        },
+        ...(post.featuredImage && { "image": post.featuredImage }),
+        ...(post.tags && post.tags.length > 0 && { "keywords": post.tags.join(", ") })
+      };
+
+      const script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.setAttribute('data-type', 'article-schema');
+      script.textContent = JSON.stringify(articleSchema);
+      document.head.appendChild(script);
+
+      // Cleanup on unmount
+      return () => {
+        const scriptToRemove = document.querySelector('script[data-type="article-schema"]');
+        if (scriptToRemove) {
+          scriptToRemove.remove();
+        }
+      };
     }
   }, [post]);
 
@@ -97,8 +137,18 @@ export default function BlogPostPage() {
 
   return (
     <div className="min-h-screen bg-[hsl(218,11%,15%)] text-white font-sans">
+      {post && (
+        <SEOHead
+          title={`${post.title} - Six1Five Studio Blog | Reality Capture Insights`}
+          description={post.excerpt || "Blog post from Six1Five Studio covering reality capture, drone mapping, and photogrammetry insights."}
+          keywords={post.tags?.join(", ") || "reality capture, drone mapping, LiDAR, photogrammetry"}
+          ogImage={post.featuredImage || undefined}
+          ogType="article"
+          canonicalUrl={getCanonicalUrl(`/blog/${post.slug}`)}
+        />
+      )}
       <Navbar />
-      
+
       <main className="pt-20 pb-16">
         <article className="container mx-auto px-6 max-w-4xl">
           {/* Back to Blog Link */}

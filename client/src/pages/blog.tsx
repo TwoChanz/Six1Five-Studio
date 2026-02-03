@@ -1,8 +1,8 @@
-import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import { SEOHead, getCanonicalUrl } from "@/components/seo-head";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
@@ -12,15 +12,6 @@ import type { BlogPost } from "@shared/schema";
 import logoCircular from "@/assets/logo-circular-large.webp";
 
 export default function Blog() {
-  useEffect(() => {
-    document.title = "Reality Capture Blog - Six1Five Studio | Industry Insights & Tutorials";
-    
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute("content", "Expert insights on reality capture, drone mapping, LiDAR scanning, and photogrammetry. Learn about the latest techniques and regulations in the AEC industry.");
-    }
-  }, []);
-
   const { data: blogPosts, isLoading } = useQuery<BlogPost[]>({
     queryKey: ['/api/blog'],
     queryFn: getQueryFn({ on401: "returnNull" }),
@@ -37,8 +28,14 @@ export default function Blog() {
 
   return (
     <div className="min-h-screen bg-[hsl(218,11%,15%)] text-white font-sans">
+      <SEOHead
+        title="Reality Capture Blog - Six1Five Studio | Industry Insights & Tutorials"
+        description="Expert insights on reality capture, drone mapping, LiDAR scanning, and photogrammetry for AEC professionals. Learn about the latest techniques, regulations, and best practices in Nashville and Tennessee."
+        keywords="reality capture blog, drone mapping tutorials, LiDAR scanning insights, photogrammetry techniques, AEC technology blog, construction documentation"
+        canonicalUrl={getCanonicalUrl('/blog')}
+      />
       <Navbar />
-      
+
       <main className="pt-20 pb-16">
         <div className="container mx-auto px-6">
           {/* Header */}

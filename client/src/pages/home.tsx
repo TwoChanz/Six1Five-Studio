@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import Navbar from "@/components/navbar";
+import { SEOHead, getCanonicalUrl } from "@/components/seo-head";
 import HeroSection from "@/components/hero-section";
 import ServiceKeywords from "@/components/service-keywords";
 import ServicesSection from "@/components/services-section";
@@ -15,17 +16,6 @@ import Footer from "@/components/footer";
 
 export default function Home() {
   useEffect(() => {
-    document.title = "Six1Five Studio - Reality Capture Portfolio | Chandler Hopkins";
-    
-    // Add meta description for SEO
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (!metaDescription) {
-      const meta = document.createElement("meta");
-      meta.name = "description";
-      meta.content = "Professional reality capture services in Nashville, TN. Drone mapping, LiDAR scanning, and photogrammetry for AEC, real estate, and historic preservation by Chandler Hopkins.";
-      document.head.appendChild(meta);
-    }
-
     // Add structured data for local business
     const structuredData = {
       "@context": "https://schema.org",
@@ -98,6 +88,12 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[hsl(218,11%,15%)] text-white font-sans">
+      <SEOHead
+        title="Six1Five Studio - Drone Mapping & LiDAR Scanning Nashville | Reality Capture Services"
+        description="Professional drone mapping, LiDAR scanning, and photogrammetry services in Nashville and Middle Tennessee. Precision reality capture for AEC, construction, real estate, and historic preservation projects."
+        keywords="drone mapping Nashville, LiDAR scanning Tennessee, photogrammetry services, reality capture, construction documentation, 3D scanning Nashville, aerial surveying"
+        canonicalUrl={getCanonicalUrl('/')}
+      />
       <Navbar />
       <HeroSection />
       <ServiceKeywords />

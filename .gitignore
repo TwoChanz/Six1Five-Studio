@@ -28,6 +28,15 @@ client/public/downloads/*.zip
 repomix-output.xml
 _ul
 
+# Replit artifacts (remove from repo, keep locally ignored)
+.replit
+replit.nix
+.local/
+_transfer_reports/
+
+# PowerShell utilities (Windows-only, not needed in deployed site)
+*.ps1
+
 # IDE and local settings
 .claude/settings.local.json
 .vercel

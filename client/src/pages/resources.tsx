@@ -1,23 +1,13 @@
-import { useEffect } from "react";
 import { Link } from "wouter";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import { SEOHead, getCanonicalUrl } from "@/components/seo-head";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { FileText, Download, ExternalLink, BookOpen, Video, Wrench, Shield, Newspaper, Lightbulb, Database } from "lucide-react";
 
-export default function Resources() {
-  useEffect(() => {
-    document.title = "Resources - Six1Five Studio | Reality Capture Guides & Tools";
-
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute("content", "Free reality capture resources, guides, and tools. Learn about drone mapping, LiDAR scanning, photogrammetry best practices, and industry regulations.");
-    }
-  }, []);
-
-  const resourceCategories = [
+const resourceCategories = [
     {
       title: "Concept Studies",
       icon: Lightbulb,
@@ -148,28 +138,35 @@ export default function Resources() {
         }
       ]
     }
-  ];
+];
 
-  const latestInsights = [
-    {
-      title: "The Future of Construction Technology",
-      excerpt: "How LiDAR, BIM, and AI are revolutionizing the AEC industry.",
-      slug: "the-future-of-construction-how-lidar-bim-and-ai-are-revolutionizing-the-industry"
-    },
-    {
-      title: "AI Agents and Digital Twins",
-      excerpt: "The new era of operational intelligence transforming AEC technology.",
-      slug: "the-new-era-of-operational-intelligence-ai-agents-and-digital-twins-transform-aec-technology"
-    },
-    {
-      title: "GIS and CAD Integration",
-      excerpt: "5 overlapping areas between GIS and CAD and why they matter.",
-      slug: "overlapping-areas-gis-cad"
-    }
-  ];
+const latestInsights = [
+  {
+    title: "The Future of Construction Technology",
+    excerpt: "How LiDAR, BIM, and AI are revolutionizing the AEC industry.",
+    slug: "the-future-of-construction-how-lidar-bim-and-ai-are-revolutionizing-the-industry"
+  },
+  {
+    title: "AI Agents and Digital Twins",
+    excerpt: "The new era of operational intelligence transforming AEC technology.",
+    slug: "the-new-era-of-operational-intelligence-ai-agents-and-digital-twins-transform-aec-technology"
+  },
+  {
+    title: "GIS and CAD Integration",
+    excerpt: "5 overlapping areas between GIS and CAD and why they matter.",
+    slug: "overlapping-areas-gis-cad"
+  }
+];
 
+export default function Resources() {
   return (
     <div className="min-h-screen bg-[hsl(218,11%,15%)] text-white font-sans">
+      <SEOHead
+        title="Resources - Six1Five Studio | Reality Capture Guides & Tools"
+        description="Free reality capture resources, guides, and tools. Learn about drone mapping, LiDAR scanning, photogrammetry best practices, and industry regulations for AEC professionals."
+        keywords="reality capture resources, drone mapping guides, LiDAR tutorials, photogrammetry best practices, AEC documentation tools, free sample datasets"
+        canonicalUrl={getCanonicalUrl('/resources')}
+      />
       <Navbar />
 
       <main className="pt-20 pb-16">

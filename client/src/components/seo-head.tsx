@@ -25,7 +25,7 @@ export function SEOHead({
   title,
   description,
   keywords,
-  ogImage = '/images/og-default.jpg',
+  ogImage = 'https://six1fivestudio.com/images/og-default.webp',
   ogType = 'website',
   canonicalUrl,
   noindex = false,
