@@ -1,0 +1,12 @@
+name: pointcloud
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - numpy
+  - pip
+  - pip:
+    - open3d
+    - laspy[lazrs]
+    - numpy
