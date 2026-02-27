@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRoute, Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowLeft, Star, ExternalLink, Calendar, Package, Wrench } from "lucide-react";
+import { ArrowLeft, Star, ExternalLink, Calendar, Package, Wrench, Download } from "lucide-react";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import LeadMagnetTrigger from "@/components/lead-magnet-trigger";
@@ -153,57 +153,208 @@ export default function PortfolioDetail() {
       {/* Main Content */}
       <main className="container mx-auto px-6 py-16">
         {/* Concept Study Timeline OR Featured Image / 3D Model */}
-        <div className="mb-16">
-          {item.isConceptStudy && item.images && item.images.length > 1 ? (
-            /* Interactive Phase Timeline for Concept Studies */
-            <ConceptStudyTimeline images={item.images} title={item.title} />
-          ) : (
-            /* Standard Featured Image Display */
-            <>
-              <div className="relative aspect-video rounded-xl overflow-hidden bg-gray-900 shadow-2xl">
-                {item.featuredImage ? (
-                  <img
-                    src={item.featuredImage}
-                    alt={item.title}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[hsl(24,95%,53%)] to-[hsl(199,89%,48%)]">
-                    <div className="text-center text-white">
-                      <Package className="w-16 h-16 mx-auto mb-4 opacity-50" />
-                      <p className="text-lg font-semibold">{item.title}</p>
+        {/* Skip featured image for projects with custom layout */}
+        {!item.hasCustomLayout && (
+          <div className="mb-16">
+            {item.isConceptStudy && item.images && item.images.length > 1 ? (
+              /* Interactive Phase Timeline for Concept Studies */
+              <ConceptStudyTimeline images={item.images} title={item.title} />
+            ) : (
+              /* Standard Featured Image Display */
+              <>
+                <div className="relative aspect-video rounded-xl overflow-hidden bg-gray-900 shadow-2xl">
+                  {item.featuredImage ? (
+                    <img
+                      src={item.featuredImage}
+                      alt={item.title}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[hsl(24,95%,53%)] to-[hsl(199,89%,48%)]">
+                      <div className="text-center text-white">
+                        <Package className="w-16 h-16 mx-auto mb-4 opacity-50" />
+                        <p className="text-lg font-semibold">{item.title}</p>
+                      </div>
                     </div>
-                  </div>
-                )}
-              </div>
-
-              {/* 3D Model CTA */}
-              {hasModel && (
-                <div className="mt-6 flex flex-wrap gap-4">
-                  <Button
-                    onClick={() => {
-                      setSelectedModel(item);
-                      setIsModelDialogOpen(true);
-                    }}
-                    className="bg-[hsl(199,89%,48%)] hover:bg-[hsl(199,89%,43%)]"
-                  >
-                    View 3D Model
-                  </Button>
-                  {externalLink && (
-                    <Button
-                      variant="outline"
-                      className="border-gray-400 text-gray-200 hover:bg-gray-700"
-                      onClick={() => window.open(externalLink, '_blank')}
-                    >
-                      Open in Viewer
-                      <ExternalLink className="w-4 h-4 ml-2" />
-                    </Button>
                   )}
                 </div>
-              )}
-            </>
-          )}
-        </div>
+
+                {/* 3D Model CTA */}
+                {hasModel && (
+                  <div className="mt-6 flex flex-wrap gap-4">
+                    <Button
+                      onClick={() => {
+                        setSelectedModel(item);
+                        setIsModelDialogOpen(true);
+                      }}
+                      className="bg-[hsl(199,89%,48%)] hover:bg-[hsl(199,89%,43%)]"
+                    >
+                      View 3D Model
+                    </Button>
+                    {externalLink && (
+                      <Button
+                        variant="outline"
+                        className="border-gray-400 text-gray-200 hover:bg-gray-700"
+                        onClick={() => window.open(externalLink, '_blank')}
+                      >
+                        Open in Viewer
+                        <ExternalLink className="w-4 h-4 ml-2" />
+                      </Button>
+                    )}
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+        )}
+
+        {/* Custom Layout for Projects with hasCustomLayout flag */}
+        {item.hasCustomLayout && (
+          <div className="mb-16 space-y-16">
+            {/* A. Hero Image - Drone Orthomosaic Overlay */}
+            <div>
+              <div className="relative rounded-2xl overflow-hidden bg-gray-900 shadow-2xl border border-gray-700">
+                <img
+                  src="/assets/lhs-field/orthomosaic_overlay_1800.jpg"
+                  alt="Wolverines Track & Field - Drone Orthomosaic Overlay"
+                  className="w-full h-auto object-contain"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+
+            {/* B. Static 2-Image Comparison */}
+            <div>
+              <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
+                <span className="w-2 h-8 bg-gradient-to-b from-[hsl(24,95%,53%)] to-[hsl(199,89%,48%)] rounded-full"></span>
+                Satellite vs. Drone Capture Comparison
+              </h2>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-3">
+                  <div className="relative rounded-xl overflow-hidden bg-gray-900 shadow-lg border border-gray-700">
+                    <img
+                      src="/assets/lhs-field/google_satellite_1800.jpg"
+                      alt="Google Satellite View"
+                      className="w-full h-auto object-contain"
+                      loading="lazy"
+                    />
+                  </div>
+                  <p className="text-sm text-gray-400 text-center">Google Satellite</p>
+                </div>
+                <div className="space-y-3">
+                  <div className="relative rounded-xl overflow-hidden bg-gray-900 shadow-lg border border-gray-700">
+                    <img
+                      src="/assets/lhs-field/drone_orthomosaic_1800.jpg"
+                      alt="Drone Orthomosaic"
+                      className="w-full h-auto object-contain"
+                      loading="lazy"
+                    />
+                  </div>
+                  <p className="text-sm text-gray-400 text-center">Drone Orthomosaic</p>
+                </div>
+              </div>
+            </div>
+
+            {/* C. Mission Overview */}
+            <div className="bg-gray-800 rounded-xl p-8 border border-gray-700">
+              <h2 className="text-3xl font-bold mb-2">Wolverines Track & Field – Middle Tennessee</h2>
+              <p className="text-xl text-gray-400 mb-8">Aerial Mapping Mission (Overcast Conditions)</p>
+              
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="space-y-1">
+                  <p className="text-2xl font-bold text-[hsl(24,95%,53%)]">333</p>
+                  <p className="text-gray-400">Images Captured</p>
+                </div>
+                <div className="space-y-1">
+                  <p className="text-2xl font-bold text-[hsl(24,95%,53%)]">319</p>
+                  <p className="text-gray-400">Registered</p>
+                </div>
+                <div className="space-y-1">
+                  <p className="text-2xl font-bold text-[hsl(199,89%,48%)]">0.46 px</p>
+                  <p className="text-gray-400">Median Reprojection Error</p>
+                </div>
+                <div className="space-y-1">
+                  <p className="text-lg font-semibold text-white">Geo-referenced</p>
+                  <p className="text-gray-400">Metric-scaled</p>
+                </div>
+                <div className="space-y-1">
+                  <p className="text-lg font-semibold text-white">Two Output Models</p>
+                  <p className="text-gray-400">High-detail + Web-optimized</p>
+                </div>
+              </div>
+            </div>
+
+            {/* D. 4-Image Technical Grid */}
+            <div>
+              <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
+                <span className="w-2 h-8 bg-gradient-to-b from-[hsl(24,95%,53%)] to-[hsl(199,89%,48%)] rounded-full"></span>
+                Technical Analysis
+              </h2>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-3">
+                  <div className="relative rounded-xl overflow-hidden bg-gray-900 shadow-lg border border-gray-700">
+                    <img
+                      src="/assets/lhs-field/dsm_heatmap_1500.jpg"
+                      alt="DSM Heatmap"
+                      className="w-full h-auto object-contain"
+                      loading="lazy"
+                    />
+                  </div>
+                  <p className="text-sm text-gray-400 text-center">DSM Heatmap</p>
+                </div>
+                <div className="space-y-3">
+                  <div className="relative rounded-xl overflow-hidden bg-gray-900 shadow-lg border border-gray-700">
+                    <img
+                      src="/assets/lhs-field/dsm_elevation_1500.jpg"
+                      alt="DSM Elevation"
+                      className="w-full h-auto object-contain"
+                      loading="lazy"
+                    />
+                  </div>
+                  <p className="text-sm text-gray-400 text-center">DSM Elevation</p>
+                </div>
+                <div className="space-y-3">
+                  <div className="relative rounded-xl overflow-hidden bg-gray-900 shadow-lg border border-gray-700">
+                    <img
+                      src="/assets/lhs-field/pointcloud_view_1500.jpg"
+                      alt="Point Cloud View"
+                      className="w-full h-auto object-contain"
+                      loading="lazy"
+                    />
+                  </div>
+                  <p className="text-sm text-gray-400 text-center">Point Cloud View</p>
+                </div>
+                <div className="space-y-3">
+                  <div className="relative rounded-xl overflow-hidden bg-gray-900 shadow-lg border border-gray-700">
+                    <img
+                      src="/assets/lhs-field/mission_path_1500.jpg"
+                      alt="Flight Path Coverage"
+                      className="w-full h-auto object-contain"
+                      loading="lazy"
+                    />
+                  </div>
+                  <p className="text-sm text-gray-400 text-center">Flight Path Coverage</p>
+                </div>
+              </div>
+            </div>
+
+            {/* E. PDF Download Button */}
+            <div className="text-center">
+              <Button
+                size="lg"
+                className="bg-[hsl(199,89%,48%)] hover:bg-[hsl(199,89%,43%)] text-white px-8"
+                onClick={() => {
+                  const pdfUrl = '/assets/lhs-field/Wolverines_Report_Renamed.pdf';
+                  window.open(pdfUrl, '_blank');
+                  analytics.externalLink(pdfUrl, 'Wolverines Project Report PDF');
+                }}
+              >
+                <Download className="w-5 h-5 mr-2" />
+                Download Full Project Report
+              </Button>
+            </div>
+          </div>
+        )}
 
         {/* Project Details Grid */}
         <div className="grid md:grid-cols-2 gap-8 mb-16">
