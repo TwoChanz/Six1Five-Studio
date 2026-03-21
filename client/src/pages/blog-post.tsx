@@ -11,6 +11,8 @@ import { Calendar, Clock, ArrowLeft, Share2 } from "lucide-react";
 import { getQueryFn } from "@/lib/queryClient";
 import { format } from "date-fns";
 import type { BlogPost } from "@shared/schema";
+import { SEOHead, getCanonicalUrl } from "@/components/seo-head";
+import ReactMarkdown from "react-markdown";
 
 export default function BlogPostPage() {
   const { slug } = useParams();
@@ -22,15 +24,9 @@ export default function BlogPostPage() {
   });
 
   useEffect(() => {
-    if (post) {
-      document.title = `${post.title} - Six1Five Studio Blog | Reality Capture Insights`;
-      
-      const metaDescription = document.querySelector('meta[name="description"]');
-      if (metaDescription) {
-        metaDescription.setAttribute("content", post.excerpt || "Blog post from Six1Five Studio");
-      }
-    }
-  }, [post]);
+    // Scroll to top of page
+    window.scrollTo(0, 0);
+  }, [slug]);
 
   const readingTime = (content: string) => {
     const wordsPerMinute = 200;
@@ -97,8 +93,15 @@ export default function BlogPostPage() {
 
   return (
     <div className="min-h-screen bg-[hsl(218,11%,15%)] text-white font-sans">
+      <SEOHead
+        title={`${post.title} - Six1Five Studio | Reality Capture Insights`}
+        description={post.excerpt || `Read ${post.title} - Expert insights on reality capture, drone mapping, LiDAR, and AEC technology from Six1Five Studio.`}
+        keywords={`${post.tags?.join(', ') || 'reality capture, drone mapping, LiDAR'}, AEC technology, construction tech`}
+        canonicalUrl={getCanonicalUrl(`/blog/${post.slug}`)}
+        ogImage={post.featuredImage || '/images/og-blog.jpg'}
+      />
       <Navbar />
-      
+
       <main className="pt-20 pb-16">
         <article className="container mx-auto px-6 max-w-4xl">
           {/* Back to Blog Link */}
@@ -172,12 +175,11 @@ export default function BlogPostPage() {
             // Render Substack embed if available
             <SubstackEmbed embedCode={post.substackEmbedCode} />
           ) : (
-            // Otherwise render regular content
+            // Otherwise render Markdown content safely
             <div className="prose prose-invert prose-lg max-w-none">
-              <div 
-                className="text-gray-300 leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, '<br/>') }}
-              />
+              <ReactMarkdown className="text-gray-300 leading-relaxed">
+                {post.content}
+              </ReactMarkdown>
             </div>
           )}
 
