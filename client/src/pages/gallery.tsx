@@ -31,11 +31,37 @@ export default function Gallery() {
     queryFn: getQueryFn({ on401: "returnNull" }),
   });
 
-  const categories = ['all', 'photogrammetry', 'lidar', 'construction', 'heritage', 'interior'];
-  
-  const filteredItems = (portfolioItems as PortfolioItem[])?.filter((item: PortfolioItem) =>
-    selectedCategory === 'all' || item.category === selectedCategory
-  ) || [];
+  const categories = ['all', 'projects', 'concept-studies', 'photogrammetry', 'lidar', 'construction', 'heritage', 'interior'];
+
+  const filteredItems = (portfolioItems as PortfolioItem[])?.filter((item: PortfolioItem) => {
+    // Handle top-level project type filters
+    if (selectedCategory === 'projects') {
+      return !item.isConceptStudy;
+    }
+    if (selectedCategory === 'concept-studies') {
+      return item.isConceptStudy;
+    }
+    // Handle category filters (work for both projects and studies)
+    if (selectedCategory === 'all') {
+      return true;
+    }
+    return item.category === selectedCategory;
+  })
+  // Sort: prioritize items with real cover images, then featured, then newest first
+  .sort((a, b) => {
+    // 1. Prioritize items with real cover images (not placeholder)
+    const aHasCover = !!a.featuredImage;
+    const bHasCover = !!b.featuredImage;
+    if (aHasCover && !bHasCover) return -1;
+    if (!aHasCover && bHasCover) return 1;
+
+    // 2. Within each group, prioritize featured items
+    if (a.featured && !b.featured) return -1;
+    if (!a.featured && b.featured) return 1;
+
+    // 3. Finally, sort by creation date (newest first)
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  }) || [];
 
   // Helper to get external link for a project
   const getExternalLink = (item: PortfolioItem): string | null => {
@@ -182,6 +208,13 @@ export default function Gallery() {
                         </div>
                       )}
 
+                      {/* Concept Study Badge */}
+                      {item.isConceptStudy && (
+                        <div className="absolute top-3 right-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-lg">
+                          Concept Study
+                        </div>
+                      )}
+
                       {/* Category Badge */}
                       <div className="absolute bottom-3 left-3">
                         <Badge variant="secondary" className="bg-[hsl(24,95%,53%)] text-white font-semibold shadow-lg">
@@ -242,6 +275,15 @@ export default function Gallery() {
                             View on {platformName}
                           </Button>
                         )}
+                        {/* View Details Button */}
+                        <Link href={`/portfolio/${item.id}`}>
+                          <Button
+                            variant="outline"
+                            className="w-full border-[hsl(24,95%,53%)] text-[hsl(24,95%,53%)] hover:bg-[hsl(24,95%,53%)] hover:text-white transition-colors"
+                          >
+                            View Full Details
+                          </Button>
+                        </Link>
                       </div>
                     </div>
                   </div>

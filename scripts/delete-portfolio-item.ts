@@ -21,9 +21,16 @@ async function deleteItem() {
 
     console.log(`🗑️  Deleting portfolio item with ID ${itemId}...`);
 
-    const result = await db.run(sql`
-      DELETE FROM portfolio_items WHERE id = ${itemId}
-    `);
+    if (useSqlite) {
+      await db.run(sql`
+        DELETE FROM portfolio_items WHERE id = ${itemId}
+      `);
+    } else {
+      // For PostgreSQL: use Drizzle ORM
+      const { portfolioItems } = await import("../shared/schema.js");
+      const { eq } = await import("drizzle-orm");
+      await db.delete(portfolioItems).where(eq(portfolioItems.id, parseInt(itemId)));
+    }
 
     console.log("✅ Portfolio item deleted successfully!");
     console.log("🔄 Refresh your browser to see the changes");

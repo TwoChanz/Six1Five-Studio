@@ -182,7 +182,7 @@ export default function Blog() {
             <div className="text-center py-16">
               <h2 className="text-2xl font-bold mb-4">Coming Soon</h2>
               <p className="text-gray-400 mb-8">
-                We're working on bringing you expert insights and tutorials on reality capture technology. 
+                We're working on bringing you expert insights and tutorials on reality capture technology.
                 Check back soon for the latest industry knowledge and practical guides.
               </p>
               <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
@@ -199,6 +199,28 @@ export default function Blog() {
                   <p className="text-gray-400 text-sm">Updates on FAA regulations and best practices for professionals</p>
                 </div>
               </div>
+            </div>
+          )}
+
+          {/* Substack CTA Section - Preserved from insights page */}
+          {blogPosts && blogPosts.length > 0 && (
+            <div className="mt-16 text-center bg-gradient-to-r from-[hsl(24,95%,53%)] to-[hsl(199,89%,48%)] rounded-xl p-8">
+              <h2 className="text-2xl font-bold mb-4 text-white">Stay Updated with Digital Blueprint</h2>
+              <p className="text-white/90 mb-6 max-w-2xl mx-auto">
+                Subscribe to Digital Blueprint on Substack for weekly insights on AEC technology, reality capture, and digital innovation.
+              </p>
+              <a
+                href="https://digitalblueprint.substack.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <button
+                  className="bg-white text-[hsl(24,95%,53%)] hover:bg-gray-100 px-6 py-3 rounded-lg font-semibold transition-colors inline-flex items-center gap-2"
+                >
+                  Subscribe on Substack
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </a>
             </div>
           )}
         </div>

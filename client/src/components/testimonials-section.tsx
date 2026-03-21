@@ -11,7 +11,9 @@ const trustSignals = [
   {
     icon: Shield,
     title: "FAA Part 107 Certified",
-    description: "Licensed commercial drone pilot"
+    description: "Licensed commercial drone pilot",
+    link: "/credentials/TRUST_Certification.pdf",
+    linkText: "View TRUST Certification"
   },
   {
     icon: Award,
@@ -62,7 +64,21 @@ export default function TestimonialsSection() {
                 <div key={index} className="flex flex-col items-center p-6 bg-gray-800 rounded-xl">
                   <IconComponent className="w-12 h-12 text-[hsl(158,64%,52%)] mb-4" />
                   <h3 className="text-lg font-semibold text-white mb-2">{signal.title}</h3>
-                  <p className="text-gray-400 text-sm text-center">{signal.description}</p>
+                  <p className="text-gray-400 text-sm text-center mb-3">{signal.description}</p>
+                  {signal.link && (
+                    <a
+                      href={signal.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[hsl(199,89%,48%)] hover:text-[hsl(199,89%,58%)] text-sm font-medium transition-colors flex items-center gap-1"
+                      onClick={() => analytics.externalLink(signal.link!, signal.linkText || 'View Credential')}
+                    >
+                      {signal.linkText || 'View Credential'}
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </a>
+                  )}
                 </div>
               );
             })}

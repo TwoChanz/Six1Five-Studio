@@ -1,15 +1,15 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
-import { storage } from "./storage";
-import { insertContactSubmissionSchema, insertBlogPostSchema, insertPortfolioItemSchema, insertReviewSchema } from "@shared/schema";
+import { storage } from "./storage.js";
+import { insertContactSubmissionSchema, insertBlogPostSchema, insertPortfolioItemSchema, insertReviewSchema, insertLeadSchema } from "../shared/schema.js";
 import { z } from "zod";
 import { Resend } from "resend";
 import multer from "multer";
 import path from "path";
 import { fileURLToPath } from "url";
 import fs from "fs/promises";
-import { generateContactFormEmail, generateContactFormPlainText } from "./email-templates";
-import { verifyAdminPassword, generateToken, requireAuth } from "./auth";
+import { generateContactFormEmail, generateContactFormPlainText } from "./email-templates.js";
+import { verifyAdminPassword, generateToken, requireAuth } from "./auth.js";
 import rateLimit from "express-rate-limit";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -87,7 +87,34 @@ const contactLimiter = rateLimit({
   skip: (req) => process.env.NODE_ENV === 'development',
 });
 
+// Rate limiter for lead magnet downloads
+const leadLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // 5 downloads per 15 minutes per IP
+  message: {
+    error: 'Too Many Requests',
+    message: 'You can only download resources 5 times per 15 minutes. Please try again later.',
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+  skip: (req) => process.env.NODE_ENV === 'development',
+});
+
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Health check endpoint (no database)
+  app.get("/api/health", (req, res) => {
+    res.json({
+      status: "ok",
+      timestamp: new Date().toISOString(),
+      environment: process.env.VERCEL ? "vercel" : "local"
+    });
+  });
+
+  // Legacy route redirects (301 permanent redirect for SEO)
+  app.get("/insights", (req, res) => {
+    res.redirect(301, "/blog");
+  });
+
   // Admin authentication endpoints
   app.post("/api/admin/login", loginLimiter, async (req, res) => {
     try {
@@ -232,6 +259,181 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(submissions);
     } catch (error) {
       res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Lead magnet capture endpoint
+  app.post("/api/leads", leadLimiter, async (req, res) => {
+    try {
+      const validatedData = insertLeadSchema.parse(req.body);
+      const lead = await storage.createLead(validatedData);
+
+      // Send email notification if Resend is configured
+      if (resend) {
+        const fromEmail = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
+        const toEmail = process.env.RESEND_TO_EMAIL || fromEmail;
+
+        try {
+          await resend.emails.send({
+            from: fromEmail,
+            to: toEmail,
+            subject: `New Lead: ${validatedData.resourceRequested}`,
+            html: `
+              <h2>New Lead Magnet Download</h2>
+              <p><strong>Name:</strong> ${validatedData.name}</p>
+              <p><strong>Email:</strong> ${validatedData.email}</p>
+              <p><strong>Company:</strong> ${validatedData.company || 'Not provided'}</p>
+              <p><strong>Resource:</strong> ${validatedData.resourceRequested}</p>
+              <p><strong>Source:</strong> ${validatedData.source}</p>
+              <p><strong>Date:</strong> ${new Date().toLocaleString()}</p>
+            `,
+          });
+        } catch (emailError) {
+          console.error('Failed to send lead notification email:', emailError);
+          // Don't fail the request if email fails
+        }
+      }
+
+      res.json({ success: true, lead });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({
+          message: "Invalid lead data",
+          errors: error.errors
+        });
+      }
+      console.error("Lead capture error:", error);
+      res.status(500).json({ message: "Failed to capture lead" });
+    }
+  });
+
+  // Get all leads (for admin use)
+  app.get("/api/leads", adminLimiter, requireAuth, async (req, res) => {
+    try {
+      const leads = await storage.getLeads();
+      res.json(leads);
+    } catch (error) {
+      console.error("Leads fetch error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Dataset download with email capture
+  app.post("/api/dataset-download", leadLimiter, async (req, res) => {
+    try {
+      const { name, email, company } = req.body;
+
+      // Create lead record
+      const leadData = {
+        name,
+        email,
+        company: company || null,
+        source: "sample-dataset-banner",
+        resourceRequested: "Stockpile Photogrammetry Sample Dataset"
+      };
+
+      const validatedData = insertLeadSchema.parse(leadData);
+      const lead = await storage.createLead(validatedData);
+
+      // Send email with download link if Resend is configured
+      if (resend && process.env.RESEND_FROM_EMAIL) {
+        const fromEmail = process.env.RESEND_FROM_EMAIL;
+        const downloadUrl = `${req.protocol}://${req.get('host')}/downloads/stockpile-photogrammetry-sample-dataset.zip`;
+
+        try {
+          await resend.emails.send({
+            from: fromEmail,
+            to: email,
+            subject: "Your Free Reality Capture Sample Dataset",
+            html: `
+              <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
+                <h2 style="color: #10b981;">Thanks for downloading!</h2>
+                <p>Hi ${name},</p>
+                <p>Thanks for your interest in Six1Five Studio. Your sample dataset is ready to download:</p>
+                <p style="margin: 20px 0;">
+                  <a href="${downloadUrl}" style="background: #10b981; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">
+                    Download Dataset (109 MB)
+                  </a>
+                </p>
+                <p><strong>What's included:</strong></p>
+                <ul>
+                  <li>28 high-resolution aerial photos (DNG format)</li>
+                  <li>Ground Control Points (GCP) file</li>
+                  <li>Camera calibration data</li>
+                  <li>Processing instructions PDF</li>
+                </ul>
+                <p>Perfect for testing with RealityCapture, Pix4D, or Agisoft Metashape.</p>
+                <hr style="margin: 30px 0; border: none; border-top: 1px solid #ddd;">
+                <p style="font-size: 14px; color: #666;">
+                  Need professional reality capture services? <a href="https://six1fivestudio.com/pricing">View our pricing</a> or <a href="https://six1fivestudio.com/#contact">get in touch</a>.
+                </p>
+                <p style="font-size: 12px; color: #999;">
+                  Six1Five Studio | Reality Capture & Drone Mapping<br>
+                  <a href="https://six1fivestudio.com">six1fivestudio.com</a>
+                </p>
+              </div>
+            `,
+            text: `Hi ${name},
+
+Thanks for your interest in Six1Five Studio. Your sample dataset is ready to download:
+
+${downloadUrl}
+
+What's included:
+- 28 high-resolution aerial photos (DNG format)
+- Ground Control Points (GCP) file
+- Camera calibration data
+- Processing instructions PDF
+
+Perfect for testing with RealityCapture, Pix4D, or Agisoft Metashape.
+
+---
+Need professional reality capture services? Visit https://six1fivestudio.com/pricing or contact us at https://six1fivestudio.com/#contact
+
+Six1Five Studio | Reality Capture & Drone Mapping
+https://six1fivestudio.com`
+          });
+
+          console.log('✅ Dataset download email sent to:', email);
+        } catch (emailError) {
+          console.error('Failed to send dataset email:', emailError);
+          // Don't fail the request if email fails
+        }
+
+        // Also notify admin
+        try {
+          const toEmail = process.env.RESEND_TO_EMAIL || fromEmail;
+          await resend.emails.send({
+            from: fromEmail,
+            to: toEmail,
+            subject: `New Dataset Download: ${name}`,
+            html: `
+              <h2>New Sample Dataset Download</h2>
+              <p><strong>Name:</strong> ${name}</p>
+              <p><strong>Email:</strong> ${email}</p>
+              <p><strong>Company:</strong> ${company || 'Not provided'}</p>
+              <p><strong>Date:</strong> ${new Date().toLocaleString()}</p>
+            `,
+          });
+        } catch (emailError) {
+          console.error('Failed to send admin notification:', emailError);
+        }
+      }
+
+      res.json({
+        success: true,
+        lead,
+        downloadUrl: "/downloads/stockpile-photogrammetry-sample-dataset.zip"
+      });
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({
+          message: "Invalid data",
+          errors: error.errors
+        });
+      }
+      console.error("Dataset download error:", error);
+      res.status(500).json({ message: "Failed to process download request" });
     }
   });
 

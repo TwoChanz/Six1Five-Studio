@@ -201,22 +201,23 @@ export function ModelViewer({ modelFile, modelFormat, title, className = '' }: M
     };
     animate();
 
-    // Handle resize
+    // Handle resize with passive listener (doesn't preventDefault)
     const handleResize = () => {
       if (mountRef.current && camera && renderer) {
         const width = mountRef.current.clientWidth;
         const height = mountRef.current.clientHeight;
-        
+
         camera.aspect = width / height;
         camera.updateProjectionMatrix();
         renderer.setSize(width, height);
       }
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize, { passive: true });
 
     return () => {
       window.removeEventListener('resize', handleResize);
+      controls.dispose();
       if (mountRef.current && renderer.domElement) {
         mountRef.current.removeChild(renderer.domElement);
       }

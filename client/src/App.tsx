@@ -11,14 +11,12 @@ import Home from "@/pages/home";
 
 // Lazy load non-critical pages
 const Gallery = lazy(() => import("@/pages/gallery"));
+const PortfolioDetail = lazy(() => import("@/pages/portfolio-detail"));
 const Pricing = lazy(() => import("@/pages/pricing"));
 const Blog = lazy(() => import("@/pages/blog"));
 const BlogPost = lazy(() => import("@/pages/blog-post"));
-const Insights = lazy(() => import("@/pages/insights"));
 const FAQ = lazy(() => import("@/pages/faq"));
 const Resources = lazy(() => import("@/pages/resources"));
-const CaseStudyParthenon = lazy(() => import("@/pages/case-study-parthenon"));
-const Dashboard = lazy(() => import("@/pages/dashboard"));
 const Admin = lazy(() => import("@/pages/admin"));
 const NotFound = lazy(() => import("@/pages/not-found"));
 
@@ -44,6 +42,13 @@ function Router() {
             </ErrorBoundary>
           </Suspense>
         </Route>
+        <Route path="/portfolio/:id">
+          <Suspense fallback={<div className="min-h-screen bg-[hsl(218,11%,15%)] flex items-center justify-center"><div className="text-white">Loading...</div></div>}>
+            <ErrorBoundary>
+              <PortfolioDetail />
+            </ErrorBoundary>
+          </Suspense>
+        </Route>
         <Route path="/pricing">
           <Suspense fallback={<div className="min-h-screen bg-[hsl(218,11%,15%)] flex items-center justify-center"><div className="text-white">Loading...</div></div>}>
             <ErrorBoundary>
@@ -65,13 +70,6 @@ function Router() {
             </ErrorBoundary>
           </Suspense>
         </Route>
-        <Route path="/insights">
-          <Suspense fallback={<div className="min-h-screen bg-[hsl(218,11%,15%)] flex items-center justify-center"><div className="text-white">Loading...</div></div>}>
-            <ErrorBoundary>
-              <Insights />
-            </ErrorBoundary>
-          </Suspense>
-        </Route>
         <Route path="/faq">
           <Suspense fallback={<div className="min-h-screen bg-[hsl(218,11%,15%)] flex items-center justify-center"><div className="text-white">Loading...</div></div>}>
             <ErrorBoundary>
@@ -83,20 +81,6 @@ function Router() {
           <Suspense fallback={<div className="min-h-screen bg-[hsl(218,11%,15%)] flex items-center justify-center"><div className="text-white">Loading...</div></div>}>
             <ErrorBoundary>
               <Resources />
-            </ErrorBoundary>
-          </Suspense>
-        </Route>
-        <Route path="/case-study/parthenon">
-          <Suspense fallback={<div className="min-h-screen bg-[hsl(218,11%,15%)] flex items-center justify-center"><div className="text-white">Loading...</div></div>}>
-            <ErrorBoundary>
-              <CaseStudyParthenon />
-            </ErrorBoundary>
-          </Suspense>
-        </Route>
-        <Route path="/dashboard">
-          <Suspense fallback={<div className="min-h-screen bg-[hsl(218,11%,15%)] flex items-center justify-center"><div className="text-white">Loading...</div></div>}>
-            <ErrorBoundary>
-              <Dashboard />
             </ErrorBoundary>
           </Suspense>
         </Route>

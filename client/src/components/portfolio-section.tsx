@@ -138,18 +138,21 @@ export default function PortfolioSection() {
         {isLoading ? (
           <div className="space-y-16">
             {Array.from({ length: 3 }).map((_, index) => (
-              <div key={index} className="grid lg:grid-cols-2 gap-12 items-center">
-                <div>
-                  <Skeleton className="h-8 mb-4 bg-gray-700" />
-                  <Skeleton className="h-24 mb-6 bg-gray-700" />
-                  <div className="space-y-2 mb-8">
-                    <Skeleton className="h-4 bg-gray-700" />
-                    <Skeleton className="h-4 bg-gray-700" />
-                    <Skeleton className="h-4 bg-gray-700" />
-                  </div>
-                  <Skeleton className="h-12 w-32 bg-gray-700" />
+              <div key={index} className="space-y-8">
+                {/* Title and description skeleton */}
+                <div className="text-center max-w-4xl mx-auto">
+                  <Skeleton className="h-10 w-3/4 mx-auto mb-4 bg-gray-700" />
+                  <Skeleton className="h-6 w-full mb-2 bg-gray-700" />
+                  <Skeleton className="h-6 w-5/6 mx-auto bg-gray-700" />
                 </div>
-                <Skeleton className="aspect-video bg-gray-700 rounded-xl" />
+                {/* Viewer skeleton */}
+                <Skeleton className="aspect-video bg-gray-700 rounded-xl w-full" />
+                {/* Details skeleton */}
+                <div className="max-w-4xl mx-auto space-y-4">
+                  <Skeleton className="h-20 bg-gray-700 rounded-lg" />
+                  <Skeleton className="h-16 bg-gray-700 rounded-lg" />
+                  <Skeleton className="h-12 w-48 bg-gray-700 rounded-lg" />
+                </div>
               </div>
             ))}
           </div>
@@ -162,21 +165,85 @@ export default function PortfolioSection() {
               const isReverse = index % 2 === 1;
               
               return (
-                <div 
-                  key={item.id} 
-                  className={`grid lg:grid-cols-2 gap-12 items-center ${isReverse ? 'lg:grid-flow-col-dense' : ''}`}
-                >
-                  <div className={isReverse ? 'lg:col-start-2' : ''}>
-                    <div className="flex items-center gap-3 mb-4">
+                <div key={item.id} className="space-y-8">
+                  {/* Title, Badge, and Description - Above the viewer */}
+                  <div className="text-center max-w-4xl mx-auto">
+                    <div className="flex items-center justify-center gap-3 mb-4 flex-wrap">
                       <h3 className="text-3xl font-semibold">{item.title}</h3>
                       <Badge variant="secondary" className="bg-[hsl(24,95%,53%)] text-white">
                         {item.category}
                       </Badge>
                     </div>
-                    
-                    <p className="text-gray-400 mb-4 leading-relaxed">
+
+                    <p className="text-gray-400 leading-relaxed text-lg">
                       {item.description}
                     </p>
+                  </div>
+
+                  {/* 3D Viewer - Full Width */}
+                  <div className="relative">{item.lumaEmbedUrl ? (
+                      <div className="bg-gray-800 rounded-xl p-4">
+                        <LumaEmbed embedUrl={item.lumaEmbedUrl} title={item.title} />
+                      </div>
+                    ) : item.polycamEmbedUrl ? (
+                      <div className="bg-gray-800 rounded-xl p-4">
+                        <PolycamEmbed embedUrl={item.polycamEmbedUrl} title={item.title} />
+                      </div>
+                    ) : item.sketchfabModelId ? (
+                      <div className="bg-gray-800 rounded-xl p-4">
+                        <SketchfabEmbed modelId={item.sketchfabModelId} title={item.title} />
+                      </div>
+                    ) : item.modelFile && item.modelFormat ? (
+                      <div className="bg-gray-800 rounded-xl p-4" data-model-id={item.id}>
+                        <ModelViewer
+                          modelFile={item.modelFile}
+                          modelFormat={item.modelFormat as 'glb' | 'gltf' | 'obj'}
+                          title={item.title}
+                          className="rounded-lg"
+                        />
+                        <div className="absolute top-4 right-4 z-20 bg-black/60 text-white px-3 py-1 rounded-lg text-sm flex items-center gap-2">
+                          <Eye className="w-3 h-3" />
+                          Interactive 3D
+                        </div>
+                      </div>
+                    ) : item.videoFile && item.videoFormat ? (
+                      <div className="bg-gray-800 rounded-xl overflow-hidden relative" data-video-id={item.id}>
+                        <video
+                          controls
+                          preload="metadata"
+                          className="w-full h-auto aspect-video object-cover rounded-lg"
+                          poster={item.featuredImage || "https://images.unsplash.com/photo-1577223625816-7546f13df25d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"}
+                        >
+                          <source src={item.videoFile} type={`video/${item.videoFormat}`} />
+                          Your browser does not support the video tag.
+                        </video>
+                        <div className="absolute top-4 left-4 bg-black/70 text-white px-3 py-1 rounded-lg text-sm font-medium flex items-center gap-2">
+                          <PlayCircle className="w-3 h-3" />
+                          Video Walkthrough
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="bg-gray-800 rounded-xl overflow-hidden relative group">
+                        <OptimizedImage
+                          src={item.featuredImage || "https://images.unsplash.com/photo-1577223625816-7546f13df25d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"}
+                          alt={item.title}
+                          aspectRatio="video"
+                          className="w-full h-auto"
+                        />
+                        {item.images && item.images.length > 1 && (
+                          <div className="absolute bottom-4 right-4 bg-black/70 text-white px-3 py-1 rounded-lg text-sm">
+                            +{item.images.length - 1} more images
+                          </div>
+                        )}
+                        <div className="absolute top-4 left-4 bg-black/70 text-white px-3 py-1 rounded-lg text-sm font-medium">
+                          {item.category}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Technical Details and CTAs - Below the viewer */}
+                  <div className="max-w-4xl mx-auto space-y-6">
                     
                     {/* Project Impact/Results Section */}
                     <div className="bg-gray-800/50 rounded-lg p-4 mb-6 border-l-4 border-[hsl(24,95%,53%)]">
@@ -296,68 +363,6 @@ export default function PortfolioSection() {
                         </Link>
                       </div>
                     </div>
-                  </div>
-                  
-                  <div className={`relative ${isReverse ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
-                    {item.lumaEmbedUrl ? (
-                      <div className="bg-gray-800 rounded-xl p-4">
-                        <LumaEmbed embedUrl={item.lumaEmbedUrl} title={item.title} />
-                      </div>
-                    ) : item.polycamEmbedUrl ? (
-                      <div className="bg-gray-800 rounded-xl p-4">
-                        <PolycamEmbed embedUrl={item.polycamEmbedUrl} title={item.title} />
-                      </div>
-                    ) : item.sketchfabModelId ? (
-                      <div className="bg-gray-800 rounded-xl p-4">
-                        <SketchfabEmbed modelId={item.sketchfabModelId} title={item.title} />
-                      </div>
-                    ) : item.modelFile && item.modelFormat ? (
-                      <div className="bg-gray-800 rounded-xl p-4" data-model-id={item.id}>
-                        <ModelViewer 
-                          modelFile={item.modelFile} 
-                          modelFormat={item.modelFormat as 'glb' | 'gltf' | 'obj'} 
-                          title={item.title} 
-                          className="rounded-lg"
-                        />
-                        <div className="absolute top-4 right-4 z-20 bg-black/60 text-white px-3 py-1 rounded-lg text-sm flex items-center gap-2">
-                          <Eye className="w-3 h-3" />
-                          Interactive 3D
-                        </div>
-                      </div>
-                    ) : item.videoFile && item.videoFormat ? (
-                      <div className="bg-gray-800 rounded-xl overflow-hidden relative" data-video-id={item.id}>
-                        <video 
-                          controls
-                          preload="metadata"
-                          className="w-full h-auto aspect-video object-cover rounded-lg"
-                          poster={item.featuredImage || "https://images.unsplash.com/photo-1577223625816-7546f13df25d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"}
-                        >
-                          <source src={item.videoFile} type={`video/${item.videoFormat}`} />
-                          Your browser does not support the video tag.
-                        </video>
-                        <div className="absolute top-4 left-4 bg-black/70 text-white px-3 py-1 rounded-lg text-sm font-medium flex items-center gap-2">
-                          <PlayCircle className="w-3 h-3" />
-                          Video Walkthrough
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="bg-gray-800 rounded-xl overflow-hidden relative group">
-                        <OptimizedImage
-                          src={item.featuredImage || "https://images.unsplash.com/photo-1577223625816-7546f13df25d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"}
-                          alt={item.title}
-                          aspectRatio="video"
-                          className="w-full h-auto"
-                        />
-                        {item.images && item.images.length > 1 && (
-                          <div className="absolute bottom-4 right-4 bg-black/70 text-white px-3 py-1 rounded-lg text-sm">
-                            +{item.images.length - 1} more images
-                          </div>
-                        )}
-                        <div className="absolute top-4 left-4 bg-black/70 text-white px-3 py-1 rounded-lg text-sm font-medium">
-                          {item.category}
-                        </div>
-                      </div>
-                    )}
                   </div>
                 </div>
               );

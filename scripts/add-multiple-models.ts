@@ -138,6 +138,7 @@ async function addMultipleItems() {
           )
         `);
       } else {
+        // For PostgreSQL: use Drizzle ORM
         const { portfolioItems: portfolioTable } = await import("../shared/schema.js");
         await db.insert(portfolioTable).values({
           ...item,

@@ -6,7 +6,8 @@ import ServicesSection from "@/components/services-section";
 import AIWorkflowShowcase from "@/components/ai-workflow-showcase";
 import AboutSection from "@/components/about-section";
 import PortfolioSection from "@/components/portfolio-section";
-import LatestInsightsWidget from "@/components/latest-insights-widget";
+import SampleDatasetBanner from "@/components/sample-dataset-banner";
+import LatestBlogWidget from "@/components/latest-blog-widget";
 import TestimonialsSection from "@/components/testimonials-section";
 import ContactSection from "@/components/contact-section";
 import FinalCTABanner from "@/components/final-cta-banner";
@@ -104,7 +105,8 @@ export default function Home() {
       <AIWorkflowShowcase />
       <AboutSection />
       <PortfolioSection />
-      <LatestInsightsWidget />
+      <SampleDatasetBanner />
+      <LatestBlogWidget />
       <TestimonialsSection />
       <ContactSection />
       <FinalCTABanner />

@@ -8,6 +8,7 @@ vite.config.ts.*
 # Environment variables
 .env
 .env.local
+.env.vercel
 
 # Local SQLite database
 local.db
@@ -18,9 +19,16 @@ local.db-wal
 server/uploads/**/*
 !server/uploads/.gitkeep
 
+# Large asset files (deploy separately via CDN or Vercel upload)
+client/public/assets/church/church-model.glb
+client/public/assets/church/church-walkthrough.mp4
+client/public/downloads/*.zip
+
 # Development artifacts
 repomix-output.xml
 _ul
 
 # IDE and local settings
 .claude/settings.local.json
+.vercel
+.aider*

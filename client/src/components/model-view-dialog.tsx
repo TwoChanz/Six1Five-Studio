@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Dialog,
   DialogContent,
@@ -26,11 +26,34 @@ export function ModelViewDialog({
   polycamEmbedUrl,
 }: ModelViewDialogProps) {
   const [isLoading, setIsLoading] = useState(true);
+  const [shouldRenderIframe, setShouldRenderIframe] = useState(false);
+  const cleanupTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Reset loading state when dialog opens
+  // Control iframe mounting/unmounting to prevent duplicate listeners
   useEffect(() => {
     if (isOpen) {
+      // Clear any pending cleanup
+      if (cleanupTimeoutRef.current) {
+        clearTimeout(cleanupTimeoutRef.current);
+        cleanupTimeoutRef.current = null;
+      }
+
+      // Reset loading state and enable iframe rendering
       setIsLoading(true);
+      // Delay iframe rendering slightly to ensure clean mount
+      const renderTimeout = setTimeout(() => {
+        setShouldRenderIframe(true);
+      }, 50);
+
+      return () => clearTimeout(renderTimeout);
+    } else {
+      // Dialog is closing - unmount iframes to cleanup listeners
+      setShouldRenderIframe(false);
+
+      // Keep iframe unmounted for a bit to ensure cleanup completes
+      cleanupTimeoutRef.current = setTimeout(() => {
+        setIsLoading(true);
+      }, 300);
     }
   }, [isOpen]);
 
@@ -71,16 +94,19 @@ export function ModelViewDialog({
             </div>
           </div>
         )}
-        <iframe
-          src={embedSrc}
-          title={title}
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          className="w-full h-full"
-          loading="eager"
-          onLoad={() => setIsLoading(false)}
-        />
+        {shouldRenderIframe && (
+          <iframe
+            key={`luma-${captureId}`}
+            src={embedSrc}
+            title={title}
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="w-full h-full"
+            loading="eager"
+            onLoad={() => setIsLoading(false)}
+          />
+        )}
         <div className="absolute top-2 right-2 z-20">
           <Button
             size="sm"
@@ -130,15 +156,18 @@ export function ModelViewDialog({
             </div>
           </div>
         )}
-        <iframe
-          src={`https://sketchfab.com/models/${modelId}/embed?autostart=1&ui_theme=dark`}
-          title={title}
-          frameBorder="0"
-          allow="autoplay; fullscreen; vr"
-          className="w-full h-full"
-          loading="eager"
-          onLoad={() => setIsLoading(false)}
-        />
+        {shouldRenderIframe && (
+          <iframe
+            key={`sketchfab-${modelId}`}
+            src={`https://sketchfab.com/models/${modelId}/embed?autostart=1&ui_theme=dark`}
+            title={title}
+            frameBorder="0"
+            allow="autoplay; fullscreen; vr"
+            className="w-full h-full"
+            loading="eager"
+            onLoad={() => setIsLoading(false)}
+          />
+        )}
         <div className="absolute top-2 right-2 z-20">
           <Button
             size="sm"

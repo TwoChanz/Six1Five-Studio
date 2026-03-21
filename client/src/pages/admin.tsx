@@ -218,11 +218,13 @@ export default function Admin() {
                 <div className="relative">
                   <Input
                     id="password"
+                    name="password"
                     type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="bg-gray-700 border-gray-600 text-white pr-10"
                     placeholder="Enter admin password"
+                    autoComplete="current-password"
                   />
                   <button
                     type="button"

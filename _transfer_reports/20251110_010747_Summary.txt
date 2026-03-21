@@ -1,0 +1,46 @@
+﻿Project Optimization Summary
+Generated: 11/10/2025 01:08:21
+Mode: LIVE EXECUTION
+================================================================================
+
+INITIAL STATE:
+  Total folders: 12
+  Total files: 30182
+  Total size: 0.83 GB
+
+CLEANUP (Phase 2):
+  Directories removed: 3
+  Files removed: 0
+  Space freed: 0.46 GB
+
+ARCHIVE (Phase 3):
+  Projects archived: 0
+  Space archived: 0 GB
+
+TRANSFER (Phase 4):
+  Status: Completed
+  See: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\_transfer_reports\20251110_010747_TransferLog.txt
+
+FINAL STATE:
+  Source folders: 10
+  Source files: 1664
+  Source size: 375.48 MB
+
+  Destination folders: 10
+  Destination files: 1664
+  Destination size: 375.48 MB
+
+ESTIMATED SAVINGS:
+  Total space reclaimed: 0.46 GB
+  Transfer size optimized: 0.46 GB
+
+REPORTS GENERATED:
+  - Top folders by size: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\_transfer_reports\20251110_010747_TopFoldersBySize.csv
+  - File type breakdown: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\_transfer_reports\20251110_010747_FileTypeBreakdown.csv
+  - Cleanup log: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\_transfer_reports\20251110_010747_CleanupLog.txt
+  - Archive log: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\_transfer_reports\20251110_010747_ArchiveLog.txt
+  - Transfer log: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\_transfer_reports\20251110_010747_TransferLog.txt
+  - Verification: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\_transfer_reports\20251110_010747_Verification.csv
+  - This summary: C:\Users\Overlord\LiveProjects\RealityCapturePortfolio\_transfer_reports\20251110_010747_Summary.txt
+
+================================================================================

@@ -101,11 +101,10 @@ export default function AboutSection() {
             <div className="relative overflow-visible pt-2 pb-2">
               {/* Tennessee state outline background - enhanced visibility */}
               <div className="absolute -left-6 -top-3 w-full max-w-full h-auto opacity-[0.14] pointer-events-none">
-                <svg 
-                  width="100%" 
-                  height="auto" 
-                  viewBox="0 0 400 64" 
-                  fill="none" 
+                <svg
+                  width="100%"
+                  viewBox="0 0 400 64"
+                  fill="none"
                   className="w-full h-auto text-[hsl(28,100%,58%)] drop-shadow-sm"
                   style={{ aspectRatio: '6.25/1', objectFit: 'contain', maxWidth: '100%' }}
                 >

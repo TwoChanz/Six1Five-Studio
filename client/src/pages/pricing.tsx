@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { Link } from "wouter";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import CostCalculator from "@/components/cost-calculator";
+import LeadMagnetTrigger from "@/components/lead-magnet-trigger";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Check, AlertCircle, ArrowRight } from "lucide-react";
@@ -156,6 +158,17 @@ export default function Pricing() {
             </p>
           </div>
 
+          {/* Cost Calculator */}
+          <div className="mb-16 max-w-4xl mx-auto">
+            <CostCalculator />
+          </div>
+
+          {/* Pricing Tiers Section */}
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold mb-2">Standard Pricing Tiers</h2>
+            <p className="text-gray-400">Or browse our standard packages below</p>
+          </div>
+
           {/* Pricing Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
             {pricingTiers.map((tier) => (
@@ -274,6 +287,23 @@ export default function Pricing() {
                 </div>
               ))}
             </div>
+          </div>
+
+          {/* Lead Magnet Section */}
+          <div className="mb-16 bg-gradient-to-br from-[hsl(24,95%,53%)]/10 to-[hsl(199,89%,48%)]/10 border-2 border-[hsl(24,95%,53%)] rounded-xl p-8 text-center">
+            <h2 className="text-3xl font-bold mb-4">
+              Free Download: <span className="text-[hsl(24,95%,53%)]">Reality Capture ROI Guide</span>
+            </h2>
+            <p className="text-gray-300 mb-6 max-w-2xl mx-auto text-lg">
+              Calculate your project ROI, compare technologies, and get expert planning templates.
+              No credit card required - just instant access to our comprehensive guide.
+            </p>
+            <LeadMagnetTrigger
+              source="pricing_page"
+              variant="cta"
+              text="Get Your Free Guide"
+              className="px-8 py-6 text-lg"
+            />
           </div>
 
           {/* CTA Section */}
