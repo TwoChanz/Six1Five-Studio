@@ -8,7 +8,7 @@ import { sql } from "drizzle-orm";
  */
 
 const useSqlite = process.env.USE_SQLITE === 'true';
-const coverPhotoPath = "/assets/lhs-field/lhs-watchtower-hero.jpg";
+const coverPhotoPath = "/assets/lhs-field/lhs-watchtower-hero.webp";
 
 async function updateWatchtowerCover() {
   try {
