@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import Navbar from "@/components/navbar";
-import HeroSection from "@/components/hero-section";
+import HeroVideo from "@/components/hero-video";
+import DroneVideoSection from "@/components/drone-video-section";
 import ServiceKeywords from "@/components/service-keywords";
 import ServicesSection from "@/components/services-section";
 import AIWorkflowShowcase from "@/components/ai-workflow-showcase";
@@ -99,11 +100,12 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[hsl(218,11%,15%)] text-white font-sans">
       <Navbar />
-      <HeroSection />
+      <HeroVideo />
       <ServiceKeywords />
       <ServicesSection />
       <AIWorkflowShowcase />
       <AboutSection />
+      <DroneVideoSection />
       <PortfolioSection />
       <SampleDatasetBanner />
       <LatestBlogWidget />
