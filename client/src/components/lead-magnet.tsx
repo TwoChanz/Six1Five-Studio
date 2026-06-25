@@ -73,7 +73,7 @@ export default function LeadMagnet({ isOpen, onClose, source = "unknown" }: Lead
     onError: (error: any) => {
       toast({
         title: "Submission Failed",
-        description: error.response?.data?.message || "Please try again or contact us directly.",
+        description: error.response?.data?.message || "Please try again or contact me directly.",
         variant: "destructive",
       });
     },
@@ -106,7 +106,7 @@ export default function LeadMagnet({ isOpen, onClose, source = "unknown" }: Lead
                 Free Reality Capture Guide
               </DialogTitle>
               <DialogDescription className="text-gray-300 text-center">
-                Download our comprehensive ROI calculator and planning guide for reality capture projects
+                Download my comprehensive ROI calculator and planning guide for reality capture projects
               </DialogDescription>
             </DialogHeader>
 

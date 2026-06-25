@@ -100,7 +100,7 @@ export default function Gallery() {
     <div className="min-h-screen bg-[hsl(218,11%,15%)] text-white font-sans">
       <SEOHead
         title="Portfolio Gallery - Six1Five Studio | Reality Capture Projects"
-        description="Explore our portfolio of drone mapping, LiDAR scanning, and photogrammetry projects for construction, real estate, agriculture, and historic preservation."
+        description="Explore my portfolio of drone mapping, LiDAR scanning, and photogrammetry projects for construction, real estate, agriculture, and historic preservation."
         keywords="reality capture portfolio, drone mapping projects, LiDAR scans, photogrammetry gallery, 3D model viewer, construction surveying, AEC technology"
         canonicalUrl={getCanonicalUrl('/gallery')}
         ogImage="/images/og-gallery.jpg"
@@ -115,7 +115,7 @@ export default function Gallery() {
               3D Model <span className="text-[hsl(199,89%,48%)]">Gallery</span>
             </h1>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Explore our complete collection of reality capture projects. Each model tells a story of precision, innovation, and digital transformation.
+              Explore my complete collection of reality capture projects. Each model tells a story of precision, innovation, and digital transformation.
             </p>
           </div>
 
@@ -313,7 +313,7 @@ export default function Gallery() {
           <div className="mt-16 text-center bg-gray-800 rounded-xl p-8 border border-gray-700">
             <h2 className="text-2xl font-bold mb-4">Ready to Create Your Own 3D Model?</h2>
             <p className="text-gray-400 mb-6 max-w-2xl mx-auto">
-              From concept to completion, we deliver high-quality reality capture services that bring your projects into the digital realm.
+              From concept to completion, I deliver high-quality reality capture services that bring your projects into the digital realm.
             </p>
             <Link href="/#contact">
               <Button className="bg-[hsl(24,95%,53%)] hover:bg-[hsl(24,95%,48%)] text-white px-8 py-3 rounded-lg font-semibold">

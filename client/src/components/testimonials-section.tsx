@@ -177,7 +177,7 @@ export default function TestimonialsSection() {
               Ready to capture your site?
             </h3>
             <p className="text-white/90 mb-6">
-              Join our satisfied clients and experience professional reality capture services.
+              Join my satisfied clients and experience professional reality capture services.
             </p>
             <button
               onClick={scrollToContact}

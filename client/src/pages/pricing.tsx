@@ -107,11 +107,11 @@ const addOns = [
 const faqs = [
   {
     question: "What factors affect pricing?",
-    answer: "Pricing depends on site size, complexity, desired resolution, deliverable formats, turnaround time, and site accessibility. We provide custom quotes after reviewing your project requirements.",
+    answer: "Pricing depends on site size, complexity, desired resolution, deliverable formats, turnaround time, and site accessibility. I provide custom quotes after reviewing your project requirements.",
   },
   {
     question: "Do you offer volume discounts?",
-    answer: "Yes! We offer discounted rates for multi-site projects, ongoing monitoring programs, and long-term partnerships. Contact us to discuss volume pricing.",
+    answer: "Yes! I offer discounted rates for multi-site projects, ongoing monitoring programs, and long-term partnerships. Contact me to discuss volume pricing.",
   },
   {
     question: "What's included in the base price?",
@@ -123,11 +123,11 @@ const faqs = [
   },
   {
     question: "What if my project is outside these tiers?",
-    answer: "These are starting points. Every project is unique. Contact us with your specific requirements for a custom quote tailored to your needs.",
+    answer: "These are starting points. Every project is unique. Contact me with your specific requirements for a custom quote tailored to your needs.",
   },
   {
     question: "Do you travel for projects?",
-    answer: "Yes! We serve clients nationwide. Travel expenses may apply for projects outside our local service area (details provided in quote).",
+    answer: "Yes! I serve clients nationwide. Travel expenses may apply for projects outside my local service area (details provided in quote).",
   },
 ];
 
@@ -154,7 +154,7 @@ export default function Pricing() {
               Invest in <span className="text-[hsl(199,89%,48%)]">Precision</span>
             </h1>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Clear, competitive pricing for professional reality capture services. Choose the tier that fits your project, or contact us for a custom quote.
+              Clear, competitive pricing for professional reality capture services. Choose the tier that fits your project, or contact me for a custom quote.
             </p>
           </div>
 
@@ -166,7 +166,7 @@ export default function Pricing() {
           {/* Pricing Tiers Section */}
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold mb-2">Standard Pricing Tiers</h2>
-            <p className="text-gray-400">Or browse our standard packages below</p>
+            <p className="text-gray-400">Or browse my standard packages below</p>
           </div>
 
           {/* Pricing Cards */}
@@ -263,7 +263,7 @@ export default function Pricing() {
               <p className="text-gray-400 text-sm">
                 These are starting prices for typical projects. Every site is unique—factors like terrain complexity,
                 flight restrictions, desired accuracy, and deliverable requirements can affect final pricing.
-                <span className="text-white font-medium"> Contact us for an accurate quote</span> based on your specific needs.
+                <span className="text-white font-medium"> Contact me for an accurate quote</span> based on your specific needs.
               </p>
             </div>
           </div>
@@ -273,7 +273,7 @@ export default function Pricing() {
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold mb-4">Frequently Asked Questions</h2>
               <p className="text-gray-400 max-w-2xl mx-auto">
-                Have questions about our pricing? We've got answers.
+                Have questions about my pricing? I've got answers.
               </p>
             </div>
 
@@ -296,7 +296,7 @@ export default function Pricing() {
             </h2>
             <p className="text-gray-300 mb-6 max-w-2xl mx-auto text-lg">
               Calculate your project ROI, compare technologies, and get expert planning templates.
-              No credit card required - just instant access to our comprehensive guide.
+              No credit card required - just instant access to my comprehensive guide.
             </p>
             <LeadMagnetTrigger
               source="pricing_page"
@@ -310,7 +310,7 @@ export default function Pricing() {
           <div className="text-center bg-gray-800 rounded-xl p-8 border border-gray-700">
             <h2 className="text-2xl font-bold mb-4">Ready to Get Started?</h2>
             <p className="text-gray-400 mb-6 max-w-2xl mx-auto">
-              Tell us about your project and we'll provide a detailed quote within 24 hours.
+              Tell me about your project and I'll provide a detailed quote within 24 hours.
               No obligation, no hidden fees.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
