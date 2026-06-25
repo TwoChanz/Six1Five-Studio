@@ -242,7 +242,7 @@ export default function ReviewForm({ onSuccess }: ReviewFormProps) {
       </Button>
 
       <p className="text-sm text-gray-400 text-center">
-        Your review will be published after approval by our team.
+        Your review will be published after my approval.
       </p>
     </form>
   );

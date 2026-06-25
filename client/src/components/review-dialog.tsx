@@ -40,8 +40,8 @@ export default function ReviewDialog({ trigger, triggerText = "Leave a Review" }
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold">Share Your Experience</DialogTitle>
           <DialogDescription className="text-gray-400">
-            We'd love to hear about your experience working with Six1Five Studio.
-            Your feedback helps us improve and helps others understand the quality of our work.
+            I'd love to hear about your experience working with Six1Five Studio.
+            Your feedback helps me improve and helps others understand the quality of my work.
           </DialogDescription>
         </DialogHeader>
         <ReviewForm onSuccess={handleSuccess} />
