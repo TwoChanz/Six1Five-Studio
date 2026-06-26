@@ -3,11 +3,13 @@ import { Home, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import { SEOHead } from "@/components/seo-head";
 import logoCircular from "@/assets/logo-circular-large.webp";
 
 export default function NotFound() {
   return (
     <div className="min-h-screen bg-[hsl(218,11%,15%)] text-white font-sans flex flex-col">
+      <SEOHead title="Page Not Found - Six1Five Studio" description="This page doesn't exist." noindex={true} />
       <Navbar />
 
       <main className="flex-grow flex items-center justify-center px-6 pt-20">
@@ -31,7 +33,7 @@ export default function NotFound() {
           </h2>
 
           <p className="text-gray-400 text-lg mb-8 max-w-md mx-auto">
-            Looks like this page got lost in the point cloud. Don't worry, we'll help you find your way back.
+            Looks like this page got lost in the point cloud. Don't worry, I'll help you find your way back.
           </p>
 
           {/* Action Buttons */}
