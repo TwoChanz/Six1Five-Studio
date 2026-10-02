@@ -1,0 +1,58 @@
+{
+  "name": "Chandler Hopkins",
+  "tagline": "Drone Mapping · 3D Site Models · Part 107",
+  "avatarAlt": "Chandler Hopkins, Six1Five Studio",
+  "socials": [
+    { "icon": "Linkedin", "label": "LinkedIn", "url": "https://www.linkedin.com/in/chandler-hopkins-057164185/" },
+    { "icon": "Box", "label": "Sketchfab", "url": "https://sketchfab.com/six1fivemedia" },
+    { "icon": "FileText", "label": "Digital Blueprint", "url": "https://digitalblueprint.substack.com/" },
+    { "icon": "Github", "label": "GitHub", "url": "https://github.com/TwoChanz" }
+  ],
+  "featured": {
+    "title": "Six1Five Studio — Drone Mapping & 3D Models",
+    "subtitle": "Orthomosaics, elevation data, and interactive 3D site models. Middle Tennessee.",
+    "image": "/assets/lhs-field/orthomosaic.png",
+    "imageAlt": "Drone orthomosaic of a high-school athletic field overlaid on satellite imagery",
+    "url": "/",
+    "internal": true
+  },
+  "links": [
+    {
+      "title": "Book a scan / request a quote",
+      "subtitle": "Site address + what you need to decide. Same-day reply.",
+      "url": "/#contact",
+      "internal": true,
+      "accent": true
+    },
+    {
+      "title": "Portfolio — interactive 3D models",
+      "subtitle": "Stockpile survey, homestead & acreage, more",
+      "url": "/gallery",
+      "internal": true
+    },
+    {
+      "title": "Pricing",
+      "subtitle": "Starting at $500 · cost calculator",
+      "url": "/pricing",
+      "internal": true
+    },
+    {
+      "title": "Free sample dataset",
+      "subtitle": "28 aerial photos with GCPs — test your photogrammetry workflow",
+      "url": "/resources",
+      "internal": true
+    },
+    {
+      "title": "Digital Blueprint newsletter",
+      "subtitle": "AEC tech, LiDAR, BIM, and digital twins from the field",
+      "url": "https://digitalblueprint.substack.com/",
+      "internal": false
+    },
+    {
+      "title": "Six1Five Devs",
+      "subtitle": "Build-in-public software studio",
+      "url": "https://github.com/TwoChanz",
+      "internal": false
+    }
+  ]
+}

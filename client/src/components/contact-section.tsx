@@ -55,12 +55,14 @@ const timelineOptions = [
   { value: "flexible", label: "Flexible timeline" },
 ];
 
+// Ranges start low on purpose: the first tier on /pricing begins at $500, so a
+// land-listing or small-site client needs to see a bracket they fit in.
 const budgetOptions = [
-  { value: "under-5k", label: "Under $5,000" },
+  { value: "under-1k", label: "Under $1,000" },
+  { value: "1k-2500", label: "$1,000 - $2,500" },
+  { value: "2500-5k", label: "$2,500 - $5,000" },
   { value: "5k-10k", label: "$5,000 - $10,000" },
-  { value: "10k-25k", label: "$10,000 - $25,000" },
-  { value: "25k-50k", label: "$25,000 - $50,000" },
-  { value: "over-50k", label: "Over $50,000" },
+  { value: "over-10k", label: "Over $10,000" },
   { value: "discuss", label: "Let's discuss" },
 ];
 
