@@ -11,6 +11,8 @@ interface FeaturedModel {
   description: string;
   sketchfabModelId: string;
   fullModelUrl: string;
+  /** Optional CSS brightness multiplier for the embed (1 = untouched, 0.85 = slightly darker). */
+  brightness?: number;
 }
 
 interface FeaturedModelsData {
@@ -83,6 +85,11 @@ function FeaturedModelCard({ model, index }: { model: FeaturedModel; index: numb
               allow="autoplay; fullscreen; xr-spatial-tracking"
               allowFullScreen
               loading="lazy"
+              style={
+                model.brightness !== undefined
+                  ? { filter: `brightness(${model.brightness})` }
+                  : undefined
+              }
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center text-gray-500">

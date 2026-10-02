@@ -9,15 +9,8 @@
       "useCase": "Construction · Volumetrics",
       "description": "Aggregate stockpile captured with GCPs for survey-tied accuracy. The same model supports cut/fill and volume calculations for pay applications.",
       "sketchfabModelId": "735d001c65a2487985c309e41fd5c770",
-      "fullModelUrl": "https://sketchfab.com/3d-models/stockpile-survey-reality-capture-with-gcps-735d001c65a2487985c309e41fd5c770"
-    },
-    {
-      "id": "serene-homestead",
-      "title": "Homestead & Acreage",
-      "useCase": "Real Estate · Land Listing",
-      "description": "A residential property and surrounding land as a buyer would see it from above. Drop this link into an MLS listing or text it to a prospect.",
-      "sketchfabModelId": "39c4a47887a046979e26f2e071c03a57",
-      "fullModelUrl": "https://sketchfab.com/3d-models/serene-homestead-retreat-39c4a47887a046979e26f2e071c03a57"
+      "fullModelUrl": "https://sketchfab.com/3d-models/stockpile-survey-reality-capture-with-gcps-735d001c65a2487985c309e41fd5c770",
+      "brightness": 0.85
     }
   ]
 }
