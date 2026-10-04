@@ -17,6 +17,7 @@ const Blog = lazy(() => import("@/pages/blog"));
 const BlogPost = lazy(() => import("@/pages/blog-post"));
 const FAQ = lazy(() => import("@/pages/faq"));
 const Resources = lazy(() => import("@/pages/resources"));
+const Links = lazy(() => import("@/pages/links"));
 const Admin = lazy(() => import("@/pages/admin"));
 const NotFound = lazy(() => import("@/pages/not-found"));
 
@@ -81,6 +82,13 @@ function Router() {
           <Suspense fallback={<div className="min-h-screen bg-[hsl(218,11%,15%)] flex items-center justify-center"><div className="text-white">Loading...</div></div>}>
             <ErrorBoundary>
               <Resources />
+            </ErrorBoundary>
+          </Suspense>
+        </Route>
+        <Route path="/links">
+          <Suspense fallback={<div className="min-h-screen bg-[hsl(218,11%,15%)] flex items-center justify-center"><div className="text-white">Loading...</div></div>}>
+            <ErrorBoundary>
+              <Links />
             </ErrorBoundary>
           </Suspense>
         </Route>
