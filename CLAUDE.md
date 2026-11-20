@@ -99,8 +99,8 @@ All routes in a single `registerRoutes(app)` function. Key patterns:
 
 - **Unprotected create**: `POST /api/blog` and `POST /api/portfolio` have **no auth** (used by seeding scripts)
 - **Admin CRUD**: `PUT`/`DELETE` under `/api/admin/` are protected with `requireAuth`
-- **Rate limiting** (skipped in development): contact 3/15min, login 5/15min, leads 5/15min, general admin 100/min
-- **File uploads**: Multer — contact submissions to `server/uploads/`, admin images to `client/public/assets/{type}-images/`
+- **Rate limiting** (skipped in development; relies on `trust proxy` being set on Vercel in `server/index.ts`): contact 3/15min, login 5/15min, leads 5/15min, general admin 100/min
+- **File uploads**: Multer (memory storage). Contact form files are attached to the Resend notification email; on Vercel nothing is written to disk and only file names are stored, locally they are also saved to `server/uploads/`. Total upload size is capped at 4MB (Vercel rejects request bodies over 4.5MB). Admin images go to `client/public/assets/{type}-images/`
 - **Email**: Resend client conditionally initialized if `RESEND_API_KEY` is set
 
 ### Theming
@@ -158,7 +158,7 @@ See `.env.example` for all variables with documentation.
 | Asset Type | Location |
 |------------|----------|
 | Portfolio project assets | `client/public/assets/{project-slug}/` |
-| User uploads (contact form) | `server/uploads/contact-submissions/` |
+| User uploads (contact form) | Emailed as attachments in production; `server/uploads/contact-submissions/` in local dev |
 | Large datasets (not in git) | `attached_assets/downloads/` |
 | Credentials/certs | `client/public/credentials/` |
 | Static content (FAQ, services) | `client/src/data/` |
