@@ -158,7 +158,8 @@ export default function ContactSection() {
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files || []);
     const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'application/pdf', 'text/plain'];
-    const maxSize = 10 * 1024 * 1024; // 10MB
+    // The host rejects uploads over 4.5MB, so the limit applies to all files together.
+    const maxTotalSize = 4 * 1024 * 1024; // 4MB
 
     const validFiles = files.filter(file => {
       if (!allowedTypes.includes(file.type)) {
@@ -169,16 +170,18 @@ export default function ContactSection() {
         });
         return false;
       }
-      if (file.size > maxSize) {
-        toast({
-          title: "File too large",
-          description: `${file.name} is too large. Please keep files under 10MB.`,
-          variant: "destructive",
-        });
-        return false;
-      }
       return true;
     });
+
+    const totalSize = [...uploadedFiles, ...validFiles].reduce((sum, file) => sum + file.size, 0);
+    if (totalSize > maxTotalSize) {
+      toast({
+        title: "Files too large",
+        description: "Please keep attachments under 4MB in total. For larger files, mention them in your message and I'll send a transfer link.",
+        variant: "destructive",
+      });
+      return;
+    }
 
     // Check total files limit
     const totalFiles = uploadedFiles.length + validFiles.length;
@@ -474,7 +477,7 @@ export default function ContactSection() {
                     <label htmlFor="file-upload" className="cursor-pointer">
                       <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
                       <p className="text-gray-400 mb-1">Upload reference images or documents</p>
-                      <p className="text-xs text-gray-500">Max 5 files, 10MB each (JPEG, PNG, GIF, WebP, PDF, TXT)</p>
+                      <p className="text-xs text-gray-500">Max 5 files, 4MB total (JPEG, PNG, GIF, WebP, PDF, TXT)</p>
                     </label>
                   </div>
                   

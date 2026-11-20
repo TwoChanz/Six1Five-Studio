@@ -435,17 +435,24 @@ function ContactsManager() {
               <div>
                 <span className="text-gray-400 text-sm">Reference Files ({contact.referenceFiles.length}):</span>
                 <div className="space-y-1 mt-1">
-                  {contact.referenceFiles.map((file, idx) => (
-                    <a
-                      key={idx}
-                      href={file}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[hsl(199,89%,48%)] hover:underline text-sm block"
-                    >
-                      {file.split('/').pop()}
-                    </a>
-                  ))}
+                  {contact.referenceFiles.map((file, idx) =>
+                    file.startsWith('/') ? (
+                      <a
+                        key={idx}
+                        href={file}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[hsl(199,89%,48%)] hover:underline text-sm block"
+                      >
+                        {file.split('/').pop()}
+                      </a>
+                    ) : (
+                      // In production the file itself is attached to the notification email.
+                      <span key={idx} className="text-gray-300 text-sm block">
+                        {file} <span className="text-gray-500">(attached to the notification email)</span>
+                      </span>
+                    )
+                  )}
                 </div>
               </div>
             )}
