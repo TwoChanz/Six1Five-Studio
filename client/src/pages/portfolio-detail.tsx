@@ -215,8 +215,8 @@ export default function PortfolioDetail() {
             <div>
               <div className="relative rounded-2xl overflow-hidden bg-gray-900 shadow-2xl border border-gray-700">
                 <img
-                  src="/assets/lhs-field/orthomosaic_overlay_1800.jpg"
-                  alt="Wolverines Track & Field - Drone Orthomosaic Overlay"
+                  src="/assets/lhs-field/orthomosaic.png"
+                  alt="Wolverines Track & Field - Drone Orthomosaic"
                   className="w-full h-auto object-contain"
                   loading="lazy"
                 />
@@ -233,24 +233,24 @@ export default function PortfolioDetail() {
                 <div className="space-y-3">
                   <div className="relative rounded-xl overflow-hidden bg-gray-900 shadow-lg border border-gray-700">
                     <img
-                      src="/assets/lhs-field/google_satellite_1800.jpg"
-                      alt="Google Satellite View"
+                      src="/assets/lhs-field/reference.png"
+                      alt="Satellite Reference View"
                       className="w-full h-auto object-contain"
                       loading="lazy"
                     />
                   </div>
-                  <p className="text-sm text-gray-400 text-center">Google Satellite</p>
+                  <p className="text-sm text-gray-400 text-center">Satellite Reference</p>
                 </div>
                 <div className="space-y-3">
                   <div className="relative rounded-xl overflow-hidden bg-gray-900 shadow-lg border border-gray-700">
                     <img
-                      src="/assets/lhs-field/drone_orthomosaic_1800.jpg"
-                      alt="Drone Orthomosaic"
+                      src="/assets/lhs-field/satellite-overlay.png"
+                      alt="Drone Satellite Overlay"
                       className="w-full h-auto object-contain"
                       loading="lazy"
                     />
                   </div>
-                  <p className="text-sm text-gray-400 text-center">Drone Orthomosaic</p>
+                  <p className="text-sm text-gray-400 text-center">Drone Overlay</p>
                 </div>
               </div>
             </div>
@@ -294,7 +294,7 @@ export default function PortfolioDetail() {
                 <div className="space-y-3">
                   <div className="relative rounded-xl overflow-hidden bg-gray-900 shadow-lg border border-gray-700">
                     <img
-                      src="/assets/lhs-field/dsm_heatmap_1500.jpg"
+                      src="/assets/lhs-field/dsm-heatmap.png"
                       alt="DSM Heatmap"
                       className="w-full h-auto object-contain"
                       loading="lazy"
@@ -305,54 +305,39 @@ export default function PortfolioDetail() {
                 <div className="space-y-3">
                   <div className="relative rounded-xl overflow-hidden bg-gray-900 shadow-lg border border-gray-700">
                     <img
-                      src="/assets/lhs-field/dsm_elevation_1500.jpg"
-                      alt="DSM Elevation"
+                      src="/assets/lhs-field/orthomosaic.png"
+                      alt="Drone Orthomosaic"
                       className="w-full h-auto object-contain"
                       loading="lazy"
                     />
                   </div>
-                  <p className="text-sm text-gray-400 text-center">DSM Elevation</p>
+                  <p className="text-sm text-gray-400 text-center">Orthomosaic</p>
                 </div>
                 <div className="space-y-3">
                   <div className="relative rounded-xl overflow-hidden bg-gray-900 shadow-lg border border-gray-700">
                     <img
-                      src="/assets/lhs-field/pointcloud_view_1500.jpg"
-                      alt="Point Cloud View"
+                      src="/assets/lhs-field/reference.png"
+                      alt="Reference View"
                       className="w-full h-auto object-contain"
                       loading="lazy"
                     />
                   </div>
-                  <p className="text-sm text-gray-400 text-center">Point Cloud View</p>
+                  <p className="text-sm text-gray-400 text-center">Reference View</p>
                 </div>
                 <div className="space-y-3">
                   <div className="relative rounded-xl overflow-hidden bg-gray-900 shadow-lg border border-gray-700">
                     <img
-                      src="/assets/lhs-field/mission_path_1500.jpg"
-                      alt="Flight Path Coverage"
+                      src="/assets/lhs-field/satellite-overlay.png"
+                      alt="Satellite Overlay"
                       className="w-full h-auto object-contain"
                       loading="lazy"
                     />
                   </div>
-                  <p className="text-sm text-gray-400 text-center">Flight Path Coverage</p>
+                  <p className="text-sm text-gray-400 text-center">Satellite Overlay</p>
                 </div>
               </div>
             </div>
 
-            {/* E. PDF Download Button */}
-            <div className="text-center">
-              <Button
-                size="lg"
-                className="bg-[hsl(199,89%,48%)] hover:bg-[hsl(199,89%,43%)] text-white px-8"
-                onClick={() => {
-                  const pdfUrl = '/assets/lhs-field/Wolverines_Report_Renamed.pdf';
-                  window.open(pdfUrl, '_blank');
-                  analytics.externalLink(pdfUrl, 'Wolverines Project Report PDF');
-                }}
-              >
-                <Download className="w-5 h-5 mr-2" />
-                Download Full Project Report
-              </Button>
-            </div>
           </div>
         )}
 
