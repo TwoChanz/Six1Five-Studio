@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <footer className="bg-[hsl(218,11%,15%)] border-t border-gray-700 py-12">
       <div className="container mx-auto px-6">
-        <div className="grid md:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-5 gap-8">
           <div className="md:col-span-2">
             <div className="flex items-start mb-4 pl-2">
               <img
@@ -63,10 +63,20 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-4">Services</h4>
             <ul className="space-y-2 text-gray-400">
-              <li><a href="/#services" className="hover:text-white transition-colors">Drone Mapping</a></li>
-              <li><a href="/#services" className="hover:text-white transition-colors">LiDAR Scanning</a></li>
-              <li><a href="/#services" className="hover:text-white transition-colors">Photogrammetry</a></li>
-              <li><a href="/#services" className="hover:text-white transition-colors">3D Reconstruction</a></li>
+              <li><a href="/#services" className="hover:text-white transition-colors">Drone Mapping &amp; 3D Models</a></li>
+              <li><a href="/#services" className="hover:text-white transition-colors">Progress Documentation</a></li>
+              <li><a href="/#services" className="hover:text-white transition-colors">Aerial Photo &amp; Video</a></li>
+              <li><a href="/pricing" className="hover:text-white transition-colors">Pricing</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-semibold mb-4">Explore</h4>
+            <ul className="space-y-2 text-gray-400">
+              <li><a href="/gallery" className="hover:text-white transition-colors">Portfolio</a></li>
+              <li><a href="/blog" className="hover:text-white transition-colors">Blog</a></li>
+              <li><a href="/faq" className="hover:text-white transition-colors">FAQ</a></li>
+              <li><a href="/resources" className="hover:text-white transition-colors">Resources</a></li>
+              <li><a href="/links" className="hover:text-white transition-colors">All Links</a></li>
             </ul>
           </div>
           <div>

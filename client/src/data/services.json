@@ -1,87 +1,50 @@
 {
-  "sectionTitle": "Capture Workflows",
-  "ctaTitle": "Ready to capture your project?",
-  "ctaDescription": "Get a custom quote based on your specific requirements and timeline.",
-  "ctaButtonText": "Get Free Quote →",
+  "sectionLabel": "Services",
+  "sectionTitle": "Three things I deliver, and deliver well.",
+  "sectionDescription": "Every project is captured by drone and processed with photogrammetry. You get files you can measure from and a link you can share — no software to install.",
+  "ctaTitle": "Not sure which one fits your project?",
+  "ctaDescription": "Send me the site address and what you're trying to decide. I'll tell you what to capture and what it costs.",
+  "ctaButtonText": "Request a Quote",
   "services": [
     {
-      "icon": "CameraIcon",
-      "title": "Photogrammetry",
-      "subtitle": "Transform photos into precise 3D models with millimeter accuracy",
-      "color": "drone-orange",
-      "backContent": "Precise 3D models from aerial photography with sub-centimeter accuracy",
-      "workflow": [
-        "Sub-millimeter accuracy levels",
-        "Texture-mapped 3D models",
-        "Multiple export formats",
-        "Construction documentation"
-      ]
-    },
-    {
-      "icon": "Crosshair",
-      "title": "LiDAR Scanning",
-      "subtitle": "High-resolution point cloud data for detailed site analysis",
+      "icon": "Map",
+      "title": "Drone Mapping & 3D Site Models",
+      "subtitle": "Orthomosaics, elevation data, and interactive 3D models from a single flight.",
       "color": "sky-blue",
-      "backContent": "Millimeter-precise point clouds for engineering-grade documentation",
       "workflow": [
-        "FARO & Leica scanner compatibility",
-        "Cloud-to-mesh processing",
-        "Revit & AutoCAD integration",
-        "As-built documentation"
+        "High-resolution orthomosaic (GeoTIFF)",
+        "Digital surface model & contours",
+        "Interactive 3D model, viewable in any browser",
+        "Centimeter-level accuracy with ground control",
+        "Stockpile volumes and cut/fill quantities",
+        "Land listings, lots, and acreage"
       ]
     },
     {
-      "icon": "Building",
-      "title": "3D Reconstruction",
-      "subtitle": "Convert reality capture data into actionable 3D models",
-      "color": "tech-green",
-      "backContent": "Professional 3D assets ready for CAD, VR, and visualization workflows",
-      "workflow": [
-        "Reality capture data processing",
-        "CAD-ready mesh generation",
-        "Design workflow integration",
-        "Planning optimization"
-      ]
-    },
-    {
-      "icon": "Bot",
-      "title": "Automated Mapping",
-      "subtitle": "Automated drone missions for large-scale site mapping",
+      "icon": "HardHat",
+      "title": "Construction Progress Documentation",
+      "subtitle": "Dated, repeatable captures that show exactly what was on site and when.",
       "color": "drone-orange",
-      "backContent": "Autonomous aerial mapping with repeatable flight paths and progress tracking",
       "workflow": [
-        "Flight planning & automated execution",
-        "Large-scale site mapping",
-        "Real-time progress monitoring",
-        "Weather-optimized scheduling"
+        "Recurring flights on your schedule (weekly, monthly, milestone)",
+        "Side-by-side comparisons between dates",
+        "Shareable links for owners, PMs, and subs",
+        "Pay-app and dispute documentation",
+        "Progress photos and video from consistent angles"
       ]
     },
     {
-      "icon": "Home",
-      "title": "Virtual Tours",
-      "subtitle": "Interactive 3D experiences for real estate marketing",
-      "color": "sky-blue",
-      "backContent": "Immersive 360° experiences with interactive hotspots and measurements",
-      "workflow": [
-        "360° immersive experiences",
-        "Interactive hotspot integration",
-        "Real estate marketing tools",
-        "Facility management solutions"
-      ]
-    },
-    {
-      "icon": "Plane",
-      "title": "Scan-to-BIM",
-      "subtitle": "Convert point clouds to Building Information Models",
+      "icon": "Camera",
+      "title": "Aerial Photography & Video",
+      "subtitle": "Still imagery and cinematic footage for listings, marketing, and proposals.",
       "color": "tech-green",
-      "backContent": "LOD 300+ BIM models from laser scan data for renovation projects",
       "workflow": [
-        "Point cloud to BIM conversion",
-        "LOD 300+ model accuracy",
-        "Renovation project support",
-        "Retrofit documentation"
+        "High-resolution property and site imagery",
+        "Listing and marketing assets",
+        "Overhead and ground-context perspectives",
+        "Social and web-ready video",
+        "Add-on to any mapping project"
       ]
     }
   ]
 }
-

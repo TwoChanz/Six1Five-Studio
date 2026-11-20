@@ -1,6 +1,6 @@
 export default function DroneVideoSection() {
   return (
-    <section id="work" className="py-20 bg-[hsl(218,11%,12%)]">
+    <section id="showcase" className="py-20 bg-[hsl(218,11%,12%)]">
       <div className="container mx-auto px-6">
         <h2 className="text-4xl font-bold text-center mb-4">
           Aerial <span className="text-[var(--accent-blue)]">Showcase</span>

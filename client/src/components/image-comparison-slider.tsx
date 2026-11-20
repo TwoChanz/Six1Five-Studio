@@ -1,191 +1,157 @@
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 interface ImageComparisonSliderProps {
   beforeImage: string;
   afterImage: string;
   beforeLabel?: string;
   afterLabel?: string;
+  /** Alt text for screen readers; labels are used if omitted. */
+  beforeAlt?: string;
+  afterAlt?: string;
   className?: string;
-  /** Aspect ratio as width/height (e.g., 16/9, 4/3, 1). Auto-detects from image if not provided. */
+  /** Aspect ratio as width/height (e.g. 16/9). Auto-detected from the after image if omitted. */
   aspectRatio?: number;
+  /** Initial divider position, 0–100. Default 50. */
+  initialPosition?: number;
 }
 
+/**
+ * Before/after image comparison.
+ *
+ * Both images are laid out identically at full container size; the "after"
+ * layer is clipped with `clip-path: inset(0 0 0 X%)`. Because neither image
+ * is ever resized or offset, the two halves stay perfectly registered no
+ * matter where the divider is — which matters for orthomosaics, where a few
+ * pixels of drift makes the comparison meaningless.
+ *
+ * Supports mouse, touch, and keyboard (arrow keys, Home/End) via role="slider".
+ */
 export function ImageComparisonSlider({
   beforeImage,
   afterImage,
   beforeLabel = "Before",
   afterLabel = "After",
+  beforeAlt,
+  afterAlt,
   className = "",
   aspectRatio,
+  initialPosition = 50,
 }: ImageComparisonSliderProps) {
-  const [sliderPosition, setSliderPosition] = useState(50);
+  const [position, setPosition] = useState(initialPosition);
   const [isDragging, setIsDragging] = useState(false);
-  const [containerWidth, setContainerWidth] = useState(0);
-  const [detectedAspectRatio, setDetectedAspectRatio] = useState<number | null>(null);
+  const [detectedRatio, setDetectedRatio] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Detect aspect ratio from the after image if not provided
+  // Detect aspect ratio from the after image when not supplied.
   useEffect(() => {
-    if (!aspectRatio) {
-      const img = new Image();
-      img.onload = () => {
-        setDetectedAspectRatio(img.width / img.height);
-      };
-      img.src = afterImage;
-    }
+    if (aspectRatio) return;
+    const img = new Image();
+    img.onload = () => setDetectedRatio(img.naturalWidth / img.naturalHeight);
+    img.src = afterImage;
   }, [afterImage, aspectRatio]);
 
-  // Track container width for proper image sizing
-  useEffect(() => {
-    const updateWidth = () => {
-      if (containerRef.current) {
-        setContainerWidth(containerRef.current.offsetWidth);
-      }
-    };
-    
-    updateWidth();
-    window.addEventListener('resize', updateWidth);
-    return () => window.removeEventListener('resize', updateWidth);
+  const updateFromClientX = useCallback((clientX: number) => {
+    const node = containerRef.current;
+    if (!node) return;
+    const rect = node.getBoundingClientRect();
+    const pct = ((clientX - rect.left) / rect.width) * 100;
+    setPosition(Math.max(0, Math.min(100, pct)));
   }, []);
 
-  const handleMove = useCallback(
-    (clientX: number) => {
-      if (!containerRef.current) return;
-
-      const rect = containerRef.current.getBoundingClientRect();
-      const x = clientX - rect.left;
-      const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
-      setSliderPosition(percentage);
-    },
-    []
-  );
-
-  const handleMouseDown = (e: React.MouseEvent) => {
+  // Pointer events cover mouse + touch + pen in one code path.
+  const onPointerDown = (e: React.PointerEvent) => {
     e.preventDefault();
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
     setIsDragging(true);
-    handleMove(e.clientX);
+    updateFromClientX(e.clientX);
   };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
+  const onPointerMove = (e: React.PointerEvent) => {
     if (!isDragging) return;
-    handleMove(e.clientX);
+    updateFromClientX(e.clientX);
+  };
+  const endDrag = () => setIsDragging(false);
+
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    const step = e.shiftKey ? 10 : 2;
+    const map: Record<string, number | undefined> = {
+      ArrowLeft: position - step,
+      ArrowRight: position + step,
+      Home: 0,
+      End: 100,
+    };
+    const next = map[e.key];
+    if (next === undefined) return;
+    e.preventDefault();
+    setPosition(Math.max(0, Math.min(100, next)));
   };
 
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setIsDragging(true);
-    handleMove(e.touches[0].clientX);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging) return;
-    handleMove(e.touches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    setIsDragging(false);
-  };
-
-  // Use provided aspect ratio, detected ratio, or fallback to 4:3
-  const finalAspectRatio = aspectRatio || detectedAspectRatio || (4/3);
-  const paddingBottom = `${(1 / finalAspectRatio) * 100}%`;
+  const ratio = aspectRatio ?? detectedRatio ?? 4 / 3;
 
   return (
     <div
       ref={containerRef}
-      className={`relative w-full overflow-hidden rounded-xl cursor-ew-resize select-none ${className}`}
-      style={{ paddingBottom }}
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseUp}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
+      role="slider"
+      tabIndex={0}
+      aria-label={`Compare ${beforeLabel} and ${afterLabel}`}
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={Math.round(position)}
+      className={`relative w-full overflow-hidden rounded-xl select-none touch-none outline-none focus-visible:ring-2 focus-visible:ring-[var(--logo-blue)] ${
+        isDragging ? "cursor-grabbing" : "cursor-ew-resize"
+      } ${className}`}
+      style={{ aspectRatio: String(ratio) }}
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={endDrag}
+      onPointerCancel={endDrag}
+      onKeyDown={onKeyDown}
     >
-      {/* Before Image (Full width, static background on left) */}
-      <div className="absolute inset-0">
-        <img
-          src={beforeImage}
-          alt={beforeLabel}
-          className="w-full h-full object-cover object-center"
-          draggable={false}
-        />
-      </div>
+      {/* Before — full frame */}
+      <img
+        src={beforeImage}
+        alt={beforeAlt ?? beforeLabel}
+        className="absolute inset-0 w-full h-full object-cover"
+        draggable={false}
+        loading="lazy"
+      />
 
-      {/* After Image (Revealed from right side as slider moves left) */}
-      <div
-        className="absolute top-0 bottom-0 right-0 overflow-hidden"
-        style={{ width: `${100 - sliderPosition}%` }}
-      >
-        <img
-          src={afterImage}
-          alt={afterLabel}
-          className="h-full object-cover object-right"
-          style={{ 
-            width: containerWidth > 0 ? `${containerWidth}px` : '100vw',
-            marginLeft: `${-sliderPosition}%`
-          }}
-          draggable={false}
-        />
-      </div>
+      {/* After — full frame, clipped from the left to the divider */}
+      <img
+        src={afterImage}
+        alt={afterAlt ?? afterLabel}
+        className="absolute inset-0 w-full h-full object-cover"
+        style={{ clipPath: `inset(0 0 0 ${position}%)` }}
+        draggable={false}
+        loading="lazy"
+      />
 
-      {/* Slider Line */}
+      {/* Divider + handle */}
       <div
-        className="absolute top-0 bottom-0 w-1 bg-white shadow-lg z-10"
-        style={{ left: `calc(${sliderPosition}% - 2px)` }}
+        className="absolute top-0 bottom-0 w-0.5 bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.35)] z-10 pointer-events-none"
+        style={{ left: `calc(${position}% - 1px)` }}
       >
-        {/* Slider Handle */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-xl flex items-center justify-center border-2 border-gray-200">
-          <div className="flex items-center gap-0.5">
-            <svg
-              className="w-3 h-3 text-gray-600 rotate-180"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={3}
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-            <svg
-              className="w-3 h-3 text-gray-600"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={3}
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-          </div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white shadow-xl border border-gray-300 flex items-center justify-center">
+          <svg className="w-5 h-5 text-gray-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 6l-5 6 5 6M15 6l5 6-5 6" />
+          </svg>
         </div>
       </div>
 
       {/* Labels */}
-      <div className="absolute top-4 left-4 px-3 py-1.5 bg-black/70 backdrop-blur-sm rounded-full text-white text-sm font-medium z-20">
+      <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/70 backdrop-blur-sm text-white text-xs sm:text-sm font-medium z-20 pointer-events-none">
         {beforeLabel}
-      </div>
-      <div className="absolute top-4 right-4 px-3 py-1.5 bg-drone-orange/90 backdrop-blur-sm rounded-full text-white text-sm font-medium z-20">
+      </span>
+      <span className="absolute top-3 right-3 px-3 py-1 rounded-full bg-[var(--tech-orange)]/90 backdrop-blur-sm text-white text-xs sm:text-sm font-medium z-20 pointer-events-none">
         {afterLabel}
-      </div>
+      </span>
 
-      {/* Instruction hint */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 bg-black/60 backdrop-blur-sm rounded-full text-white/80 text-xs z-20 pointer-events-none transition-opacity duration-300"
-        style={{ opacity: isDragging ? 0 : 0.8 }}
+      {/* Hint, fades once the visitor interacts */}
+      <span
+        className="absolute bottom-3 left-1/2 -translate-x-1/2 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-sm text-white/80 text-xs z-20 pointer-events-none transition-opacity duration-300"
+        style={{ opacity: isDragging ? 0 : 0.85 }}
       >
         ← Drag to compare →
-      </div>
+      </span>
     </div>
   );
 }
-
