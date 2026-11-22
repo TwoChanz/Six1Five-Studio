@@ -98,7 +98,7 @@ export default function BlogPostPage() {
         description={post.excerpt || `Read ${post.title} - Expert insights on reality capture, drone mapping, LiDAR, and AEC technology from Six1Five Studio.`}
         keywords={`${post.tags?.join(', ') || 'reality capture, drone mapping, LiDAR'}, AEC technology, construction tech`}
         canonicalUrl={getCanonicalUrl(`/blog/${post.slug}`)}
-        ogImage={post.featuredImage || '/images/og-blog.jpg'}
+        ogImage={post.featuredImage || '/assets/floyd-stadium-aerial.jpg'}
       />
       <Navbar />
 

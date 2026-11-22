@@ -18,14 +18,14 @@ interface SEOHeadProps {
  *   title="Page Title - Six1Five Studio"
  *   description="Page description for SEO"
  *   keywords="keyword1, keyword2, keyword3"
- *   ogImage="/images/og-image.jpg"
+ *   ogImage="/assets/floyd-stadium-aerial.jpg"
  * />
  */
 export function SEOHead({
   title,
   description,
   keywords,
-  ogImage = '/images/og-default.jpg',
+  ogImage = '/assets/floyd-stadium-aerial.jpg',
   ogType = 'website',
   canonicalUrl,
   noindex = false,
