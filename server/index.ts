@@ -5,6 +5,14 @@ import fs from "fs";
 import path from "path";
 
 const app = express();
+
+// Vercel puts exactly one proxy in front of the function. Trusting it makes
+// req.ip the visitor's address, so express-rate-limit counts per visitor
+// instead of logging ERR_ERL_UNEXPECTED_X_FORWARDED_FOR on every request.
+if (process.env.VERCEL) {
+  app.set('trust proxy', 1);
+}
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 

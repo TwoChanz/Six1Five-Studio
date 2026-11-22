@@ -1,4 +1,4 @@
-import type { Express } from "express";
+import type { Express, RequestHandler } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage.js";
 import { insertContactSubmissionSchema, insertBlogPostSchema, insertPortfolioItemSchema, insertReviewSchema, insertLeadSchema } from "../shared/schema.js";
@@ -18,20 +18,15 @@ const __dirname = path.dirname(__filename);
 // Initialize Resend if API key is available
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
-// Configure multer for file uploads
+// Configure multer for file uploads.
+// Files are held in memory: Vercel's filesystem is read-only, so writing to
+// server/uploads fails there. In production they are delivered as attachments
+// on the notification email; in local dev they are also written to disk.
 const uploadDir = path.join(__dirname, 'uploads', 'contact-submissions');
 
-const storage_multer = multer.diskStorage({
-  destination: async (req, file, cb) => {
-    // Ensure upload directory exists
-    await fs.mkdir(uploadDir, { recursive: true }).catch(() => {});
-    cb(null, uploadDir);
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
-  }
-});
+// Vercel rejects request bodies over 4.5 MB before they reach this function,
+// so the whole submission (all files together) must stay under that.
+const MAX_TOTAL_UPLOAD_BYTES = 4 * 1024 * 1024;
 
 const fileFilter = (req: any, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
   const allowedMimes = [
@@ -47,13 +42,48 @@ const fileFilter = (req: any, file: Express.Multer.File, cb: multer.FileFilterCa
 };
 
 const upload = multer({
-  storage: storage_multer,
+  storage: multer.memoryStorage(),
   limits: {
-    fileSize: 10 * 1024 * 1024, // 10MB per file
+    fileSize: MAX_TOTAL_UPLOAD_BYTES,
     files: 5 // Max 5 files per submission
   },
   fileFilter
 });
+
+// Run multer and turn its errors (too large, wrong type) into a 400 response
+// instead of letting them fall through to the generic error handler.
+const uploadReferenceFiles: RequestHandler = (req, res, next) => {
+  upload.array('referenceFiles', 5)(req, res, (err: unknown) => {
+    if (!err) return next();
+    const message = err instanceof multer.MulterError && err.code === 'LIMIT_FILE_SIZE'
+      ? 'Files are too large. Please keep attachments under 4MB in total.'
+      : err instanceof Error ? err.message : 'File upload failed';
+    res.status(400).json({ message });
+  });
+};
+
+// Keep only the base name and drop characters that are unsafe in a filename.
+function safeFileName(originalName: string): string {
+  return path.basename(originalName).replace(/[^\w.\- ]+/g, '_') || 'file';
+}
+
+// Returns what to store in contact_submissions.reference_files.
+// Local dev: write to disk and store the /uploads path (served statically).
+// Vercel: nothing can be written, so store the file names; the files
+// themselves travel with the notification email.
+async function storeReferenceFiles(files: Express.Multer.File[]): Promise<string[]> {
+  if (process.env.VERCEL) {
+    return files.map(file => safeFileName(file.originalname));
+  }
+
+  await fs.mkdir(uploadDir, { recursive: true });
+  return Promise.all(files.map(async file => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const filename = `${file.fieldname}-${uniqueSuffix}${path.extname(file.originalname)}`;
+    await fs.writeFile(path.join(uploadDir, filename), file.buffer);
+    return `/uploads/contact-submissions/${filename}`;
+  }));
+}
 
 // Rate limiter for login attempts
 const loginLimiter = rateLimit({
@@ -188,16 +218,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
   }, (await import('express')).static(path.join(__dirname, 'uploads')));
 
   // Contact form submission with file uploads
-  app.post("/api/contact", contactLimiter, upload.array('referenceFiles', 5), async (req, res) => {
+  app.post("/api/contact", contactLimiter, uploadReferenceFiles, async (req, res) => {
     try {
       // Parse services as JSON array if it's a string
       const services = typeof req.body.services === 'string'
         ? JSON.parse(req.body.services)
         : req.body.services;
 
-      // Get uploaded file paths
-      const files = req.files as Express.Multer.File[];
-      const filePaths = files ? files.map(file => `/uploads/contact-submissions/${file.filename}`) : [];
+      const files = (req.files as Express.Multer.File[] | undefined) ?? [];
+      const totalBytes = files.reduce((sum, file) => sum + file.size, 0);
+      if (totalBytes > MAX_TOTAL_UPLOAD_BYTES) {
+        return res.status(400).json({
+          message: 'Files are too large. Please keep attachments under 4MB in total.'
+        });
+      }
+
+      const filePaths = await storeReferenceFiles(files);
 
       const formData = {
         ...req.body,
@@ -220,6 +256,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
             subject: `🚁 New Project Inquiry: ${validatedData.projectType} - ${validatedData.name}`,
             html: htmlEmail,
             text: plainTextEmail,
+            attachments: files.map(file => ({
+              filename: safeFileName(file.originalname),
+              content: file.buffer,
+            })),
           });
 
           if (error) {
@@ -233,6 +273,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       } else {
         console.warn('Resend not configured. Email notification skipped. Set RESEND_API_KEY and RESEND_FROM_EMAIL environment variables.');
+        if (files.length > 0 && process.env.VERCEL) {
+          console.error(`${files.length} uploaded file(s) were dropped: email is the only delivery path for attachments on Vercel.`);
+        }
       }
 
       res.json({ success: true, submission });
