@@ -1,0 +1,36 @@
+{
+  "//": "Keep the pack lean, code-first. Exclude meshes, binaries, caches, and local tooling state.",
+  "respectGitIgnore": true,
+  "maxFileSizeMB": 1,
+  "includeExtensions": [
+    ".ts", ".tsx", ".js", ".jsx", ".json", ".md", ".sql", ".css", ".scss", ".html",
+    ".env.example", ".yml", ".yaml"
+  ],
+  "excludePatterns": [
+    "attached_assets/**",
+    "client/public/assets/models/**",
+    "client/public/assets/*.webp",
+    ".local/**",
+    "**/*.obj",
+    "**/*.ply",
+    "**/*.glb",
+    "**/*.gltf",
+    "**/*.bin",
+    "**/*.webp",
+    "**/*.heic",
+    "**/*.png",
+    "**/*.jpg",
+    "**/*.jpeg",
+    "**/*.pdf",
+    "node_modules/**",
+    "dist/**",
+    "build/**",
+    ".next/**",
+    ".vercel/**",
+    "coverage/**",
+    "uploads/**",
+    "server/uploads/**",
+    "server/dist/**"
+  ],
+  "sort": "path"
+}

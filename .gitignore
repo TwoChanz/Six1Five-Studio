@@ -19,6 +19,25 @@ local.db-wal
 server/uploads/**/*
 !server/uploads/.gitkeep
 
+# build / cache
+build/
+.vercel/
+.next/
+coverage/
+uploads/
+.local/
+
+# heavy assets (keep them outside Git or store via LFS/CDN)
+client/public/assets/models/
+attached_assets/
+*.obj
+*.ply
+*.glb
+*.gltf
+*.bin
+*.webp
+*.heic
+*.pdf
 # Large asset files (deploy separately via CDN or Vercel upload)
 client/public/assets/church/church-model.glb
 client/public/assets/church/church-walkthrough.mp4
