@@ -1,20 +1,21 @@
 import { Users, Globe, FileText } from "lucide-react";
 import logoImage from "@/assets/six1five-logo.png";
-import logoHorizontalWhite from "@/assets/logo-horizontal-clean-bg.png";
+import logoHorizontalWhiteClean from "@/assets/logo-horizontal-white-clean.png";
 
 export default function Footer() {
   return (
     <footer className="bg-[hsl(218,11%,15%)] border-t border-gray-700 py-12">
       <div className="container mx-auto px-6">
-        <div className="grid md:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-5 gap-8">
           <div className="md:col-span-2">
-            <div className="flex items-center mb-4">
-              <img 
-                src={logoHorizontalWhite} 
-                alt="SixlFive Studio - Reality Capture Specialists" 
-                className="h-12 w-auto filter drop-shadow-lg"
+            <div className="flex items-start mb-4 pl-2">
+              <img
+                src={logoHorizontalWhiteClean}
+                alt="SixlFive Studio - Reality Capture Specialists"
+                className="h-auto w-full max-w-[180px] md:max-w-[220px]"
                 style={{
-                  filter: 'drop-shadow(0 0 8px var(--logo-blue))'
+                  mixBlendMode: 'screen',
+                  filter: 'brightness(1.3) drop-shadow(0 0 8px var(--logo-blue)) drop-shadow(0 0 12px var(--logo-blue))'
                 }}
               />
             </div>
@@ -62,23 +63,33 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-4">Services</h4>
             <ul className="space-y-2 text-gray-400">
-              <li><a href="#services" className="hover:text-white transition-colors">Drone Mapping</a></li>
-              <li><a href="#services" className="hover:text-white transition-colors">LiDAR Scanning</a></li>
-              <li><a href="#services" className="hover:text-white transition-colors">Photogrammetry</a></li>
-              <li><a href="#services" className="hover:text-white transition-colors">3D Reconstruction</a></li>
+              <li><a href="/#services" className="hover:text-white transition-colors">Drone Mapping &amp; 3D Models</a></li>
+              <li><a href="/#services" className="hover:text-white transition-colors">Progress Documentation</a></li>
+              <li><a href="/#services" className="hover:text-white transition-colors">Aerial Photo &amp; Video</a></li>
+              <li><a href="/pricing" className="hover:text-white transition-colors">Pricing</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-semibold mb-4">Explore</h4>
+            <ul className="space-y-2 text-gray-400">
+              <li><a href="/gallery" className="hover:text-white transition-colors">Portfolio</a></li>
+              <li><a href="/blog" className="hover:text-white transition-colors">Blog</a></li>
+              <li><a href="/faq" className="hover:text-white transition-colors">FAQ</a></li>
+              <li><a href="/resources" className="hover:text-white transition-colors">Resources</a></li>
+              <li><a href="/links" className="hover:text-white transition-colors">All Links</a></li>
             </ul>
           </div>
           <div>
             <h4 className="font-semibold mb-4">Contact</h4>
             <ul className="space-y-2 text-gray-400">
               <li>Nashville, Tennessee</li>
-              <li>(931) 588-8997</li>
-              <li>admin@six1fivestudio.com</li>
+              <li><a href="tel:+19315888997" className="hover:text-[var(--primary-blue)] transition-colors">(931) 588-8997</a></li>
+              <li><a href="mailto:admin@six1fivestudio.com" className="hover:text-[var(--primary-blue)] transition-colors underline decoration-transparent hover:decoration-[var(--primary-blue)] transition-all">admin@six1fivestudio.com</a></li>
             </ul>
           </div>
         </div>
         <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; 2024 Six1Five Studio. All rights reserved.</p>
+          <p>&copy; 2026 Six1Five Studio. All rights reserved.</p>
         </div>
       </div>
     </footer>

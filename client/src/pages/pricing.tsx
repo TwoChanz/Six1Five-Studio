@@ -2,132 +2,14 @@ import { useEffect } from "react";
 import { Link } from "wouter";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import CostCalculator from "@/components/cost-calculator";
+import LeadMagnetTrigger from "@/components/lead-magnet-trigger";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Check, AlertCircle, ArrowRight } from "lucide-react";
 import { analytics } from "@/lib/analytics";
 
-interface PricingTier {
-  name: string;
-  tagline: string;
-  price: string;
-  priceSubtext: string;
-  description: string;
-  features: string[];
-  popular?: boolean;
-  cta: string;
-}
-
-const pricingTiers: PricingTier[] = [
-  {
-    name: "Essential",
-    tagline: "Perfect for small sites",
-    price: "Starting at $500",
-    priceSubtext: "per project",
-    description: "Ideal for residential properties, small commercial sites, or single-structure documentation.",
-    features: [
-      "Up to 5 acres coverage",
-      "Basic aerial photogrammetry",
-      "3D model delivery (OBJ/FBX)",
-      "Orthomosaic map (GeoTIFF)",
-      "Basic point cloud",
-      "2-week turnaround",
-      "Email support",
-    ],
-    cta: "Get Started",
-  },
-  {
-    name: "Professional",
-    tagline: "Most popular choice",
-    price: "Starting at $1,500",
-    priceSubtext: "per project",
-    description: "Comprehensive solution for construction sites, commercial properties, and heritage documentation.",
-    features: [
-      "Up to 50 acres coverage",
-      "Advanced photogrammetry + LiDAR",
-      "High-detail 3D models",
-      "Orthomosaic + elevation maps",
-      "Classified point cloud",
-      "Progress tracking dashboards",
-      "1-week turnaround",
-      "Priority phone/email support",
-      "3 revision rounds included",
-    ],
-    popular: true,
-    cta: "Get Quote",
-  },
-  {
-    name: "Enterprise",
-    tagline: "For large-scale projects",
-    price: "Custom Pricing",
-    priceSubtext: "volume discounts available",
-    description: "Tailored solutions for large construction projects, infrastructure, and ongoing monitoring programs.",
-    features: [
-      "Unlimited acreage",
-      "Multi-site coordination",
-      "Drone + terrestrial LiDAR",
-      "Advanced mesh processing",
-      "Custom deliverable formats",
-      "Automated progress monitoring",
-      "Rush delivery available",
-      "Dedicated project manager",
-      "Unlimited revisions",
-      "API integration support",
-      "Training & onboarding",
-    ],
-    cta: "Contact Sales",
-  },
-];
-
-const addOns = [
-  {
-    name: "Thermal Imaging",
-    price: "+$300",
-    description: "Identify heat loss, moisture intrusion, or electrical issues",
-  },
-  {
-    name: "Interior Scanning",
-    price: "+$500",
-    description: "Complete interior documentation with terrestrial LiDAR",
-  },
-  {
-    name: "Rush Delivery",
-    price: "+30%",
-    description: "3-day turnaround for urgent projects",
-  },
-  {
-    name: "Monthly Monitoring",
-    price: "Custom",
-    description: "Scheduled site captures for progress tracking",
-  },
-];
-
-const faqs = [
-  {
-    question: "What factors affect pricing?",
-    answer: "Pricing depends on site size, complexity, desired resolution, deliverable formats, turnaround time, and site accessibility. We provide custom quotes after reviewing your project requirements.",
-  },
-  {
-    question: "Do you offer volume discounts?",
-    answer: "Yes! We offer discounted rates for multi-site projects, ongoing monitoring programs, and long-term partnerships. Contact us to discuss volume pricing.",
-  },
-  {
-    question: "What's included in the base price?",
-    answer: "All tiers include flight planning, data capture, processing, standard deliverables (3D models, orthomosaics, point clouds), and basic project management. Additional services can be added à la carte.",
-  },
-  {
-    question: "How do revisions work?",
-    answer: "Essential tier includes minor adjustments. Professional includes 3 revision rounds. Enterprise includes unlimited revisions. Revisions cover processing adjustments, not additional site visits.",
-  },
-  {
-    question: "What if my project is outside these tiers?",
-    answer: "These are starting points. Every project is unique. Contact us with your specific requirements for a custom quote tailored to your needs.",
-  },
-  {
-    question: "Do you travel for projects?",
-    answer: "Yes! We serve clients nationwide. Travel expenses may apply for projects outside our local service area (details provided in quote).",
-  },
-];
+import { pricingTiers, pricingAddOns as addOns, pricingFaqs as faqs } from "@/data/pricing";
 
 export default function Pricing() {
   useEffect(() => {
@@ -152,8 +34,19 @@ export default function Pricing() {
               Invest in <span className="text-[hsl(199,89%,48%)]">Precision</span>
             </h1>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Clear, competitive pricing for professional reality capture services. Choose the tier that fits your project, or contact us for a custom quote.
+              Clear, competitive pricing for professional reality capture services. Choose the tier that fits your project, or contact me for a custom quote.
             </p>
+          </div>
+
+          {/* Cost Calculator */}
+          <div className="mb-16 max-w-4xl mx-auto">
+            <CostCalculator />
+          </div>
+
+          {/* Pricing Tiers Section */}
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold mb-2">Standard Pricing Tiers</h2>
+            <p className="text-gray-400">Or browse my standard packages below</p>
           </div>
 
           {/* Pricing Cards */}
@@ -250,7 +143,7 @@ export default function Pricing() {
               <p className="text-gray-400 text-sm">
                 These are starting prices for typical projects. Every site is unique—factors like terrain complexity,
                 flight restrictions, desired accuracy, and deliverable requirements can affect final pricing.
-                <span className="text-white font-medium"> Contact us for an accurate quote</span> based on your specific needs.
+                <span className="text-white font-medium"> Contact me for an accurate quote</span> based on your specific needs.
               </p>
             </div>
           </div>
@@ -260,7 +153,7 @@ export default function Pricing() {
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold mb-4">Frequently Asked Questions</h2>
               <p className="text-gray-400 max-w-2xl mx-auto">
-                Have questions about our pricing? We've got answers.
+                Have questions about my pricing? I've got answers.
               </p>
             </div>
 
@@ -276,11 +169,28 @@ export default function Pricing() {
             </div>
           </div>
 
+          {/* Lead Magnet Section */}
+          <div className="mb-16 bg-gradient-to-br from-[hsl(24,95%,53%)]/10 to-[hsl(199,89%,48%)]/10 border-2 border-[hsl(24,95%,53%)] rounded-xl p-8 text-center">
+            <h2 className="text-3xl font-bold mb-4">
+              Free Download: <span className="text-[hsl(24,95%,53%)]">Reality Capture ROI Guide</span>
+            </h2>
+            <p className="text-gray-300 mb-6 max-w-2xl mx-auto text-lg">
+              Calculate your project ROI, compare technologies, and get expert planning templates.
+              No credit card required - just instant access to my comprehensive guide.
+            </p>
+            <LeadMagnetTrigger
+              source="pricing_page"
+              variant="cta"
+              text="Get Your Free Guide"
+              className="px-8 py-6 text-lg"
+            />
+          </div>
+
           {/* CTA Section */}
           <div className="text-center bg-gray-800 rounded-xl p-8 border border-gray-700">
             <h2 className="text-2xl font-bold mb-4">Ready to Get Started?</h2>
             <p className="text-gray-400 mb-6 max-w-2xl mx-auto">
-              Tell us about your project and we'll provide a detailed quote within 24 hours.
+              Tell me about your project and I'll provide a detailed quote within 24 hours.
               No obligation, no hidden fees.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

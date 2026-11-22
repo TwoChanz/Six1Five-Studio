@@ -1,0 +1,39 @@
+{
+  "sectionLabel": "Featured Captures",
+  "sectionTitle": "Explore a real site, right here.",
+  "sectionDescription": "Everything below was captured by drone and processed with photogrammetry. The 3D model opens in any browser — click and drag to orbit. The comparison is two dated orthomosaics of the same site; drag the divider to see what changed.",
+  "captures": [
+    {
+      "id": "stockpile-survey",
+      "kind": "sketchfab",
+      "title": "Stockpile Survey — with Ground Control Points",
+      "useCase": "Construction · Volumetrics",
+      "description": "Aggregate stockpile captured with GCPs for survey-tied accuracy. The same model supports cut/fill and volume calculations for pay applications.",
+      "sketchfabModelId": "735d001c65a2487985c309e41fd5c770",
+      "brightness": 0.85,
+      "link": {
+        "label": "View full-resolution model",
+        "url": "https://sketchfab.com/3d-models/stockpile-survey-reality-capture-with-gcps-735d001c65a2487985c309e41fd5c770",
+        "external": true
+      }
+    },
+    {
+      "id": "chaney-blvd-progress",
+      "kind": "compare",
+      "title": "Chaney Blvd — Five Weeks of Construction Progress",
+      "useCase": "Construction · Progress Documentation",
+      "description": "Same 17-acre site in Smyrna, March 1 vs April 7, 2026. Foundations poured, utilities trenched, pads graded. Every flight is dated and georeferenced, so a PM can show an owner exactly what was on site and when.",
+      "beforeImage": "/assets/chaney/compare-2026-03-01.webp",
+      "afterImage": "/assets/chaney/compare-2026-04-07.webp",
+      "beforeLabel": "Mar 1, 2026",
+      "afterLabel": "Apr 7, 2026",
+      "beforeAlt": "Orthomosaic of the Chaney Blvd site on March 1, 2026 — graded dirt with early excavation",
+      "afterAlt": "Orthomosaic of the Chaney Blvd site on April 7, 2026 — foundations, utility trenches, and equipment on site",
+      "link": {
+        "label": "Get this for your site",
+        "url": "contact",
+        "external": false
+      }
+    }
+  ]
+}

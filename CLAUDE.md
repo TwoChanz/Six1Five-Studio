@@ -4,186 +4,198 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Six1Five Studio Reality Capture Portfolio - A professional portfolio website for a reality capture company specializing in drone mapping, LiDAR scanning, and photogrammetry for AEC (Architecture, Engineering, Construction), real estate, and historic preservation industries.
+Six1Five Studio Reality Capture Portfolio - A professional portfolio website for a reality capture company specializing in drone mapping, LiDAR scanning, and photogrammetry for AEC industries.
+
+**Tech Stack**: React 18 + Vite + TypeScript + Express.js + Drizzle ORM (PostgreSQL/SQLite) + Wouter routing + TailwindCSS
+
+**Important**: This is a **Vite + React SPA**, NOT Next.js. Navigation uses Wouter's `<Link>` component.
 
 ## Commands
 
-### Development
 ```bash
-npm run dev          # Start development server with hot reload (localhost:5000)
-npm run build        # Build both client (Vite) and server (esbuild)
-npm run start        # Start production server
-npm run check        # Run TypeScript type checking
+# Development
+npm run dev          # Start dev server (localhost:5000)
+npm run build        # Build client (Vite) + server (esbuild)
+npm run check        # TypeScript type checking
+
+# Database
+npm run db:push      # Sync Drizzle schema (PostgreSQL)
+drizzle-kit push --config=drizzle.config.local.ts  # Sync schema (SQLite local dev)
+
+# Common scripts (run with tsx)
+tsx scripts/setup-database.ts          # Initialize + seed database
+tsx scripts/add-portfolio-item.ts      # Add portfolio item
+tsx scripts/add-blog-post.ts           # Add blog post
+tsx scripts/hash-password.ts           # Generate bcrypt hash for admin
 ```
 
-### Database
-```bash
-npm run db:push      # Push Drizzle schema changes to PostgreSQL
-```
-
-### Environment Variables
-
-Required environment variables:
-
-**Database (Required)**
-- `DATABASE_URL` - PostgreSQL connection string
-
-**Email Notifications (Optional but recommended)**
-- `SENDGRID_API_KEY` - SendGrid API key for sending contact form emails
-- `SENDGRID_FROM_EMAIL` - Verified sender email address (e.g., admin@six1fivestudio.com)
-- `SENDGRID_TO_EMAIL` - Recipient email (defaults to SENDGRID_FROM_EMAIL if not set)
-
-Without SendGrid configured, contact submissions will still be saved to the database but no email notifications will be sent.
-
-**Analytics (Optional but recommended)**
-- `VITE_GA_MEASUREMENT_ID` - Google Analytics 4 measurement ID (e.g., G-XXXXXXXXXX)
-
-Without GA configured, analytics tracking will be skipped. Analytics tracks:
-- Page views, contact form submissions, portfolio views, CTA clicks, file uploads, gallery filters, external link clicks
+**No test framework is configured.** Verify changes with `npm run check` (TypeScript) and manual testing.
 
 ## Architecture
 
-### Stack Overview
-- **Frontend**: React 18 + TypeScript + Vite + Tailwind CSS
-- **Backend**: Express.js + TypeScript (ES modules)
-- **Database**: PostgreSQL with Drizzle ORM
-- **Routing**: Wouter (client-side)
-- **State Management**: TanStack Query (React Query)
-- **Forms**: React Hook Form + Zod validation
-- **UI Components**: Shadcn/ui (Radix UI primitives)
+### Single Source of Truth: `shared/schema.ts`
 
-### Project Structure
-
-```
-client/
-  src/
-    components/     # React components (hero, portfolio, contact, etc.)
-    pages/          # Route pages (home, gallery, pricing, blog, faq)
-    lib/            # Client utilities (analytics, queryClient, etc.)
-server/
-  index.ts          # Express server entry point
-  routes.ts         # API route definitions
-  storage.ts        # Database abstraction layer
-  db.ts             # Database connection
-shared/
-  schema.ts         # Drizzle schema and Zod validators (shared types)
-```
+Drizzle table definitions, Zod insert schemas, and TypeScript types all live in one file. Both client (via `@shared/schema`) and server (via `../shared/schema.js`) import from here. No separate DTO layer — `PortfolioItem`, `BlogPost`, etc. are used everywhere.
 
 ### Path Aliases
 - `@/*` → `client/src/*`
 - `@shared/*` → `shared/*`
-- `@assets/*` → `attached_assets/*` (in Vite config only)
+- `@assets/*` → `attached_assets/*` (Vite only)
 
-### Database Schema
+### Dual Database Mode
 
-**Tables:**
-- `users` - Basic user authentication (future expansion)
-- `contact_submissions` - Contact form data with services array, project details, timeline, budget
-- `blog_posts` - Blog content with slug, tags, publish status
-- `portfolio_items` - Portfolio projects with:
-  - Sketchfab model IDs for embedded 3D viewers
-  - Local model files (GLB/GLTF/OBJ)
-  - Video walkthroughs (MP4/WebM/MOV)
-  - Category, tools, services arrays
-  - Featured flag for homepage
+The project supports SQLite (local) and PostgreSQL (production):
 
-**Validation**: All insert operations use Zod schemas exported from `shared/schema.ts`
+| Mode | Config | When |
+|------|--------|------|
+| SQLite | `USE_SQLITE=true` in `.env` | Local development (default) |
+| PostgreSQL | `USE_SQLITE=false` + `DATABASE_URL` | Production |
 
-### API Routes
+**Critical**: Arrays are stored as JSON strings in SQLite but native arrays in PostgreSQL. The storage layer (`server/storage.ts`) handles conversion via helper functions: `mapPortfolioColumns()` / `mapBlogPostColumns()` / `mapReviewColumns()` (snake_case → camelCase) and `deserializeArrayFields()` (JSON string → array). SQLite paths use raw SQL while PostgreSQL uses Drizzle's query builder.
 
-**Contact:**
-- `POST /api/contact` - Submit contact form
-- `GET /api/contact` - Get all submissions (admin)
+Three Drizzle configs exist:
 
-**Blog:**
-- `GET /api/blog` - Get published posts
-- `GET /api/blog/:slug` - Get post by slug
-- `POST /api/blog` - Create new post
+| Config | DB | Use |
+|--------|----|-----|
+| `drizzle.config.ts` | PostgreSQL | `npm run db:push` (production) |
+| `drizzle.config.local.ts` | SQLite → `local.db` | `drizzle-kit push --config=drizzle.config.local.ts` |
+| `drizzle-push-auto.config.ts` | PostgreSQL | Auto-push with verbose/strict, outputs to `./drizzle` |
 
-**Portfolio:**
-- `GET /api/portfolio` - Get published items
-- `GET /api/portfolio/featured` - Get featured items
-- `GET /api/portfolio/:id` - Get item by ID
-- `POST /api/portfolio` - Create new item
+`scripts/init-local-db.ts` is outdated (missing columns) — use `drizzle-kit push --config=drizzle.config.local.ts` instead.
 
-### Key Technical Details
+### Routing & Lazy Loading
 
-1. **Development Server**: Port 5000 serves both API and client via Vite middleware
-2. **Production Build**:
-   - Client → `dist/public` (Vite)
-   - Server → `dist/index.js` (esbuild with ES module format)
-3. **Environment**: Uses `NODE_ENV` for dev/production modes
-4. **3D Viewers**: Integrated Sketchfab embeds and local Three.js model viewers
-5. **Design System**: Dark tech-industrial theme with custom Tailwind config
+Only `Home` is eagerly loaded. All other routes use `React.lazy()` with per-route `<Suspense>` + `<ErrorBoundary>` in `App.tsx`.
 
-### File Upload System
+**Adding a route**: Create page in `client/src/pages/`, add lazy import + `<Route>` in `App.tsx`.
 
-**Local File Storage** - Contact form reference files
-- Uploaded files saved to `server/uploads/contact-submissions/`
-- Configured with multer middleware (max 5 files, 10MB each)
-- Allowed types: JPEG, PNG, GIF, WebP, PDF, TXT
-- Files served via `/uploads/contact-submissions/` static route
-- File paths stored in database (not base64)
-- **Important**: `server/uploads/` is gitignored except for `.gitkeep`
+### Landing Pages (Config-Driven)
 
-### Critical Files
+Landing pages use a template pattern — no backend changes needed:
 
-- `server/routes.ts` - All API endpoint definitions + multer file upload configuration
-- `shared/schema.ts` - Database schema and validation (source of truth for data structure)
-- `server/storage.ts` - Database query abstraction layer
-- `client/src/App.tsx` - Client routing and lazy loading setup
-- `vite.config.ts` - Build configuration and path aliases
-- `server/uploads/` - User-uploaded files (gitignored)
+1. Create `client/src/pages/{slug}.tsx` with a `LandingPageConfig` object
+2. Return `<LandingPageTemplate config={config} />` (from `@/components/landing-page-template`)
+3. Lazy-import in `App.tsx` and add `<Route>`
 
-### User Preferences
+The template renders 9 sections (Hero, Trust Signals, Benefits, Portfolio Showcase, How It Works, etc.) from the config. Portfolio items are filtered by `config.portfolioFilter` category. Contact submissions go through `QuickQuoteForm` → `POST /api/contact` with `[Quick Quote from {pageName}]` prefix in `projectDetails`. UTM params from `client/src/lib/utm.ts` are appended automatically.
 
-- **Communication Style**: Simple, everyday language
-- **Profile Focus**: Reality Capture-relevant background, AEC/agricultural experience supporting aerial imagery and 3D mapping expertise
-- **Avoid**: Unrelated professional roles or generic portfolio content
+Existing landing pages: `/drone-mapping-nashville`, `/construction-progress-surveys`.
 
-### Pricing Page
+### TanStack Query Convention
 
-**Location**: `/pricing` - Comprehensive pricing guide page
-**Structure**:
-- Three pricing tiers: Essential ($500+), Professional ($1,500+), Enterprise (Custom)
-- Add-on services section (Thermal Imaging, Interior Scanning, Rush Delivery, Monthly Monitoring)
-- FAQ section addressing common pricing questions
-- Multiple CTAs linking to contact form
-- Analytics tracking on all CTAs and tier interactions
+The query key IS the API URL path:
+```ts
+useQuery({ queryKey: ['/api/portfolio'], queryFn: getQueryFn({ on401: "returnNull" }) })
+```
+Mutations use `apiRequest(method, url, data)` from `@/lib/queryClient`. Default: 5-minute staleTime, 10-minute gcTime.
 
-**Customization Notes**:
-- Pricing tiers are defined in `pricing.tsx` as a `pricingTiers` array
-- Industry-standard starting prices provided as placeholders
-- Update pricing based on actual service rates and market positioning
-- Features and descriptions can be modified to match actual offerings
+### Auth Flow
 
-### Testimonials Section
+JWT stored in `localStorage` as `adminToken`. Helper `getAuthHeaders()` in `admin.tsx` creates the Bearer header. Stateless — logout just clears localStorage. Token expires after 8 hours. In dev mode without `ADMIN_PASSWORD_HASH`, plain-text comparison is used (default password: `admin615`).
 
-**Location**: `client/src/components/testimonials-section.tsx`
-**Structure**:
-- Trust signals section (FAA certification, insurance, credentials)
-- Client testimonials grid (3 columns on large screens)
-- Project type badges for context
-- Placeholder avatar initials or optional client headshots
-- CTA button with scroll-to-contact and analytics tracking
+### Server Routes (`server/routes.ts`)
 
-**Customization Instructions**:
-- Replace placeholder testimonials in `testimonials` array with real client feedback
-- Steps to add real testimonials:
-  1. Reach out to past clients for permission
-  2. Update name, role, company, content, projectType fields
-  3. Optional: Add client headshot images to imageUrl field
-- Trust signals can be updated to reflect current certifications
-- Remove placeholder note once real testimonials are added
+All routes in a single `registerRoutes(app)` function. Key patterns:
 
-### Design & UX Notes
+- **Unprotected create**: `POST /api/blog` and `POST /api/portfolio` have **no auth** (used by seeding scripts)
+- **Admin CRUD**: `PUT`/`DELETE` under `/api/admin/` are protected with `requireAuth`
+- **Rate limiting** (skipped in development; relies on `trust proxy` being set on Vercel in `server/index.ts`): contact 3/15min, login 5/15min, leads 5/15min, general admin 100/min
+- **File uploads**: Multer (memory storage). Contact form files are attached to the Resend notification email; on Vercel nothing is written to disk and only file names are stored, locally they are also saved to `server/uploads/`. Total upload size is capped at 4MB (Vercel rejects request bodies over 4.5MB). Admin images go to `client/public/assets/{type}-images/`
+- **Email**: Resend client conditionally initialized if `RESEND_API_KEY` is set
 
-- **Theme**: Dark tech-industrial aesthetic (concrete gray, drone orange, sky blue, tech green)
-- **Mobile-First**: Responsive design with progressive enhancement
-- **Performance**: Lazy loading for non-critical pages, React Query caching, Intersection Observer for Sketchfab iframes
-- **3D Integration**: Sketchfab embeds + Three.js custom viewers for portfolio models
-- **Accessibility**:
-  - WCAG AA compliant text colors (`.text-contrast-low`, `.text-contrast-medium`, `.text-contrast-high`)
-  - Visible focus states for keyboard navigation
-  - Comprehensive ARIA labels on interactive elements
-  - React Error Boundaries to prevent full app crashes
+### Theming
+
+Dark-first design. `:root` is dark. Light mode requires `.light` class (not system preference). Brand colors are CSS custom properties in `index.css` (`--tech-orange`, `--primary-blue`, `--accent-blue`, `--navy-blue`, `--dark-gray`), referenced as `var(--primary-blue)` or raw HSL values like `hsl(218,11%,15%)`.
+
+### Server Initialization
+
+Dual-mode for local dev vs Vercel serverless:
+- Uses `import.meta.url` comparison with `pathToFileURL()` for Windows compatibility
+- Exports Express app as default for Vercel: `export default app`
+- Only starts HTTP server when `VERCEL` env var is not set
+- Vite dev server is set up programmatically in `server/vite.ts` (imported dynamically in dev only)
+
+### 3D Viewer Integration
+
+Portfolio items support four viewer types via database fields:
+- `sketchfabModelId` - Sketchfab embeds
+- `lumaEmbedUrl` - Luma AI NeRF/Gaussian Splatting
+- `polycamEmbedUrl` - Polycam photogrammetry
+- `modelFile` + `modelFormat` - Local Three.js viewer (GLB/GLTF/OBJ)
+
+All viewers lazy load via Intersection Observer.
+
+### Custom Portfolio Layouts
+
+Portfolio items with `hasCustomLayout: true` get conditional rendering in `portfolio-detail.tsx`. That file also contains hardcoded `technicalSpecs` data keyed by project title strings.
+
+### Static Content Data
+
+`client/src/data/faq.json` and `services.json` hold FAQ and services content. Edit these for no-code content changes to those sections.
+
+## Critical Build Configuration
+
+**Vite output MUST be `dist/`** (not `dist/public`) - configured in `vite.config.ts:37`. Previous `dist/public` configuration caused Vercel deployment failures.
+
+**esbuild requires `--external:./vite.js`** flag to prevent serverless import errors.
+
+**Vite chunk splitting** (`vite.config.ts`): Manual chunks for `react-vendor`, `app-core`, `ui-components`, `three-vendor`, and `visual-libs`. The `chunkSizeWarningLimit` is raised to 600KB.
+
+## Environment Variables
+
+Required: `JWT_SECRET`
+
+Production: `DATABASE_URL`, `ADMIN_PASSWORD_HASH` (generate with `tsx scripts/hash-password.ts`)
+
+Development: `USE_SQLITE=true`, `ADMIN_PASSWORD` (plain text, dev only)
+
+Optional: `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `RESEND_TO_EMAIL` (email notifications), `VITE_GA_MEASUREMENT_ID` (GA4, `VITE_` prefix = client-accessible)
+
+See `.env.example` for all variables with documentation.
+
+## File Locations
+
+| Asset Type | Location |
+|------------|----------|
+| Portfolio project assets | `client/public/assets/{project-slug}/` |
+| User uploads (contact form) | Emailed as attachments in production; `server/uploads/contact-submissions/` in local dev |
+| Large datasets (not in git) | `attached_assets/downloads/` |
+| Credentials/certs | `client/public/credentials/` |
+| Static content (FAQ, services) | `client/src/data/` |
+| Vercel serverless entry | `api/index.js` (re-exports `dist/index.js`) |
+
+## Key Patterns
+
+**Navigation**:
+- Same-page scroll: `scrollToSection(sectionId)`
+- Cross-page navigation: `window.location.href = "/#section"`
+
+**SEOHead**: Every page uses `<SEOHead title="" description="" />` from `@/components/seo-head`. Admin/404 use `noindex: true`. Home and landing pages inject JSON-LD `LocalBusiness` structured data.
+
+**Analytics**: GA4 initialized in `App.tsx`, page views tracked on route change. UTM params captured via `client/src/lib/utm.ts` (first-touch attribution in sessionStorage).
+
+**Admin Dashboard** (`admin.tsx`): Largest file in the codebase — full CRUD for portfolio, blog, contact submissions, reviews, and leads. Uses Tiptap rich text editor for blog content.
+
+**Scripts**: All data scripts detect `USE_SQLITE=true` and manually JSON-stringify arrays.
+
+## Deployment
+
+**Platform**: Vercel serverless
+
+**Build outputs**:
+- Client → `dist/` (Vite)
+- Server → `dist/index.js` (esbuild ES module)
+
+**Vercel config** (`vercel.json`):
+- API routes → `api/index.js` serverless function (which re-exports the Express app)
+- All other routes → `index.html` for SPA routing
+
+## Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| Port 5000 in use | Windows: `netstat -ano \| findstr :5000` then `taskkill /PID <PID> /F` |
+| SQLite locked | Close connections or delete `local.db` and reinitialize |
+| Array deserialization errors | Check `server/storage.ts` JSON.parse/stringify for SQLite mode |
+| Vercel deploy fails | Ensure `dist/` exists, check `--external:./vite.js` in build |
+| Admin login fails | Verify `JWT_SECRET` is set and password hash is correct |

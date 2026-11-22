@@ -1,0 +1,19 @@
+# Large asset files (too big for deployment)
+client/public/assets/church/church-model.glb
+client/public/assets/church/church-model.obj
+client/public/assets/church/church-model.mtl
+client/public/assets/church/church-texture.png
+client/public/assets/church/church-walkthrough.mp4
+# Note: parthenon assets are now optimized (1.9 MB total) and included in deployment
+
+# Large downloads directory
+attached_assets/downloads/
+
+# Development files
+node_modules
+.git
+*.log
+.env
+.env.local
+local.db*
+server/uploads

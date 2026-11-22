@@ -1,9 +1,10 @@
 import { useState } from "react";
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Play, Eye, Download, ExternalLink, Layers, Box, Zap } from "lucide-react";
+import { Play, Eye, Download, ExternalLink, Layers, Box, Zap, ArrowRight } from "lucide-react";
 
 // Import the uploaded images
 import houseRender1 from "@assets/2025-07-24_10.17.03_1753534885802.png";
@@ -78,7 +79,7 @@ export default function AIWorkflowShowcase() {
   };
 
   return (
-    <section className="py-20 bg-[hsl(218,11%,15%)]">
+    <section id="ai-workflow" className="py-20 bg-[hsl(218,11%,15%)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
@@ -91,15 +92,14 @@ export default function AIWorkflowShowcase() {
           </p>
           
           <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Button 
-              onClick={handlePlayDemo}
+            <Button style={{display:"none"}} onClick={handlePlayDemo}
               disabled={isPlaying}
               className="bg-[hsl(199,89%,48%)] hover:bg-[hsl(199,89%,43%)] text-white px-6 py-3"
             >
               <Play className="w-4 h-4 mr-2" />
               {isPlaying ? "Playing Demo..." : "Play Workflow Demo"}
             </Button>
-            <Button variant="outline" className="text-white border-gray-600 hover:bg-gray-800">
+            <Button variant="outline" style={{display:"none"}} className="text-white border-gray-600 hover:bg-gray-800">
               <Download className="w-4 h-4 mr-2" />
               Download Sample Assets
             </Button>
@@ -135,6 +135,8 @@ export default function AIWorkflowShowcase() {
                       src={step.image} 
                       alt={step.title}
                       className="w-full h-64 lg:h-96 object-cover"
+                      loading="lazy"
+                      decoding="async"
                     />
                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
                       <p className="text-white text-sm font-medium">{step.caption}</p>
@@ -283,13 +285,26 @@ export default function AIWorkflowShowcase() {
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap justify-center gap-4">
-                <Button className="bg-white text-[hsl(199,89%,48%)] hover:bg-gray-100">
+                <Button style={{display:"none"}} className="bg-white text-[hsl(199,89%,48%)] hover:bg-gray-100">
                   Request Demo Project
                 </Button>
-                <Button variant="outline" className="text-white border-white hover:bg-white/10">
+                <Button style={{display:"none"}} variant="outline" className="text-white border-white hover:bg-white/10">
                   <ExternalLink className="w-4 h-4 mr-2" />
                   View Technical Details
                 </Button>
+              </div>
+
+              {/* Parthenon Case Study Teaser */}
+              <div className="mt-6 pt-6 border-t border-white/20">
+                <Link href="/case-study/parthenon">
+                  <a className="inline-flex items-center gap-2 text-white hover:text-white/80 transition-colors font-medium group">
+                    <span>Want to see real-world analysis?</span>
+                    <span className="flex items-center gap-1 underline underline-offset-4 decoration-white/50 group-hover:decoration-white transition-colors">
+                      View Parthenon Case Study
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </span>
+                  </a>
+                </Link>
               </div>
             </CardContent>
           </Card>

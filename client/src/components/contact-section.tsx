@@ -13,6 +13,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { Phone, Mail, MapPin, Upload, X } from "lucide-react";
+import nashvilleSvg from "@/assets/nashville-region-outline.svg";
 
 const contactSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -54,12 +55,14 @@ const timelineOptions = [
   { value: "flexible", label: "Flexible timeline" },
 ];
 
+// Ranges start low on purpose: the first tier on /pricing begins at $500, so a
+// land-listing or small-site client needs to see a bracket they fit in.
 const budgetOptions = [
-  { value: "under-5k", label: "Under $5,000" },
+  { value: "under-1k", label: "Under $1,000" },
+  { value: "1k-2500", label: "$1,000 - $2,500" },
+  { value: "2500-5k", label: "$2,500 - $5,000" },
   { value: "5k-10k", label: "$5,000 - $10,000" },
-  { value: "10k-25k", label: "$10,000 - $25,000" },
-  { value: "25k-50k", label: "$25,000 - $50,000" },
-  { value: "over-50k", label: "Over $50,000" },
+  { value: "over-10k", label: "Over $10,000" },
   { value: "discuss", label: "Let's discuss" },
 ];
 
@@ -155,7 +158,8 @@ export default function ContactSection() {
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files || []);
     const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'application/pdf', 'text/plain'];
-    const maxSize = 10 * 1024 * 1024; // 10MB
+    // The host rejects uploads over 4.5MB, so the limit applies to all files together.
+    const maxTotalSize = 4 * 1024 * 1024; // 4MB
 
     const validFiles = files.filter(file => {
       if (!allowedTypes.includes(file.type)) {
@@ -166,16 +170,18 @@ export default function ContactSection() {
         });
         return false;
       }
-      if (file.size > maxSize) {
-        toast({
-          title: "File too large",
-          description: `${file.name} is too large. Please keep files under 10MB.`,
-          variant: "destructive",
-        });
-        return false;
-      }
       return true;
     });
+
+    const totalSize = [...uploadedFiles, ...validFiles].reduce((sum, file) => sum + file.size, 0);
+    if (totalSize > maxTotalSize) {
+      toast({
+        title: "Files too large",
+        description: "Please keep attachments under 4MB in total. For larger files, mention them in your message and I'll send a transfer link.",
+        variant: "destructive",
+      });
+      return;
+    }
 
     // Check total files limit
     const totalFiles = uploadedFiles.length + validFiles.length;
@@ -263,12 +269,14 @@ export default function ContactSection() {
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-sm font-medium">Name</FormLabel>
+                      <FormLabel htmlFor="contact-name" className="text-sm font-medium">Name</FormLabel>
                       <FormControl>
-                        <Input 
-                          {...field} 
+                        <Input
+                          {...field}
+                          id="contact-name"
                           placeholder="Your name"
                           className="bg-gray-700 border-gray-600 focus:border-[hsl(24,95%,53%)] text-white"
+                          autoComplete="name"
                         />
                       </FormControl>
                       <FormMessage />
@@ -281,13 +289,15 @@ export default function ContactSection() {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-sm font-medium">Email</FormLabel>
+                      <FormLabel htmlFor="contact-email" className="text-sm font-medium">Email</FormLabel>
                       <FormControl>
-                        <Input 
-                          {...field} 
+                        <Input
+                          {...field}
+                          id="contact-email"
                           type="email"
                           placeholder="your@email.com"
                           className="bg-gray-700 border-gray-600 focus:border-[hsl(24,95%,53%)] text-white"
+                          autoComplete="email"
                         />
                       </FormControl>
                       <FormMessage />
@@ -300,10 +310,10 @@ export default function ContactSection() {
                   name="projectType"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-sm font-medium">Project Type</FormLabel>
+                      <FormLabel htmlFor="contact-projectType" className="text-sm font-medium">Project Type</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
-                          <SelectTrigger className="bg-gray-700 border-gray-600 focus:border-[hsl(24,95%,53%)] text-white">
+                          <SelectTrigger id="contact-projectType" className="bg-gray-700 border-gray-600 focus:border-[hsl(24,95%,53%)] text-white">
                             <SelectValue placeholder="Select project type" />
                           </SelectTrigger>
                         </FormControl>
@@ -325,12 +335,14 @@ export default function ContactSection() {
                   name="location"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-sm font-medium">Project Location</FormLabel>
+                      <FormLabel htmlFor="contact-location" className="text-sm font-medium">Project Location</FormLabel>
                       <FormControl>
-                        <Input 
-                          {...field} 
+                        <Input
+                          {...field}
+                          id="contact-location"
                           placeholder="City, State (e.g., Nashville, TN)"
                           className="bg-gray-700 border-gray-600 focus:border-[hsl(24,95%,53%)] text-white"
+                          autoComplete="address-level2"
                         />
                       </FormControl>
                       <FormMessage />
@@ -354,6 +366,7 @@ export default function ContactSection() {
                               <FormItem className="flex items-center space-x-2 space-y-0">
                                 <FormControl>
                                   <Checkbox
+                                    id={`service-${service.id}`}
                                     checked={field.value?.includes(service.id)}
                                     onCheckedChange={(checked) => {
                                       return checked
@@ -365,7 +378,7 @@ export default function ContactSection() {
                                     className="border-gray-600 data-[state=checked]:bg-[hsl(24,95%,53%)]"
                                   />
                                 </FormControl>
-                                <FormLabel className="text-sm font-normal cursor-pointer">
+                                <FormLabel htmlFor={`service-${service.id}`} className="text-sm font-normal cursor-pointer">
                                   {service.label}
                                 </FormLabel>
                               </FormItem>
@@ -383,10 +396,11 @@ export default function ContactSection() {
                   name="projectDetails"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-sm font-medium">Project Details</FormLabel>
+                      <FormLabel htmlFor="contact-projectDetails" className="text-sm font-medium">Project Details</FormLabel>
                       <FormControl>
-                        <Textarea 
-                          {...field} 
+                        <Textarea
+                          {...field}
+                          id="contact-projectDetails"
                           placeholder="Tell me about your project..."
                           className="bg-gray-700 border-gray-600 focus:border-[hsl(24,95%,53%)] h-32 text-white"
                         />
@@ -402,10 +416,10 @@ export default function ContactSection() {
                     name="timeline"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-sm font-medium">Project Timeline</FormLabel>
+                        <FormLabel htmlFor="contact-timeline" className="text-sm font-medium">Project Timeline</FormLabel>
                         <Select onValueChange={field.onChange} value={field.value}>
                           <FormControl>
-                            <SelectTrigger className="bg-gray-700 border-gray-600 focus:border-[hsl(24,95%,53%)] text-white">
+                            <SelectTrigger id="contact-timeline" className="bg-gray-700 border-gray-600 focus:border-[hsl(24,95%,53%)] text-white">
                               <SelectValue placeholder="Select timeline" />
                             </SelectTrigger>
                           </FormControl>
@@ -427,10 +441,10 @@ export default function ContactSection() {
                     name="budgetRange"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-sm font-medium">Budget Range</FormLabel>
+                        <FormLabel htmlFor="contact-budgetRange" className="text-sm font-medium">Budget Range</FormLabel>
                         <Select onValueChange={field.onChange} value={field.value}>
                           <FormControl>
-                            <SelectTrigger className="bg-gray-700 border-gray-600 focus:border-[hsl(24,95%,53%)] text-white">
+                            <SelectTrigger id="contact-budgetRange" className="bg-gray-700 border-gray-600 focus:border-[hsl(24,95%,53%)] text-white">
                               <SelectValue placeholder="Select budget" />
                             </SelectTrigger>
                           </FormControl>
@@ -453,6 +467,7 @@ export default function ContactSection() {
                   <div className="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center">
                     <input
                       type="file"
+                      name="referenceFiles"
                       multiple
                       accept="image/jpeg,image/png,image/gif,image/webp,.pdf,.txt"
                       onChange={handleFileUpload}
@@ -462,7 +477,7 @@ export default function ContactSection() {
                     <label htmlFor="file-upload" className="cursor-pointer">
                       <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
                       <p className="text-gray-400 mb-1">Upload reference images or documents</p>
-                      <p className="text-xs text-gray-500">Max 5 files, 10MB each (JPEG, PNG, GIF, WebP, PDF, TXT)</p>
+                      <p className="text-xs text-gray-500">Max 5 files, 4MB total (JPEG, PNG, GIF, WebP, PDF, TXT)</p>
                     </label>
                   </div>
                   
@@ -521,6 +536,29 @@ export default function ContactSection() {
               </div>
             </div>
 
+            {/* Nashville Service Area Map */}
+            <div className="mt-8 pt-6 border-t border-gray-700">
+              <h4 className="text-sm font-semibold mb-4 text-gray-300">Primary Service Area</h4>
+              <div className="relative bg-gray-900 rounded-lg p-6 border border-gray-700">
+                <img
+                  src={nashvilleSvg}
+                  alt="Nashville and Middle Tennessee Service Area"
+                  className="w-full h-auto opacity-80 hover:opacity-100 transition-opacity"
+                  style={{
+                    filter: 'drop-shadow(0 0 10px rgba(37, 211, 102, 0.3))'
+                  }}
+                />
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div className="text-center">
+                    <div className="w-3 h-3 bg-[hsl(158,64%,52%)] rounded-full mx-auto mb-2 animate-pulse"></div>
+                    <p className="text-xs text-white font-semibold bg-gray-900/80 px-2 py-1 rounded">Nashville Metro</p>
+                  </div>
+                </div>
+              </div>
+              <p className="text-xs text-gray-400 mt-3 text-center">
+                Serving Nashville, Middle Tennessee, and surrounding regions. Regional travel available.
+              </p>
+            </div>
           </div>
         </div>
       </div>

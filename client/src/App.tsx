@@ -1,5 +1,5 @@
 import { useState, useEffect, lazy, Suspense } from "react";
-import { Switch, Route, useLocation } from "wouter";
+import { Switch, Route, Redirect, useLocation } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -11,10 +11,14 @@ import Home from "@/pages/home";
 
 // Lazy load non-critical pages
 const Gallery = lazy(() => import("@/pages/gallery"));
+const PortfolioDetail = lazy(() => import("@/pages/portfolio-detail"));
 const Pricing = lazy(() => import("@/pages/pricing"));
 const Blog = lazy(() => import("@/pages/blog"));
 const BlogPost = lazy(() => import("@/pages/blog-post"));
 const FAQ = lazy(() => import("@/pages/faq"));
+const Resources = lazy(() => import("@/pages/resources"));
+const Links = lazy(() => import("@/pages/links"));
+const Admin = lazy(() => import("@/pages/admin"));
 const NotFound = lazy(() => import("@/pages/not-found"));
 
 function Router() {
@@ -29,10 +33,20 @@ function Router() {
     <ErrorBoundary>
       <Switch>
         <Route path="/" component={Home} />
+        <Route path="/portfolio">
+          <Redirect to="/gallery" />
+        </Route>
         <Route path="/gallery">
           <Suspense fallback={<div className="min-h-screen bg-[hsl(218,11%,15%)] flex items-center justify-center"><div className="text-white">Loading...</div></div>}>
             <ErrorBoundary>
               <Gallery />
+            </ErrorBoundary>
+          </Suspense>
+        </Route>
+        <Route path="/portfolio/:id">
+          <Suspense fallback={<div className="min-h-screen bg-[hsl(218,11%,15%)] flex items-center justify-center"><div className="text-white">Loading...</div></div>}>
+            <ErrorBoundary>
+              <PortfolioDetail />
             </ErrorBoundary>
           </Suspense>
         </Route>
@@ -61,6 +75,27 @@ function Router() {
           <Suspense fallback={<div className="min-h-screen bg-[hsl(218,11%,15%)] flex items-center justify-center"><div className="text-white">Loading...</div></div>}>
             <ErrorBoundary>
               <FAQ />
+            </ErrorBoundary>
+          </Suspense>
+        </Route>
+        <Route path="/resources">
+          <Suspense fallback={<div className="min-h-screen bg-[hsl(218,11%,15%)] flex items-center justify-center"><div className="text-white">Loading...</div></div>}>
+            <ErrorBoundary>
+              <Resources />
+            </ErrorBoundary>
+          </Suspense>
+        </Route>
+        <Route path="/links">
+          <Suspense fallback={<div className="min-h-screen bg-[hsl(218,11%,15%)] flex items-center justify-center"><div className="text-white">Loading...</div></div>}>
+            <ErrorBoundary>
+              <Links />
+            </ErrorBoundary>
+          </Suspense>
+        </Route>
+        <Route path="/admin">
+          <Suspense fallback={<div className="min-h-screen bg-[hsl(218,11%,15%)] flex items-center justify-center"><div className="text-white">Loading...</div></div>}>
+            <ErrorBoundary>
+              <Admin />
             </ErrorBoundary>
           </Suspense>
         </Route>

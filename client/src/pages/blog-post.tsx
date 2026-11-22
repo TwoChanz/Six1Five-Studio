@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams, Link } from "wouter";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import { SubstackEmbed } from "@/components/substack-embed";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -10,6 +11,8 @@ import { Calendar, Clock, ArrowLeft, Share2 } from "lucide-react";
 import { getQueryFn } from "@/lib/queryClient";
 import { format } from "date-fns";
 import type { BlogPost } from "@shared/schema";
+import { SEOHead, getCanonicalUrl } from "@/components/seo-head";
+import ReactMarkdown from "react-markdown";
 
 export default function BlogPostPage() {
   const { slug } = useParams();
@@ -21,15 +24,9 @@ export default function BlogPostPage() {
   });
 
   useEffect(() => {
-    if (post) {
-      document.title = `${post.title} - Six1Five Studio Blog | Reality Capture Insights`;
-      
-      const metaDescription = document.querySelector('meta[name="description"]');
-      if (metaDescription) {
-        metaDescription.setAttribute("content", post.excerpt || "Blog post from Six1Five Studio");
-      }
-    }
-  }, [post]);
+    // Scroll to top of page
+    window.scrollTo(0, 0);
+  }, [slug]);
 
   const readingTime = (content: string) => {
     const wordsPerMinute = 200;
@@ -96,8 +93,15 @@ export default function BlogPostPage() {
 
   return (
     <div className="min-h-screen bg-[hsl(218,11%,15%)] text-white font-sans">
+      <SEOHead
+        title={`${post.title} - Six1Five Studio | Reality Capture Insights`}
+        description={post.excerpt || `Read ${post.title} - Expert insights on reality capture, drone mapping, LiDAR, and AEC technology from Six1Five Studio.`}
+        keywords={`${post.tags?.join(', ') || 'reality capture, drone mapping, LiDAR'}, AEC technology, construction tech`}
+        canonicalUrl={getCanonicalUrl(`/blog/${post.slug}`)}
+        ogImage={post.featuredImage || '/assets/floyd-stadium-aerial.jpg'}
+      />
       <Navbar />
-      
+
       <main className="pt-20 pb-16">
         <article className="container mx-auto px-6 max-w-4xl">
           {/* Back to Blog Link */}
@@ -128,10 +132,12 @@ export default function BlogPostPage() {
                 <Calendar className="w-4 h-4" />
                 <span>{format(new Date(post.createdAt), 'MMMM dd, yyyy')}</span>
               </div>
-              <div className="flex items-center space-x-1">
-                <Clock className="w-4 h-4" />
-                <span>{readingTime(post.content)} min read</span>
-              </div>
+              {!post.substackEmbedCode && (
+                <div className="flex items-center space-x-1">
+                  <Clock className="w-4 h-4" />
+                  <span>{readingTime(post.content)} min read</span>
+                </div>
+              )}
               <Button 
                 variant="ghost" 
                 size="sm" 
@@ -165,12 +171,17 @@ export default function BlogPostPage() {
           </header>
 
           {/* Article Content */}
-          <div className="prose prose-invert prose-lg max-w-none">
-            <div 
-              className="text-gray-300 leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, '<br/>') }}
-            />
-          </div>
+          {post.substackEmbedCode ? (
+            // Render Substack embed if available
+            <SubstackEmbed embedCode={post.substackEmbedCode} />
+          ) : (
+            // Otherwise render Markdown content safely
+            <div className="prose prose-invert prose-lg max-w-none">
+              <ReactMarkdown className="text-gray-300 leading-relaxed">
+                {post.content}
+              </ReactMarkdown>
+            </div>
+          )}
 
           {/* Article Footer */}
           <footer className="mt-16 pt-8 border-t border-gray-700">
