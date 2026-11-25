@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { SEOHead } from "@/components/seo-head";
 import {
   Trash2,
   Edit,
@@ -21,7 +22,8 @@ import {
   LogOut,
   PlusCircle,
   Star,
-  MessageSquare
+  MessageSquare,
+  Download
 } from "lucide-react";
 
 type BlogPost = {
@@ -60,6 +62,16 @@ type ContactSubmission = {
   createdAt: string;
 };
 
+type Lead = {
+  id: number;
+  name: string;
+  email: string;
+  company?: string | null;
+  source: string;
+  resourceRequested: string;
+  createdAt: string;
+};
+
 type Review = {
   id: number;
   name: string;
@@ -84,6 +96,25 @@ function getAuthHeaders(): HeadersInit {
   const token = getAuthToken();
   return token ? { 'Authorization': `Bearer ${token}` } : {};
 }
+
+// Load admin-only data. Every /api/admin request must carry the login token,
+// so admin queries use this instead of the app's default query function.
+async function fetchAdminJson<T>(url: string): Promise<T> {
+  const response = await fetch(url, { headers: getAuthHeaders() });
+  if (!response.ok) {
+    throw new Error(`Request failed (${response.status})`);
+  }
+  return response.json();
+}
+
+// Search engines must not index any version of the admin page.
+const adminSeo = (
+  <SEOHead
+    title="Admin - Six1Five Studio"
+    description="Six1Five Studio admin dashboard."
+    noindex={true}
+  />
+);
 
 export default function Admin() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -193,6 +224,7 @@ export default function Admin() {
   if (isVerifying) {
     return (
       <div className="min-h-screen bg-[hsl(218,11%,15%)] flex items-center justify-center">
+        {adminSeo}
         <div className="text-white text-lg">Verifying authentication...</div>
       </div>
     );
@@ -201,6 +233,7 @@ export default function Admin() {
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-[hsl(218,11%,15%)] flex items-center justify-center p-6">
+        {adminSeo}
         <Card className="w-full max-w-md bg-gray-800 border-gray-700">
           <CardHeader>
             <div className="flex items-center justify-center mb-4">
@@ -256,6 +289,7 @@ export default function Admin() {
 
   return (
     <div className="min-h-screen bg-[hsl(218,11%,15%)] text-white">
+      {adminSeo}
       <header className="bg-gray-800 border-b border-gray-700 sticky top-0 z-50">
         <div className="container mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -283,6 +317,10 @@ export default function Admin() {
               <Mail className="w-4 h-4 mr-2" />
               Contact Submissions
             </TabsTrigger>
+            <TabsTrigger value="leads" className="data-[state=active]:bg-[hsl(24,95%,53%)]">
+              <Download className="w-4 h-4 mr-2" />
+              Leads
+            </TabsTrigger>
             <TabsTrigger value="reviews" className="data-[state=active]:bg-[hsl(24,95%,53%)]">
               <MessageSquare className="w-4 h-4 mr-2" />
               Reviews
@@ -300,6 +338,11 @@ export default function Admin() {
           {/* Contact Submissions Tab */}
           <TabsContent value="contacts">
             <ContactsManager />
+          </TabsContent>
+
+          {/* Guide download leads Tab */}
+          <TabsContent value="leads">
+            <LeadsManager />
           </TabsContent>
 
           {/* Reviews Tab */}
@@ -327,7 +370,8 @@ function ContactsManager() {
   const queryClient = useQueryClient();
 
   const { data: contacts, isLoading } = useQuery<ContactSubmission[]>({
-    queryKey: ["/api/contact"],
+    queryKey: ["/api/admin/contact"],
+    queryFn: () => fetchAdminJson<ContactSubmission[]>("/api/admin/contact"),
   });
 
   const deleteMutation = useMutation({
@@ -340,7 +384,7 @@ function ContactsManager() {
       return response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/contact"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/contact"] });
       toast({
         title: "Success",
         description: "Contact submission deleted",
@@ -511,9 +555,12 @@ function BlogManager() {
 
   const createMutation = useMutation({
     mutationFn: async (newPost: { title: string; slug: string; excerpt?: string; content: string; substackEmbedCode?: string; tags?: string[]; published: boolean }) => {
-      const response = await fetch("/api/blog", {
+      const response = await fetch("/api/admin/blog", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          ...getAuthHeaders()
+        },
         body: JSON.stringify(newPost),
       });
       if (!response.ok) throw new Error("Failed to create");
@@ -980,22 +1027,32 @@ function PortfolioManager() {
   const [editingItem, setEditingItem] = useState<PortfolioItem | null>(null);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
 
+  // Admin list includes unpublished items; the public list does not.
   const { data: items, isLoading} = useQuery<PortfolioItem[]>({
-    queryKey: ["/api/portfolio"],
+    queryKey: ["/api/admin/portfolio"],
+    queryFn: () => fetchAdminJson<PortfolioItem[]>("/api/admin/portfolio"),
   });
+
+  const refreshPortfolio = () => {
+    queryClient.invalidateQueries({ queryKey: ["/api/admin/portfolio"] });
+    queryClient.invalidateQueries({ queryKey: ["/api/portfolio"] });
+  };
 
   const createMutation = useMutation({
     mutationFn: async (newItem: { title: string; description: string; category: string; published: boolean; featured: boolean }) => {
-      const response = await fetch("/api/portfolio", {
+      const response = await fetch("/api/admin/portfolio", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          ...getAuthHeaders()
+        },
         body: JSON.stringify(newItem),
       });
       if (!response.ok) throw new Error("Failed to create");
       return response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/portfolio"] });
+      refreshPortfolio();
       setIsAddDialogOpen(false);
       toast({
         title: "Success",
@@ -1021,7 +1078,7 @@ function PortfolioManager() {
       return response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/portfolio"] });
+      refreshPortfolio();
       toast({
         title: "Success",
         description: "Portfolio item deleted",
@@ -1043,7 +1100,7 @@ function PortfolioManager() {
       return response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/portfolio"] });
+      refreshPortfolio();
       toast({
         title: "Success",
         description: "Portfolio item updated",
@@ -1065,7 +1122,7 @@ function PortfolioManager() {
       return response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/portfolio"] });
+      refreshPortfolio();
       toast({
         title: "Success",
         description: "Featured status updated",
@@ -1607,3 +1664,120 @@ function ReviewsManager() {
   );
 }
 
+function LeadsManager() {
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+
+  const { data: leads, isLoading, isError } = useQuery<Lead[]>({
+    queryKey: ["/api/admin/leads"],
+    queryFn: () => fetchAdminJson<Lead[]>("/api/admin/leads"),
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: async (id: number) => {
+      const response = await fetch(`/api/admin/leads/${id}`, {
+        method: "DELETE",
+        headers: getAuthHeaders(),
+      });
+      if (!response.ok) throw new Error("Failed to delete");
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/leads"] });
+      toast({
+        title: "Success",
+        description: "Lead deleted",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to delete lead",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handleDelete = (lead: Lead) => {
+    if (confirm(`Delete the lead from ${lead.name}?`)) {
+      deleteMutation.mutate(lead.id);
+    }
+  };
+
+  if (isLoading) {
+    return <div className="text-center py-12 text-gray-400">Loading leads...</div>;
+  }
+
+  if (isError) {
+    return <div className="text-center py-12 text-red-400">Couldn't load leads. Try logging in again.</div>;
+  }
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          <h2 className="text-2xl font-bold">Leads</h2>
+          <p className="text-gray-400 text-sm">People who downloaded a guide or dataset from the site.</p>
+        </div>
+        <Badge variant="secondary">{leads?.length || 0} total</Badge>
+      </div>
+
+      {(!leads || leads.length === 0) && (
+        <Card className="bg-gray-800 border-gray-700">
+          <CardContent className="flex flex-col items-center justify-center py-16 text-center">
+            <Download className="w-16 h-16 text-gray-600 mb-4" />
+            <h3 className="text-xl font-semibold text-white mb-2">No leads yet</h3>
+            <p className="text-gray-400 max-w-md">
+              When someone requests the ROI guide or another download, their details will appear here.
+            </p>
+          </CardContent>
+        </Card>
+      )}
+
+      {leads?.map((lead) => (
+        <Card key={lead.id} className="bg-gray-800 border-gray-700">
+          <CardHeader>
+            <div className="flex items-start justify-between">
+              <div>
+                <CardTitle className="text-white">{lead.name}</CardTitle>
+                <CardDescription>
+                  <a href={`mailto:${lead.email}`} className="text-[hsl(199,89%,48%)] hover:underline">
+                    {lead.email}
+                  </a>
+                </CardDescription>
+              </div>
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={() => handleDelete(lead)}
+                disabled={deleteMutation.isPending}
+                aria-label={`Delete lead from ${lead.name}`}
+              >
+                <Trash2 className="w-4 h-4" />
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
+              <div>
+                <span className="text-gray-400">Requested:</span>
+                <p className="text-white font-medium">{lead.resourceRequested}</p>
+              </div>
+              <div>
+                <span className="text-gray-400">Company:</span>
+                <p className="text-white font-medium">{lead.company || "Not provided"}</p>
+              </div>
+              <div>
+                <span className="text-gray-400">From page:</span>
+                <p className="text-white font-medium">{lead.source}</p>
+              </div>
+            </div>
+            <div className="text-xs text-gray-500">
+              Submitted: {new Date(lead.createdAt).toLocaleString()}
+            </div>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  );
+}

@@ -156,6 +156,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.redirect(301, "/blog");
   });
 
+  // Every /api/admin/* request needs a valid admin token, except logging in
+  // and out. This runs before the routes below, so a new admin route is
+  // protected even if someone forgets to add requireAuth to it.
+  // Admin responses must never be cached or indexed.
+  app.use("/api/admin", (req, res, next) => {
+    res.set("Cache-Control", "no-store");
+    res.set("X-Robots-Tag", "noindex, nofollow");
+    if (req.path === "/login" || req.path === "/logout") return next();
+    requireAuth(req, res, next);
+  });
+
   // Admin authentication endpoints
   app.post("/api/admin/login", loginLimiter, async (req, res) => {
     try {
@@ -179,7 +190,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Generate JWT token
       const token = generateToken();
-      
+      if (!token) {
+        return res.status(503).json({
+          error: 'Service Unavailable',
+          message: 'Admin login is not configured on this server'
+        });
+      }
+
       res.json({ 
         success: true,
         token,
@@ -306,8 +323,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get all contact submissions (for admin use)
-  app.get("/api/contact", async (req, res) => {
+  // Admin: Get all contact submissions
+  app.get("/api/admin/contact", adminLimiter, requireAuth, async (req, res) => {
     try {
       const submissions = await storage.getContactSubmissions();
       res.json(submissions);
@@ -395,14 +412,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get all leads (for admin use)
-  app.get("/api/leads", adminLimiter, requireAuth, async (req, res) => {
+  // Admin: Get all leads (guide downloads)
+  app.get("/api/admin/leads", adminLimiter, requireAuth, async (req, res) => {
     try {
       const leads = await storage.getLeads();
       res.json(leads);
     } catch (error) {
       console.error("Leads fetch error:", error);
       res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Admin: Delete a lead
+  app.delete("/api/admin/leads/:id", adminLimiter, requireAuth, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (Number.isNaN(id)) {
+        return res.status(400).json({ error: "Invalid lead id" });
+      }
+      await storage.deleteLead(id);
+      res.json({ success: true, message: "Lead deleted" });
+    } catch (error) {
+      console.error("Lead deletion error:", error);
+      res.status(500).json({ error: "Failed to delete lead" });
     }
   });
 
@@ -540,8 +572,9 @@ https://six1fivestudio.com`
     try {
       const { slug } = req.params;
       const post = await storage.getBlogPostBySlug(slug);
-      
-      if (!post) {
+
+      // Drafts are only visible in the admin dashboard.
+      if (!post || !post.published) {
         return res.status(404).json({ error: "Blog post not found" });
       }
       
@@ -552,7 +585,8 @@ https://six1fivestudio.com`
     }
   });
 
-  app.post("/api/blog", async (req, res) => {
+  // Admin: Create blog post
+  app.post("/api/admin/blog", adminLimiter, requireAuth, async (req, res) => {
     try {
       const validatedData = insertBlogPostSchema.parse(req.body);
       const post = await storage.createBlogPost(validatedData);
@@ -627,8 +661,9 @@ https://six1fivestudio.com`
     try {
       const { id } = req.params;
       const item = await storage.getPortfolioItemById(parseInt(id));
-      
-      if (!item) {
+
+      // Unpublished items are only visible in the admin dashboard.
+      if (!item || !item.published) {
         return res.status(404).json({ error: "Portfolio item not found" });
       }
       
@@ -639,7 +674,8 @@ https://six1fivestudio.com`
     }
   });
 
-  app.post("/api/portfolio", async (req, res) => {
+  // Admin: Create portfolio item
+  app.post("/api/admin/portfolio", adminLimiter, requireAuth, async (req, res) => {
     try {
       const validatedData = insertPortfolioItemSchema.parse(req.body);
       const item = await storage.createPortfolioItem(validatedData);
@@ -647,6 +683,17 @@ https://six1fivestudio.com`
     } catch (error) {
       console.error("Portfolio item creation error:", error);
       res.status(400).json({ error: "Invalid portfolio item data" });
+    }
+  });
+
+  // Admin: Get all portfolio items (including unpublished)
+  app.get("/api/admin/portfolio", adminLimiter, requireAuth, async (req, res) => {
+    try {
+      const items = await storage.getPortfolioItems();
+      res.json(items);
+    } catch (error) {
+      console.error("Admin portfolio fetch error:", error);
+      res.status(500).json({ error: "Failed to fetch portfolio items" });
     }
   });
 
@@ -783,6 +830,13 @@ https://six1fivestudio.com`
       console.error("Review deletion error:", error);
       res.status(500).json({ error: "Failed to delete review" });
     }
+  });
+
+  // Any other /api path is a 404 in JSON, instead of falling through to the
+  // site's HTML page. This covers the old public paths that used to expose
+  // admin data (GET /api/contact, POST /api/blog, POST /api/portfolio).
+  app.all("/api/*", (req, res) => {
+    res.status(404).json({ error: "Not found" });
   });
 
   const httpServer = createServer(app);
