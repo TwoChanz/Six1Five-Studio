@@ -21,8 +21,8 @@ const trustSignals = [
   },
   {
     icon: Star,
-    title: "Construction Management",
-    description: "Coursework at MTSU"
+    title: "Concrete Industry Management",
+    description: "CIM coursework at MTSU"
   }
 ];
 
