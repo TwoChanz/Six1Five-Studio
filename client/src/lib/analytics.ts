@@ -11,7 +11,10 @@ declare global {
   }
 }
 
-export const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID;
+// Trim the ID: a stray newline or space in the Vercel env var (e.g. "G-XXXX\n")
+// produces an invalid gtag ID and GA silently records nothing.
+export const GA_MEASUREMENT_ID: string | undefined =
+  (import.meta.env.VITE_GA_MEASUREMENT_ID ?? "").trim() || undefined;
 
 // Initialize Google Analytics
 export const initGA = () => {

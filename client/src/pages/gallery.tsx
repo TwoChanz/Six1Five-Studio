@@ -99,11 +99,10 @@ export default function Gallery() {
   return (
     <div className="min-h-screen bg-[hsl(218,11%,15%)] text-white font-sans">
       <SEOHead
-        title="Portfolio Gallery - Six1Five Studio | Reality Capture Projects"
-        description="Explore my portfolio of drone mapping, LiDAR scanning, and photogrammetry projects for construction, real estate, agriculture, and historic preservation."
-        keywords="reality capture portfolio, drone mapping projects, LiDAR scans, photogrammetry gallery, 3D model viewer, construction surveying, AEC technology"
+        title="Portfolio Gallery - Six1Five Studio | Drone Mapping & 3D Models"
+        description="Drone mapping, orthomosaic, and 3D site model projects from Six1Five Studio in Smyrna, La Vergne, and Rutherford County, Middle Tennessee."
+        keywords="drone mapping portfolio, orthomosaic, 3D site model, construction progress capture, photogrammetry, Rutherford County, Middle Tennessee"
         canonicalUrl={getCanonicalUrl('/gallery')}
-        ogImage="/images/og-gallery.jpg"
       />
       <Navbar />
       

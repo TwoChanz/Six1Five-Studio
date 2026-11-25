@@ -18,14 +18,26 @@ interface SEOHeadProps {
  *   title="Page Title - Six1Five Studio"
  *   description="Page description for SEO"
  *   keywords="keyword1, keyword2, keyword3"
- *   ogImage="/assets/floyd-stadium-aerial.jpg"
+ *   ogImage="/og-image.png"   // relative paths are made absolute
  * />
  */
+const SITE_ORIGIN = 'https://six1fivestudio.com';
+const DEFAULT_OG_IMAGE = '/og-image.png';
+
+/**
+ * Share-preview crawlers (LinkedIn, Facebook, iMessage, Slack) need an absolute
+ * URL for og:image, so relative paths are resolved against the production origin.
+ */
+function toAbsoluteUrl(pathOrUrl: string): string {
+  if (/^https?:\/\//i.test(pathOrUrl)) return pathOrUrl;
+  return `${SITE_ORIGIN}${pathOrUrl.startsWith('/') ? '' : '/'}${pathOrUrl}`;
+}
+
 export function SEOHead({
   title,
   description,
   keywords,
-  ogImage = '/assets/floyd-stadium-aerial.jpg',
+  ogImage = DEFAULT_OG_IMAGE,
   ogType = 'website',
   canonicalUrl,
   noindex = false,
@@ -72,7 +84,8 @@ export function SEOHead({
     updateMetaTag('meta[property="og:title"]', title);
     updateMetaTag('meta[property="og:description"]', description);
     updateMetaTag('meta[property="og:type"]', ogType);
-    updateMetaTag('meta[property="og:image"]', ogImage);
+    const absoluteOgImage = toAbsoluteUrl(ogImage);
+    updateMetaTag('meta[property="og:image"]', absoluteOgImage);
 
     if (canonicalUrl) {
       updateMetaTag('meta[property="og:url"]', canonicalUrl);
@@ -85,7 +98,7 @@ export function SEOHead({
     updateMetaTag('meta[name="twitter:card"]', 'summary_large_image');
     updateMetaTag('meta[name="twitter:title"]', title);
     updateMetaTag('meta[name="twitter:description"]', description);
-    updateMetaTag('meta[name="twitter:image"]', ogImage);
+    updateMetaTag('meta[name="twitter:image"]', absoluteOgImage);
 
     // Additional SEO tags
     updateMetaTag('meta[name="author"]', 'Six1Five Studio');
