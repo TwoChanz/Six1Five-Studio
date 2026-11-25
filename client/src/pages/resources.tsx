@@ -57,7 +57,9 @@ export default function Resources() {
           title: "LiDAR vs Photogrammetry Comparison",
           description: "Technical comparison to help you choose the right capture method for your project.",
           type: "PDF Guide",
-          status: "Coming Soon"
+          status: "Coming Soon",
+          // Hidden until it is built; set to false (or remove) to show it again.
+          hidden: true
         }
       ]
     },
@@ -116,13 +118,17 @@ export default function Resources() {
           title: "Accuracy & Resolution Guide",
           description: "Understanding GSD, point density, and accuracy requirements for different applications.",
           type: "Technical Doc",
-          status: "Coming Soon"
+          status: "Coming Soon",
+          // Hidden until it is built; set to false (or remove) to show it again.
+          hidden: true
         },
         {
           title: "CAD/BIM Integration",
           description: "How reality capture data integrates with AutoCAD, Revit, and other design software.",
           type: "Integration Guide",
-          status: "Coming Soon"
+          status: "Coming Soon",
+          // Hidden until it is built; set to false (or remove) to show it again.
+          hidden: true
         }
       ]
     },
@@ -135,7 +141,9 @@ export default function Resources() {
           title: "Reading Point Cloud Data",
           description: "Learn how to interpret and navigate point cloud data for your projects.",
           type: "Video Tutorial",
-          status: "Coming Soon"
+          status: "Coming Soon",
+          // Hidden until it is built; set to false (or remove) to show it again.
+          hidden: true
         },
         {
           title: "Understanding Orthomosaics",
@@ -147,7 +155,9 @@ export default function Resources() {
           title: "3D Model Viewer Tutorial",
           description: "Navigate and extract measurements from interactive 3D models.",
           type: "Video Tutorial",
-          status: "Coming Soon"
+          status: "Coming Soon",
+          // Hidden until it is built; set to false (or remove) to show it again.
+          hidden: true
         }
       ]
     }
@@ -182,6 +192,11 @@ export default function Resources() {
           <div className="space-y-12">
             {resourceCategories.map((category, idx) => {
               const IconComponent = category.icon;
+              // Items flagged hidden stay in the data so they can be switched back on.
+              const visibleItems = category.items.filter(
+                (item) => !('hidden' in item && item.hidden)
+              );
+              if (visibleItems.length === 0) return null;
               return (
                 <div key={idx}>
                   <div className="flex items-center gap-3 mb-6">
@@ -197,7 +212,7 @@ export default function Resources() {
                   </div>
 
                   <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {category.items.map((item, itemIdx) => (
+                    {visibleItems.map((item, itemIdx) => (
                       <Card key={itemIdx} className="bg-gray-800 border-gray-700 hover:border-gray-600 transition-all">
                         <CardHeader>
                           <div className="flex items-start justify-between mb-2">
