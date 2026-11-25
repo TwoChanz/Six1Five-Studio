@@ -51,19 +51,21 @@ export default function Home() {
       email: "admin@six1fivestudio.com",
       address: {
         "@type": "PostalAddress",
-        addressLocality: "La Vergne",
+        addressLocality: "Smyrna",
         addressRegion: "TN",
         addressCountry: "US",
       },
       geo: {
         "@type": "GeoCoordinates",
-        latitude: "36.0156",
-        longitude: "-86.5804",
+        latitude: "35.9828",
+        longitude: "-86.5186",
       },
       areaServed: [
         { "@type": "City", name: "Smyrna, TN" },
         { "@type": "City", name: "La Vergne, TN" },
+        { "@type": "City", name: "Murfreesboro, TN" },
         { "@type": "AdministrativeArea", name: "Rutherford County, TN" },
+        { "@type": "City", name: "Nashville, TN" },
         { "@type": "AdministrativeArea", name: "Middle Tennessee" },
       ],
       hasOfferCatalog: {

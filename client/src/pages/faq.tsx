@@ -41,7 +41,7 @@ export default function FAQ() {
     
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute("content", "Get answers to common questions about drone mapping, LiDAR scanning, regulations, pricing, and project timelines. Expert reality capture services in Tennessee.");
+      metaDescription.setAttribute("content", "Answers to common questions about drone mapping, regulations, pricing, and project timelines. Drone mapping and 3D site models in Smyrna, Rutherford County, and Middle Tennessee.");
     }
   }, []);
 

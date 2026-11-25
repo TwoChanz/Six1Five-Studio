@@ -163,11 +163,9 @@ export default function ReviewForm({ onSuccess }: ReviewFormProps) {
               <SelectValue placeholder="Select the service you used" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="Drone Mapping">Drone Mapping</SelectItem>
-              <SelectItem value="LiDAR Scanning">LiDAR Scanning</SelectItem>
-              <SelectItem value="Photogrammetry">Photogrammetry</SelectItem>
-              <SelectItem value="Thermal Imaging">Thermal Imaging</SelectItem>
-              <SelectItem value="Construction Monitoring">Construction Monitoring</SelectItem>
+              <SelectItem value="Drone Mapping">Drone Mapping &amp; 3D Site Model</SelectItem>
+              <SelectItem value="Construction Monitoring">Construction Progress Capture</SelectItem>
+              <SelectItem value="Aerial Photo & Video">Aerial Photo &amp; Video</SelectItem>
               <SelectItem value="Other">Other</SelectItem>
             </SelectContent>
           </Select>

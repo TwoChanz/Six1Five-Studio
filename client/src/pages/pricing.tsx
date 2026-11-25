@@ -17,7 +17,7 @@ export default function Pricing() {
 
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute("content", "Transparent pricing for drone mapping, photogrammetry, and LiDAR scanning services. Custom quotes for construction, real estate, and heritage documentation projects.");
+      metaDescription.setAttribute("content", "Pricing for drone mapping, 3D site models, and construction progress capture in Smyrna, Rutherford County, and Middle Tennessee. Custom quotes for construction, land listings, and commercial property.");
     }
   }, []);
 
@@ -63,7 +63,7 @@ export default function Pricing() {
                 {tier.popular && (
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                     <Badge className="bg-[hsl(24,95%,53%)] text-white px-4 py-1">
-                      Most Popular
+                      Best for Construction
                     </Badge>
                   </div>
                 )}

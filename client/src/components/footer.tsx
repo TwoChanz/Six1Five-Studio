@@ -82,7 +82,7 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-4">Contact</h4>
             <ul className="space-y-2 text-gray-400">
-              <li>Nashville, Tennessee</li>
+              <li>Smyrna, Tennessee</li>
               <li><a href="tel:+19315888997" className="hover:text-[var(--primary-blue)] transition-colors">(931) 588-8997</a></li>
               <li><a href="mailto:admin@six1fivestudio.com" className="hover:text-[var(--primary-blue)] transition-colors underline decoration-transparent hover:decoration-[var(--primary-blue)] transition-all">admin@six1fivestudio.com</a></li>
             </ul>

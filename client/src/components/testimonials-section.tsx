@@ -21,8 +21,8 @@ const trustSignals = [
   },
   {
     icon: Star,
-    title: "MTSU Certified",
-    description: "Construction Management degree"
+    title: "Construction Management",
+    description: "Coursework at MTSU"
   }
 ];
 
@@ -160,7 +160,7 @@ export default function TestimonialsSection() {
               Ready to capture your site?
             </h3>
             <p className="text-white/90 mb-6">
-              Join my satisfied clients and experience professional reality capture services.
+              Send me the site address and what you need to decide. I'll tell you what to capture and what it costs.
             </p>
             <button
               onClick={scrollToContact}
