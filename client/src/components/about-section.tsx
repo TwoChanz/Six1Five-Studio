@@ -56,7 +56,7 @@ export default function AboutSection() {
             </div>
 
             <p className="text-gray-400 mb-6">
-              I'm <span className="text-[hsl(199,89%,48%)] font-semibold">Chandler Hopkins</span>, founder of Six1Five Studio. With a background rooted in construction, agriculture, and AEC tech, I specialize in turning physical sites into detailed 3D models using drones and photogrammetry. I began my journey studying Construction Management at MTSU and built my skills hands-on — from logistics yards to field operations.
+              I'm <span className="text-[hsl(199,89%,48%)] font-semibold">Chandler Hopkins</span>, founder of Six1Five Studio. With a background rooted in construction, agriculture, and AEC tech, I specialize in turning physical sites into detailed 3D models using drones and photogrammetry. I began my journey studying Concrete Industry Management (CIM) at MTSU and built my skills hands-on — from logistics yards to field operations.
             </p>
             <p className="text-gray-400 mb-6">
               My practical experience gives me deep insight into site conditions, project workflows, and the realities that make Reality Capture essential for modern project execution, digital twins, and preservation.

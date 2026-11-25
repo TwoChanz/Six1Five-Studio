@@ -21,9 +21,18 @@ const trustSignals = [
   },
   {
     icon: Star,
-    title: "Construction Management",
-    description: "Coursework at MTSU"
+    title: "Concrete Industry Management",
+    description: "CIM coursework at MTSU"
   }
+];
+
+// Certificates as listed on Chandler's LinkedIn (drone and AEC ones only).
+const certifications = [
+  { name: "Construction Technology Certificate", issuer: "DroneDeploy", issued: "Dec 2025" },
+  { name: "DroneDeploy Fundamentals", issuer: "DroneDeploy", issued: "Nov 2025" },
+  { name: "DroneDeploy Ground Certified", issuer: "DroneDeploy", issued: "Nov 2025" },
+  { name: "Construction Technology: Industry Snapshot", issuer: "LinkedIn Learning", issued: "Jan 2025" },
+  { name: "Reality Capture Foundations for AEC", issuer: "LinkedIn", issued: "Mar 2024" }
 ];
 
 export default function TestimonialsSection() {
@@ -85,6 +94,19 @@ export default function TestimonialsSection() {
                 </div>
               );
             })}
+          </div>
+
+          {/* Certifications */}
+          <div className="mt-10 max-w-3xl mx-auto">
+            <h3 className="text-xl font-semibold text-white mb-4">Certifications</h3>
+            <ul className="grid sm:grid-cols-2 gap-3 text-left">
+              {certifications.map((cert) => (
+                <li key={cert.name} className="p-4 bg-gray-800 rounded-lg">
+                  <p className="text-white text-sm font-medium">{cert.name}</p>
+                  <p className="text-gray-400 text-xs mt-1">{cert.issuer} · {cert.issued}</p>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 

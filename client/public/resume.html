@@ -25,7 +25,12 @@
     function resizeCanvas() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-      drawResume();
+      // Grow the canvas to fit the content so the page can scroll.
+      const contentHeight = drawResume() + 50;
+      if (contentHeight > canvas.height) {
+        canvas.height = contentHeight;
+        drawResume();
+      }
     }
 
     window.addEventListener('resize', resizeCanvas, false);
@@ -137,12 +142,39 @@
       y += 30;
       ctx.font = '16px Arial';
       ctx.fillStyle = '#ffffff';
-      ctx.fillText('Construction Management coursework (CIM Track) – Middle Tennessee State University', padX, y);
+      ctx.fillText('Concrete Industry Management (CIM) coursework at Middle Tennessee State University, including blueprint reading', padX, y);
+
+      y += 40;
+      ctx.font = 'bold 22px Arial';
+      ctx.fillStyle = '#fca311';
+      ctx.fillText('📜 Licenses & Certifications', padX, y);
+
+      y += 30;
+      ctx.font = '16px Arial';
+      ctx.fillStyle = '#ffffff';
+      const certifications = [
+        'Construction Technology Certificate – DroneDeploy · Dec 2025',
+        'DroneDeploy Fundamentals – DroneDeploy · Nov 2025',
+        'DroneDeploy Ground Certified – DroneDeploy · Nov 2025',
+        'Critical Thinking & Problem Solving – LinkedIn · May 2025',
+        'Construction Technology: Industry Snapshot – LinkedIn Learning · Jan 2025',
+        'Preprocessing Unstructured Data for LLM Applications – DeepLearning.AI · Dec 2024',
+        'Reality Capture Foundations for AEC – LinkedIn · Mar 2024',
+        'Generative AI Fundamentals – Google · Dec 2023',
+        'Introduction to Generative AI – Google · Nov 2023',
+        'Concrete Field Testing Technician - Grade I (CFTT) – American Concrete Institute · Feb 2019 – Feb 2024'
+      ];
+      certifications.forEach(line => {
+        ctx.fillText('• ' + line, padX + 10, y);
+        y += 22;
+      });
 
       y += 40;
       ctx.font = 'bold 22px Arial';
       ctx.fillStyle = '#fca311';
       ctx.fillText('📍 Service Area: Rutherford County & Middle Tennessee', padX, y);
+
+      return y;
     }
   </script>
 </body>
