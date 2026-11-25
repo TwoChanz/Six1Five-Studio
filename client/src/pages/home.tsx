@@ -25,17 +25,19 @@ import Footer from "@/components/footer";
  */
 export default function Home() {
   useEffect(() => {
-    document.title = "Six1Five Studio - Drone Mapping & 3D Site Models | Middle Tennessee";
+    document.title = "Six1Five Studio - Drone Mapping & 3D Site Models | Rutherford County, TN";
 
-    // Add meta description for SEO
-    const metaDescription = document.querySelector('meta[name="description"]');
+    // Set the meta description. index.html already ships one, so update it
+    // in place instead of only creating it when missing.
+    const description =
+      "Drone mapping, orthomosaics, 3D site models, and construction progress capture for builders, land listings, and property owners in Smyrna, La Vergne, and Rutherford County, Middle Tennessee. Delivered as a browser link.";
+    let metaDescription = document.querySelector<HTMLMetaElement>('meta[name="description"]');
     if (!metaDescription) {
-      const meta = document.createElement("meta");
-      meta.name = "description";
-      meta.content =
-        "Drone mapping, orthomosaics, and interactive 3D site models for construction teams, land listings, and property owners in Nashville and Middle Tennessee. Delivered as a browser link.";
-      document.head.appendChild(meta);
+      metaDescription = document.createElement("meta");
+      metaDescription.name = "description";
+      document.head.appendChild(metaDescription);
     }
+    metaDescription.content = description;
 
     // Structured data for local business
     const structuredData = {
@@ -43,7 +45,7 @@ export default function Home() {
       "@type": "LocalBusiness",
       name: "Six1Five Studio",
       description:
-        "Drone mapping and reality capture: orthomosaics, elevation data, and interactive 3D site models for AEC, construction, and real estate.",
+        "Drone mapping, orthomosaics, 3D site models, and construction progress capture for builders, land listings, and property owners in Rutherford County, Middle Tennessee.",
       url: "https://six1fivestudio.com",
       telephone: "+1-931-588-8997",
       email: "admin@six1fivestudio.com",
@@ -58,13 +60,15 @@ export default function Home() {
         latitude: "36.0156",
         longitude: "-86.5804",
       },
-      serviceArea: {
-        "@type": "State",
-        name: "Tennessee",
-      },
+      areaServed: [
+        { "@type": "City", name: "Smyrna, TN" },
+        { "@type": "City", name: "La Vergne, TN" },
+        { "@type": "AdministrativeArea", name: "Rutherford County, TN" },
+        { "@type": "AdministrativeArea", name: "Middle Tennessee" },
+      ],
       hasOfferCatalog: {
         "@type": "OfferCatalog",
-        name: "Reality Capture Services",
+        name: "Drone Mapping Services",
         itemListElement: [
           {
             "@type": "Offer",

@@ -1,10 +1,9 @@
-import { useState, useEffect, lazy, Suspense } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import { Switch, Route, Redirect, useLocation } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import LoadingScreen from "@/components/loading-screen";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { initGA, trackPageView } from "@/lib/analytics";
 import Home from "@/pages/home";
@@ -112,50 +111,19 @@ function Router() {
 }
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
-
   useEffect(() => {
     // Initialize analytics
     initGA();
-
-    // Check if app is actually ready instead of arbitrary delay
-    const checkReady = async () => {
-      // Wait for critical resources to load
-      await Promise.all([
-        // Wait for fonts to load
-        document.fonts.ready,
-        // Wait for DOM to be ready
-        new Promise(resolve => {
-          if (document.readyState === 'complete') {
-            resolve(true);
-          } else {
-            window.addEventListener('load', resolve);
-          }
-        })
-      ]);
-      
-      // Minimal delay to show the loading screen briefly
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 500);
-    };
-
-    checkReady();
   }, []);
 
+  // No full-screen splash: the page renders as soon as the JS bundle runs,
+  // so visitors (and Google's renderer) see real content on first paint
+  // instead of a progress bar.
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <LoadingScreen 
-          isLoading={isLoading} 
-          onLoadingComplete={() => setIsLoading(false)} 
-        />
-        {!isLoading && (
-          <>
-            <Toaster />
-            <Router />
-          </>
-        )}
+        <Toaster />
+        <Router />
       </TooltipProvider>
     </QueryClientProvider>
   );

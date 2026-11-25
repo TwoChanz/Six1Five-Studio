@@ -1,11 +1,14 @@
 import { useEffect } from "react";
 import { Link } from "wouter";
+import { useQuery } from "@tanstack/react-query";
+import type { BlogPost } from "@shared/schema";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { FileText, Download, ExternalLink, BookOpen, Video, Wrench, Shield, Newspaper, Lightbulb, Database } from "lucide-react";
+import { getQueryFn } from "@/lib/queryClient";
 
 export default function Resources() {
   useEffect(() => {
@@ -13,7 +16,7 @@ export default function Resources() {
 
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute("content", "Free reality capture resources, guides, and tools. Learn about drone mapping, LiDAR scanning, photogrammetry best practices, and industry regulations.");
+      metaDescription.setAttribute("content", "Free drone mapping resources, guides, and tools from Six1Five Studio: orthomosaics, 3D site models, construction progress capture, and drone regulations for Middle Tennessee projects.");
     }
   }, []);
 
@@ -54,7 +57,9 @@ export default function Resources() {
           title: "LiDAR vs Photogrammetry Comparison",
           description: "Technical comparison to help you choose the right capture method for your project.",
           type: "PDF Guide",
-          status: "Coming Soon"
+          status: "Coming Soon",
+          // Hidden until it is built; set to false (or remove) to show it again.
+          hidden: true
         }
       ]
     },
@@ -113,13 +118,17 @@ export default function Resources() {
           title: "Accuracy & Resolution Guide",
           description: "Understanding GSD, point density, and accuracy requirements for different applications.",
           type: "Technical Doc",
-          status: "Coming Soon"
+          status: "Coming Soon",
+          // Hidden until it is built; set to false (or remove) to show it again.
+          hidden: true
         },
         {
           title: "CAD/BIM Integration",
           description: "How reality capture data integrates with AutoCAD, Revit, and other design software.",
           type: "Integration Guide",
-          status: "Coming Soon"
+          status: "Coming Soon",
+          // Hidden until it is built; set to false (or remove) to show it again.
+          hidden: true
         }
       ]
     },
@@ -132,7 +141,9 @@ export default function Resources() {
           title: "Reading Point Cloud Data",
           description: "Learn how to interpret and navigate point cloud data for your projects.",
           type: "Video Tutorial",
-          status: "Coming Soon"
+          status: "Coming Soon",
+          // Hidden until it is built; set to false (or remove) to show it again.
+          hidden: true
         },
         {
           title: "Understanding Orthomosaics",
@@ -144,29 +155,21 @@ export default function Resources() {
           title: "3D Model Viewer Tutorial",
           description: "Navigate and extract measurements from interactive 3D models.",
           type: "Video Tutorial",
-          status: "Coming Soon"
+          status: "Coming Soon",
+          // Hidden until it is built; set to false (or remove) to show it again.
+          hidden: true
         }
       ]
     }
   ];
 
-  const latestInsights = [
-    {
-      title: "The Future of Construction Technology",
-      excerpt: "How LiDAR, BIM, and AI are revolutionizing the AEC industry.",
-      slug: "the-future-of-construction-how-lidar-bim-and-ai-are-revolutionizing-the-industry"
-    },
-    {
-      title: "AI Agents and Digital Twins",
-      excerpt: "The new era of operational intelligence transforming AEC technology.",
-      slug: "the-new-era-of-operational-intelligence-ai-agents-and-digital-twins-transform-aec-technology"
-    },
-    {
-      title: "GIS and CAD Integration",
-      excerpt: "5 overlapping areas between GIS and CAD and why they matter.",
-      slug: "overlapping-areas-gis-cad"
-    }
-  ];
+  // Pull the newest published posts from the blog API so these links can't
+  // drift out of date when a post's slug changes.
+  const { data: blogPosts } = useQuery<BlogPost[]>({
+    queryKey: ["/api/blog"],
+    queryFn: getQueryFn({ on401: "returnNull" }),
+  });
+  const latestInsights = (blogPosts ?? []).slice(0, 3);
 
   return (
     <div className="min-h-screen bg-[hsl(218,11%,15%)] text-white font-sans">
@@ -189,6 +192,11 @@ export default function Resources() {
           <div className="space-y-12">
             {resourceCategories.map((category, idx) => {
               const IconComponent = category.icon;
+              // Items flagged hidden stay in the data so they can be switched back on.
+              const visibleItems = category.items.filter(
+                (item) => !('hidden' in item && item.hidden)
+              );
+              if (visibleItems.length === 0) return null;
               return (
                 <div key={idx}>
                   <div className="flex items-center gap-3 mb-6">
@@ -204,7 +212,7 @@ export default function Resources() {
                   </div>
 
                   <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {category.items.map((item, itemIdx) => (
+                    {visibleItems.map((item, itemIdx) => (
                       <Card key={itemIdx} className="bg-gray-800 border-gray-700 hover:border-gray-600 transition-all">
                         <CardHeader>
                           <div className="flex items-start justify-between mb-2">
@@ -277,6 +285,7 @@ export default function Resources() {
           </div>
 
           {/* Latest Insights Section */}
+          {latestInsights.length > 0 && (
           <div className="mt-16 pt-12 border-t border-gray-700">
             <div className="flex items-center gap-3 mb-6">
               <div className="p-3 rounded-lg bg-gray-800 border border-gray-700">
@@ -286,8 +295,8 @@ export default function Resources() {
             </div>
 
             <div className="grid md:grid-cols-3 gap-6">
-              {latestInsights.map((article, idx) => (
-                <Link key={idx} href={`/blog/${article.slug}`}>
+              {latestInsights.map((article) => (
+                <Link key={article.id} href={`/blog/${article.slug}`}>
                   <Card className="bg-gray-800 border-gray-700 hover:border-[hsl(199,89%,48%)] transition-all cursor-pointer h-full">
                     <CardHeader>
                       <CardTitle className="text-lg text-white hover:text-[hsl(199,89%,48%)] transition-colors">
@@ -307,6 +316,7 @@ export default function Resources() {
               ))}
             </div>
           </div>
+          )}
 
           {/* CTA Section */}
           <div className="mt-16 text-center bg-gradient-to-r from-[hsl(24,95%,53%)] to-[hsl(199,89%,48%)] rounded-xl p-8">
