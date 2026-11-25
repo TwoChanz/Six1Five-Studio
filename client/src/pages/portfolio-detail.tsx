@@ -396,7 +396,7 @@ export default function PortfolioDetail() {
             <LeadMagnetTrigger
               source="portfolio_detail"
               variant="outline"
-              text="Download Planning Guide"
+              text="Get the Free ROI Guide"
               className="bg-white/10 border-white text-white hover:bg-white hover:text-[hsl(24,95%,53%)] px-8"
             />
           </div>

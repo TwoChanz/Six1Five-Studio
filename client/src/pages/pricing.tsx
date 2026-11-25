@@ -175,8 +175,8 @@ export default function Pricing() {
               Free Download: <span className="text-[hsl(24,95%,53%)]">Reality Capture ROI Guide</span>
             </h2>
             <p className="text-gray-300 mb-6 max-w-2xl mx-auto text-lg">
-              Calculate your project ROI, compare technologies, and get expert planning templates.
-              No credit card required - just instant access to my comprehensive guide.
+              Work out whether a drone capture pays for itself on your project, with a fill-in worksheet,
+              worked examples, and a straight answer on when it isn't worth it. Instant PDF download.
             </p>
             <LeadMagnetTrigger
               source="pricing_page"
