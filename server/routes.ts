@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage.js";
 import { insertContactSubmissionSchema, insertBlogPostSchema, insertPortfolioItemSchema, insertReviewSchema, insertLeadSchema, type InsertLead } from "../shared/schema.js";
 import { LEAD_MAGNETS, HONEYPOT_FIELD, leadRequestSchema, type LeadResponse } from "../shared/lead-magnets.js";
+import { SAMPLE_DATASET, absoluteDatasetUrl } from "../shared/sample-dataset.js";
 import { z } from "zod";
 import { Resend } from "resend";
 import multer from "multer";
@@ -449,7 +450,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         email,
         company: company || null,
         source: "sample-dataset-banner",
-        resourceRequested: "Stockpile Photogrammetry Sample Dataset"
+        resourceRequested: SAMPLE_DATASET.title
       };
 
       const validatedData = insertLeadSchema.parse(leadData);
@@ -458,7 +459,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Send email with download link if Resend is configured
       if (resend && process.env.RESEND_FROM_EMAIL) {
         const fromEmail = process.env.RESEND_FROM_EMAIL;
-        const downloadUrl = `${req.protocol}://${req.get('host')}/downloads/stockpile-photogrammetry-sample-dataset.zip`;
+        const downloadUrl = absoluteDatasetUrl(`${req.protocol}://${req.get('host')}`);
 
         try {
           await resend.emails.send({
@@ -472,7 +473,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
                 <p>Thanks for your interest in Six1Five Studio. Your sample dataset is ready to download:</p>
                 <p style="margin: 20px 0;">
                   <a href="${downloadUrl}" style="background: #10b981; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">
-                    Download Dataset (109 MB)
+                    Download Dataset (${SAMPLE_DATASET.sizeLabel})
                   </a>
                 </p>
                 <p><strong>What's included:</strong></p>
@@ -543,7 +544,7 @@ https://six1fivestudio.com`
       res.json({
         success: true,
         lead,
-        downloadUrl: "/downloads/stockpile-photogrammetry-sample-dataset.zip"
+        downloadUrl: SAMPLE_DATASET.url
       });
     } catch (error) {
       if (error instanceof z.ZodError) {

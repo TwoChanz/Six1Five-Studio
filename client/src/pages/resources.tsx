@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import type { BlogPost } from "@shared/schema";
+import { SAMPLE_DATASET } from "@shared/sample-dataset";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import { Button } from "@/components/ui/button";
@@ -72,8 +73,8 @@ export default function Resources() {
         {
           title: "Stockpile Photogrammetry Dataset",
           description: "28 high-resolution DJI aerial photos (~4-5MB each) with GCP files. Perfect for learning photogrammetry processing in RealityCapture, Pix4D, or Agisoft Metashape.",
-          type: "ZIP (109 MB)",
-          link: "/downloads/stockpile-photogrammetry-sample-dataset.zip",
+          type: `ZIP (${SAMPLE_DATASET.sizeLabel})`,
+          link: SAMPLE_DATASET.url,
           downloadable: true
         }
       ]
