@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { SAMPLE_DATASET } from "@shared/sample-dataset";
 import { X, Download, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -60,7 +61,7 @@ export default function DatasetDownloadModal({
 
       const result = await response.json();
 
-      setDownloadLink(result.downloadUrl || "/downloads/stockpile-photogrammetry-sample-dataset.zip");
+      setDownloadLink(result.downloadUrl || SAMPLE_DATASET.url);
       setIsSubmitted(true);
 
       // Track analytics
@@ -96,7 +97,7 @@ export default function DatasetDownloadModal({
                 Get Instant Access
               </DialogTitle>
               <DialogDescription className="text-gray-400 text-base">
-                Enter your details to download the free stockpile photogrammetry dataset (109 MB)
+                Enter your details to download the free stockpile photogrammetry dataset ({SAMPLE_DATASET.sizeLabel})
               </DialogDescription>
             </DialogHeader>
 
@@ -206,7 +207,7 @@ export default function DatasetDownloadModal({
               <div className="flex gap-3">
                 <a
                   href={downloadLink}
-                  download
+                  download={SAMPLE_DATASET.fileName}
                   className="flex-1"
                   onClick={() => {
                     // Small delay before closing so download can start
@@ -215,7 +216,7 @@ export default function DatasetDownloadModal({
                 >
                   <Button className="w-full bg-[hsl(158,64%,52%)] hover:bg-[hsl(158,64%,42%)] text-white font-semibold">
                     <Download className="w-4 h-4 mr-2" />
-                    Download Now (109 MB)
+                    Download Now ({SAMPLE_DATASET.sizeLabel})
                   </Button>
                 </a>
               </div>

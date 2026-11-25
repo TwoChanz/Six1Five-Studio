@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Database, Download, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
+import { SAMPLE_DATASET } from "@shared/sample-dataset";
 import DatasetDownloadModal from "@/components/dataset-download-modal";
 
 export default function SampleDatasetBanner() {
@@ -39,7 +40,7 @@ export default function SampleDatasetBanner() {
                   className="bg-[hsl(158,64%,52%)] hover:bg-[hsl(158,64%,42%)] text-white font-semibold px-8"
                 >
                   <Download className="w-5 h-5 mr-2" />
-                  Download (109 MB)
+                  Download ({SAMPLE_DATASET.sizeLabel})
                 </Button>
                 <Link href="/resources">
                   <Button

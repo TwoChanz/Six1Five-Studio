@@ -1,29 +1,20 @@
 # Downloads Directory
 
-This directory contains large downloadable assets that are too big for git.
+Files here are served by the site at `/downloads/...`. Only what is committed to
+git gets deployed, because Vercel builds from the repo.
 
-## Files Not in Git (Upload Separately)
+## Stockpile sample dataset (not in git)
 
-### `stockpile-photogrammetry-sample-dataset.zip` (109 MB)
-- **Source**: `C:\Users\Overlord\Downloads\StockpileScanPhotos&GCPs\StockpileScanPhotos&GCPs\Dataset sample 1`
-- **Contents**: 28 DJI aerial photos + 2 GCP files
-- **Purpose**: Free sample dataset for photogrammetry learning
-- **Deploy Location**: This file must be manually uploaded to production
+`stockpile-photogrammetry-sample-dataset.zip` is about 109 MB: 28 DJI aerial
+photos and 2 GCP files. That is over GitHub's 100 MB per-file limit, so it is
+gitignored (`client/public/downloads/*.zip`) and never reaches Vercel.
 
-## Manual Upload Instructions
+Copying it here locally does not help the live site. Host the zip somewhere
+that serves large files (for example Vercel Blob, Supabase Storage, or a
+GitHub Release asset), then put its https address in `url` in
+`shared/sample-dataset.ts`. Every download button and the download email read
+the address from there.
 
-### Option 1: Vercel CLI (Recommended)
-Since Vercel builds from git and this file is gitignored, you need to:
-
-1. After deployment completes, manually copy the file to the production server
-2. Or use Vercel Blob Storage for large files
-
-### Option 2: Build-time Copy
-The file is already in this directory locally and will be included in the Vite build output to `dist/downloads/`.
-
-When you run `npm run build`:
-- Vite copies `client/public/*` to `dist/`
-- Including `client/public/downloads/stockpile-photogrammetry-sample-dataset.zip`
-- This file will be deployed with the build
-
-**Verification**: After deployment, check https://six1fivestudio.com/downloads/stockpile-photogrammetry-sample-dataset.zip
+If a file under `/downloads/` is missing, the site now returns a 404 instead of
+the home page (see the rewrite in `vercel.json`), so a missing file can't be
+saved as a broken `.zip` of the home page again.
