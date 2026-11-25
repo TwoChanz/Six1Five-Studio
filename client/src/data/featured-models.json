@@ -8,7 +8,7 @@
       "kind": "sketchfab",
       "title": "Stockpile Survey — with Ground Control Points",
       "useCase": "Construction · Volumetrics",
-      "description": "Aggregate stockpile captured with GCPs for survey-tied accuracy. The same model supports cut/fill and volume calculations for pay applications.",
+      "description": "Aggregate stockpile captured with ground control points. The same model supports cut/fill and volume calculations for pay applications.",
       "sketchfabModelId": "735d001c65a2487985c309e41fd5c770",
       "brightness": 0.85,
       "link": {

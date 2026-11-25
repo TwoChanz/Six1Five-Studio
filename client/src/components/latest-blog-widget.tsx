@@ -30,7 +30,7 @@ export default function LatestBlogWidget() {
             Latest <span className="text-[hsl(199,89%,48%)]">Insights</span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            Exploring AEC technology, LiDAR, BIM, AI, and digital twins. Fresh perspectives from the field.
+            Exploring AEC technology, drone mapping, AI, and digital twins. Fresh perspectives from the field.
           </p>
         </div>
 
