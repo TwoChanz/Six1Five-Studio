@@ -1,7 +1,8 @@
 import type { Express, RequestHandler } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage.js";
-import { insertContactSubmissionSchema, insertBlogPostSchema, insertPortfolioItemSchema, insertReviewSchema, insertLeadSchema } from "../shared/schema.js";
+import { insertContactSubmissionSchema, insertBlogPostSchema, insertPortfolioItemSchema, insertReviewSchema, insertLeadSchema, type InsertLead } from "../shared/schema.js";
+import { LEAD_MAGNETS, HONEYPOT_FIELD, leadRequestSchema, type LeadResponse } from "../shared/lead-magnets.js";
 import { z } from "zod";
 import { Resend } from "resend";
 import multer from "multer";
@@ -83,6 +84,16 @@ async function storeReferenceFiles(files: Express.Multer.File[]): Promise<string
     await fs.writeFile(path.join(uploadDir, filename), file.buffer);
     return `/uploads/contact-submissions/${filename}`;
   }));
+}
+
+// Escape user-supplied text before putting it in an HTML email.
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 
 // Rate limiter for login attempts
@@ -305,13 +316,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Lead magnet capture endpoint
+  // Lead magnet capture endpoint.
+  // Validates and saves the visitor's details, then returns the link to the
+  // requested file. It never echoes stored lead data back, and nothing is
+  // emailed to the visitor (the download is handed over on the page).
   app.post("/api/leads", leadLimiter, async (req, res) => {
     try {
-      const validatedData = insertLeadSchema.parse(req.body);
-      const lead = await storage.createLead(validatedData);
+      const parsed = leadRequestSchema.safeParse(req.body ?? {});
+      if (!parsed.success) {
+        return res.status(400).json({
+          message: "Please check your name and email and try again.",
+          errors: parsed.error.flatten().fieldErrors,
+        });
+      }
 
-      // Send email notification if Resend is configured
+      const { name, email, company, source, resource, [HONEYPOT_FIELD]: honeypot } = parsed.data;
+      const magnet = LEAD_MAGNETS[resource];
+      const response: LeadResponse = {
+        success: true,
+        downloadUrl: magnet.downloadUrl,
+        fileName: magnet.fileName,
+      };
+
+      // A filled honeypot means a bot. Answer as if it worked, save nothing.
+      if (honeypot && honeypot.trim() !== "") {
+        console.warn("Lead form honeypot triggered; submission discarded");
+        return res.json(response);
+      }
+
+      const leadData: InsertLead = {
+        name,
+        email,
+        company: company ?? null,
+        source,
+        resourceRequested: magnet.title,
+      };
+      await storage.createLead(leadData);
+
+      // Notify the site owner if Resend is configured.
       if (resend) {
         const fromEmail = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
         const toEmail = process.env.RESEND_TO_EMAIL || fromEmail;
@@ -320,33 +362,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
           await resend.emails.send({
             from: fromEmail,
             to: toEmail,
-            subject: `New Lead: ${validatedData.resourceRequested}`,
+            replyTo: email,
+            subject: `New lead: ${magnet.title}`,
             html: `
-              <h2>New Lead Magnet Download</h2>
-              <p><strong>Name:</strong> ${validatedData.name}</p>
-              <p><strong>Email:</strong> ${validatedData.email}</p>
-              <p><strong>Company:</strong> ${validatedData.company || 'Not provided'}</p>
-              <p><strong>Resource:</strong> ${validatedData.resourceRequested}</p>
-              <p><strong>Source:</strong> ${validatedData.source}</p>
-              <p><strong>Date:</strong> ${new Date().toLocaleString()}</p>
+              <h2>New guide download</h2>
+              <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+              <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+              <p><strong>Company:</strong> ${escapeHtml(company ?? 'Not provided')}</p>
+              <p><strong>Resource:</strong> ${escapeHtml(magnet.title)}</p>
+              <p><strong>Source:</strong> ${escapeHtml(source)}</p>
+              <p><strong>Date:</strong> ${new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' })}</p>
             `,
+            text: [
+              'New guide download',
+              `Name: ${name}`,
+              `Email: ${email}`,
+              `Company: ${company ?? 'Not provided'}`,
+              `Resource: ${magnet.title}`,
+              `Source: ${source}`,
+            ].join('\n'),
           });
         } catch (emailError) {
           console.error('Failed to send lead notification email:', emailError);
-          // Don't fail the request if email fails
+          // Don't fail the request if the notification fails
         }
       }
 
-      res.json({ success: true, lead });
+      res.json(response);
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        return res.status(400).json({
-          message: "Invalid lead data",
-          errors: error.errors
-        });
-      }
       console.error("Lead capture error:", error);
-      res.status(500).json({ message: "Failed to capture lead" });
+      res.status(500).json({ message: "Something went wrong saving your details. Please try again." });
     }
   });
 
