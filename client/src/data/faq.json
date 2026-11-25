@@ -34,11 +34,11 @@
       "faqs": [
         {
           "question": "What's included in a typical photogrammetry project?",
-          "answer": "Standard deliverables include: high-resolution orthomosaic maps, digital surface models (DSM), point clouds, 3D textured models, and measurement reports. All data is provided in industry-standard formats (GeoTIFF, LAS, PLY, FBX) and includes metadata and accuracy reports."
+          "answer": "Standard deliverables include: high-resolution orthomosaic maps, digital surface models (DSM), point clouds, 3D textured models, and measurement reports. All data is provided in industry-standard formats (GeoTIFF, LAS, PLY, FBX)."
         },
         {
-          "question": "How accurate are your survey-grade measurements?",
-          "answer": "Accuracy depends on the method and ground control points used. With RTK/PPK GPS and ground control points, horizontal accuracy is typically 1-3cm and vertical accuracy is 2-5cm. For standard mapping without GCPs, accuracy ranges from 1-3 meters, suitable for most planning and monitoring applications."
+          "question": "How accurate are your measurements?",
+          "answer": "My captures are made for planning, progress tracking, and comparing one date to the next. They are not a land survey. If you need survey-grade numbers for payment quantities, boundaries, or design surfaces, I'll tell you up front, and those numbers should be confirmed by a licensed surveyor."
         },
         {
           "question": "Can you integrate with existing CAD/BIM workflows?",
@@ -46,7 +46,7 @@
         },
         {
           "question": "Do you provide LiDAR scanning services?",
-          "answer": "Yes, I offer terrestrial LiDAR scanning for detailed interior and close-range exterior mapping. This technology captures sub-centimeter accuracy and is ideal for as-built documentation, heritage preservation, and complex structural analysis where photogrammetry limitations exist."
+          "answer": "Not in-house. My work is drone photogrammetry, which suits open sites, buildings, and stockpiles. If your site needs LiDAR, for example bare ground under heavy tree cover, I'll tell you up front."
         }
       ]
     },
@@ -57,19 +57,19 @@
       "faqs": [
         {
           "question": "How long does a typical mapping project take?",
-          "answer": "Project timelines vary by scope: Small sites (1-5 acres): 1-2 days field work, 3-5 days processing. Medium sites (5-50 acres): 2-3 days field work, 5-10 days processing. Large sites (50+ acres): 3-7 days field work, 10-15 days processing. Rush delivery is available for 25% additional cost."
+          "answer": "Project timelines vary by scope: Small sites (1-5 acres): 1-2 days field work, 3-5 days processing. Medium sites (5-50 acres): 2-3 days field work, 5-10 days processing. Large sites (50+ acres): 3-7 days field work, 10-15 days processing. Rush delivery is available for 30% additional cost."
         },
         {
           "question": "What factors affect project pricing?",
-          "answer": "Pricing is based on: site size and complexity, required accuracy level, deliverable formats needed, travel distance from Nashville metro area, timeline requirements, and special permits or airspace authorizations required. Contact me for a detailed quote based on your specific needs."
+          "answer": "Pricing is based on: site size and complexity, required accuracy level, deliverable formats needed, travel distance from Smyrna, timeline requirements, and special permits or airspace authorizations required. Contact me for a detailed quote based on your specific needs."
         },
         {
           "question": "Do you offer multi-phase monitoring services?",
-          "answer": "Yes, I provide ongoing construction progress monitoring and change detection services. Multi-phase contracts include baseline mapping, scheduled progress flights, automated change detection analysis, and progress reporting. This typically reduces per-flight costs by 15-30%."
+          "answer": "Yes, I provide ongoing construction progress monitoring and change detection services. Multi-phase work includes a baseline capture, scheduled progress flights, and side-by-side comparisons between dates. Recurring captures are priced lower per flight than one-off visits."
         },
         {
           "question": "What's your service area coverage?",
-          "answer": "Primary service area covers middle Tennessee including Nashville metro, Murfreesboro, Franklin, and surrounding counties. I also travel throughout Tennessee and neighboring states for larger projects. Travel time and expenses are included in project quotes for sites beyond the primary service area."
+          "answer": "I'm based in Smyrna and cover Smyrna, La Vergne, Murfreesboro, and the rest of Rutherford County, plus the Nashville area and greater Middle Tennessee. Sites farther out are quoted case by case, with any travel cost listed in the quote."
         }
       ]
     },
@@ -80,7 +80,7 @@
       "faqs": [
         {
           "question": "What drone and camera equipment do you use?",
-          "answer": "Primary platform is the DJI Mini 4 Pro with 4K/60fps camera and mechanical 3-axis gimbal. For specialized applications, I also use the DJI Air 2S and various payload options. All equipment is regularly calibrated and maintained according to manufacturer specifications."
+          "answer": "Primary platform is the DJI Mini 4 Pro with 4K/60fps camera and mechanical 3-axis gimbal. I also fly a DJI Air 2S. All equipment is regularly calibrated and maintained according to manufacturer specifications."
         },
         {
           "question": "What software do you use for processing?",
@@ -88,11 +88,11 @@
         },
         {
           "question": "How do you ensure data quality and accuracy?",
-          "answer": "Quality assurance includes: pre-flight mission planning with overlap verification, real-time image quality monitoring, ground control point placement with RTK GPS, automated quality reports during processing, and final accuracy verification against known coordinates."
+          "answer": "Quality checks include pre-flight mission planning with overlap checks, a sharpness check on every image before processing, and a review of each model before it's delivered."
         },
         {
           "question": "Can you capture thermal or multispectral data?",
-          "answer": "Currently focused on high-resolution RGB photogrammetry and LiDAR. For thermal or multispectral requirements, I partner with specialized operators who have the appropriate sensors and certifications for agricultural, environmental, or industrial inspection applications."
+          "answer": "Not in-house. My work is high-resolution RGB photogrammetry. If your project needs thermal or multispectral data, I'll tell you up front."
         }
       ]
     },

@@ -15,7 +15,7 @@ const steps: ProcessStep[] = [
     icon: Plane,
     title: "Capture",
     description:
-      "I plan the flight around your site and the accuracy you need, then fly it with overlapping nadir and oblique passes. Ground control points are set when survey-tied results matter.",
+      "I plan the flight around your site and the accuracy you need, then fly it with overlapping nadir and oblique passes. If your job needs survey-grade numbers, I'll tell you up front.",
   },
   {
     icon: Cpu,

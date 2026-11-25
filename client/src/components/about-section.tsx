@@ -56,7 +56,7 @@ export default function AboutSection() {
             </div>
 
             <p className="text-gray-400 mb-6">
-              I'm <span className="text-[hsl(199,89%,48%)] font-semibold">Chandler Hopkins</span>, founder of Six1Five Studio. With a background rooted in construction, agriculture, and AEC tech, I specialize in bringing physical sites into high-precision 3D models using drones, LiDAR, and photogrammetry. I began my journey studying Construction Management at MTSU and built my skills hands-on — from logistics yards to field operations.
+              I'm <span className="text-[hsl(199,89%,48%)] font-semibold">Chandler Hopkins</span>, founder of Six1Five Studio. With a background rooted in construction, agriculture, and AEC tech, I specialize in turning physical sites into detailed 3D models using drones and photogrammetry. I began my journey studying Construction Management at MTSU and built my skills hands-on — from logistics yards to field operations.
             </p>
             <p className="text-gray-400 mb-6">
               My practical experience gives me deep insight into site conditions, project workflows, and the realities that make Reality Capture essential for modern project execution, digital twins, and preservation.
@@ -81,10 +81,6 @@ export default function AboutSection() {
                 <TechTag 
                   name="FARO SCENE" 
                   tooltip="3D point cloud processing software for LiDAR scanning workflows" 
-                />
-                <TechTag 
-                  name="LiDAR Scanning" 
-                  tooltip="Laser-based method for capturing precise spatial data and measurements" 
                 />
                 <TechTag 
                   name="NeRFs" 
@@ -142,7 +138,7 @@ export default function AboutSection() {
                 </div>
                 
                 {/* Service area text with maintained branding */}
-                <span className="relative z-10">Service Area: Nashville Region</span>
+                <span className="relative z-10">Based in Smyrna · Serving Rutherford County &amp; Middle Tennessee</span>
               </div>
             </div>
           </div>

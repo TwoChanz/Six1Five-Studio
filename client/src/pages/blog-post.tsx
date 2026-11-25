@@ -189,8 +189,8 @@ export default function BlogPostPage() {
               <div>
                 <h3 className="text-lg font-semibold mb-2">About Six1Five Studio</h3>
                 <p className="text-gray-400 max-w-md">
-                  Professional reality capture services specializing in drone mapping, LiDAR scanning, 
-                  and photogrammetry for the AEC industry and heritage documentation.
+                  Drone mapping, 3D site models, and construction progress capture, based in Smyrna
+                  and serving Rutherford County and Middle Tennessee.
                 </p>
               </div>
               

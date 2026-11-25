@@ -51,18 +51,18 @@ export const pricingTiers: PricingTier[] = [
   },
   {
     name: "Professional",
-    tagline: "Most popular choice",
+    tagline: "Built for active construction sites",
     price: "Starting at $1,500",
     priceSubtext: "per project",
     description:
       "Comprehensive solution for construction sites, commercial properties, and heritage documentation.",
     features: [
       "Up to 50 acres coverage",
-      "Advanced photogrammetry + LiDAR",
+      "Detailed photogrammetry with oblique passes",
       "High-detail 3D models",
       "Orthomosaic + elevation maps",
-      "Classified point cloud",
-      "Progress tracking dashboards",
+      "Dense point cloud",
+      "Shareable browser link for every capture",
       "1-week turnaround",
       "Priority phone/email support",
       "3 revision rounds included",
@@ -78,33 +78,21 @@ export const pricingTiers: PricingTier[] = [
     description:
       "Tailored solutions for large construction projects, infrastructure, and ongoing monitoring programs.",
     features: [
-      "Unlimited acreage",
-      "Multi-site coordination",
-      "Drone + terrestrial LiDAR",
-      "Advanced mesh processing",
+      "Larger or multi-phase sites",
+      "Multiple sites on one schedule",
+      "Gaussian splat walkthroughs",
       "Custom deliverable formats",
-      "Automated progress monitoring",
+      "Recurring progress captures on your schedule",
       "Rush delivery available",
-      "Dedicated project manager",
+      "You work with me directly, start to finish",
       "Unlimited revisions",
-      "API integration support",
-      "Training & onboarding",
+      "Walkthrough of your files and viewer links",
     ],
-    cta: "Contact Sales",
+    cta: "Get Quote",
   },
 ];
 
 export const pricingAddOns: PricingAddOn[] = [
-  {
-    name: "Thermal Imaging",
-    price: "+$300",
-    description: "Identify heat loss, moisture intrusion, or electrical issues",
-  },
-  {
-    name: "Interior Scanning",
-    price: "+$500",
-    description: "Complete interior documentation with terrestrial LiDAR",
-  },
   {
     name: "Rush Delivery",
     price: "+30%",
@@ -146,6 +134,6 @@ export const pricingFaqs: PricingFaq[] = [
   {
     question: "Do you travel for projects?",
     answer:
-      "Yes! I serve clients nationwide. Travel expenses may apply for projects outside my local service area (details provided in quote).",
+      "I'm based in Smyrna and cover Rutherford County, the Nashville area, and the rest of Middle Tennessee. Sites farther out are quoted case by case, with any travel cost listed in the quote.",
   },
 ];

@@ -30,20 +30,17 @@ const contactSchema = z.object({
 type ContactForm = z.infer<typeof contactSchema>;
 
 const serviceOptions = [
-  { id: "drone-mapping", label: "Drone Mapping" },
-  { id: "interior-scan", label: "Interior Scan" },
-  { id: "lidar-survey", label: "LiDAR Survey" },
-  { id: "construction-monitoring", label: "Construction Monitoring" },
-  { id: "photogrammetry", label: "Photogrammetry" },
-  { id: "heritage-documentation", label: "Heritage Documentation" },
+  { id: "drone-mapping", label: "Drone Mapping & 3D Site Model" },
+  { id: "construction-monitoring", label: "Construction Progress Capture" },
+  { id: "aerial-photo-video", label: "Aerial Photo & Video" },
+  { id: "not-sure", label: "Not Sure Yet" },
 ];
 
 const projectTypeOptions = [
-  { value: "drone-mapping", label: "Drone Mapping" },
-  { value: "heritage", label: "Heritage Documentation" },
-  { value: "bim", label: "BIM/Construction" },
-  { value: "real-estate", label: "Real Estate" },
-  { value: "inspection", label: "Inspection/Survey" },
+  { value: "construction", label: "Construction Site" },
+  { value: "real-estate", label: "Land Listing / Real Estate" },
+  { value: "commercial", label: "Commercial Property" },
+  { value: "heritage", label: "Historic Building" },
   { value: "other", label: "Other" },
 ];
 
@@ -249,7 +246,7 @@ export default function ContactSection() {
             </div>
             <div className="flex items-center gap-2 bg-gray-800 px-3 py-1 rounded-lg">
               <span className="w-2 h-2 bg-[hsl(24,95%,53%)] rounded-full"></span>
-              <span className="text-gray-300">Same-day quotes</span>
+              <span className="text-gray-300">Quotes within 24 hours</span>
             </div>
             <div className="flex items-center gap-2 bg-gray-800 px-3 py-1 rounded-lg">
               <span className="w-2 h-2 bg-[hsl(199,89%,48%)] rounded-full"></span>
@@ -340,7 +337,7 @@ export default function ContactSection() {
                         <Input
                           {...field}
                           id="contact-location"
-                          placeholder="City, State (e.g., Nashville, TN)"
+                          placeholder="City, State (e.g., Smyrna, TN)"
                           className="bg-gray-700 border-gray-600 focus:border-[hsl(24,95%,53%)] text-white"
                           autoComplete="address-level2"
                         />
@@ -531,18 +528,18 @@ export default function ContactSection() {
               <div className="flex items-center space-x-3">
                 <MapPin className="w-5 h-5 text-[hsl(158,64%,52%)]" />
                 <div>
-                  <span className="font-semibold">Service Area:</span> Tennessee + Regional Coverage
+                  <span className="font-semibold">Service Area:</span> Rutherford County &amp; Middle Tennessee
                 </div>
               </div>
             </div>
 
-            {/* Nashville Service Area Map */}
+            {/* Service Area Map */}
             <div className="mt-8 pt-6 border-t border-gray-700">
               <h4 className="text-sm font-semibold mb-4 text-gray-300">Primary Service Area</h4>
               <div className="relative bg-gray-900 rounded-lg p-6 border border-gray-700">
                 <img
                   src={nashvilleSvg}
-                  alt="Nashville and Middle Tennessee Service Area"
+                  alt="Rutherford County and Middle Tennessee service area"
                   className="w-full h-auto opacity-80 hover:opacity-100 transition-opacity"
                   style={{
                     filter: 'drop-shadow(0 0 10px rgba(37, 211, 102, 0.3))'
@@ -551,12 +548,12 @@ export default function ContactSection() {
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                   <div className="text-center">
                     <div className="w-3 h-3 bg-[hsl(158,64%,52%)] rounded-full mx-auto mb-2 animate-pulse"></div>
-                    <p className="text-xs text-white font-semibold bg-gray-900/80 px-2 py-1 rounded">Nashville Metro</p>
+                    <p className="text-xs text-white font-semibold bg-gray-900/80 px-2 py-1 rounded">Rutherford County</p>
                   </div>
                 </div>
               </div>
               <p className="text-xs text-gray-400 mt-3 text-center">
-                Serving Nashville, Middle Tennessee, and surrounding regions. Regional travel available.
+                Based in Smyrna. Serving Rutherford County, the Nashville area, and the rest of Middle Tennessee.
               </p>
             </div>
           </div>

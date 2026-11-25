@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Calculator, DollarSign, ArrowRight, CheckCircle2 } from "lucide-react";
 import { analytics } from "@/lib/analytics";
 
-type ServiceType = 'drone-mapping' | 'lidar-scanning' | 'photogrammetry' | 'full-package';
+type ServiceType = 'drone-mapping' | 'photogrammetry' | 'full-package';
 type ProjectSize = 'small' | 'medium' | 'large' | 'xlarge';
 type Complexity = 'basic' | 'standard' | 'advanced';
 
@@ -18,14 +18,13 @@ interface PriceEstimate {
 
 const serviceOptions = [
   { id: 'drone-mapping', label: 'Drone Mapping', icon: '🚁', desc: 'Aerial orthomosaics & terrain models' },
-  { id: 'lidar-scanning', label: 'LiDAR Scanning', icon: '📡', desc: 'High-precision point clouds' },
   { id: 'photogrammetry', label: 'Photogrammetry', icon: '📷', desc: '3D models from photos' },
-  { id: 'full-package', label: 'Full Package', icon: '⭐', desc: 'Complete reality capture suite' },
+  { id: 'full-package', label: 'Full Package', icon: '⭐', desc: 'Mapping, 3D model, and aerial media' },
 ];
 
 const sizeOptions = [
-  { id: 'small', label: 'Small', area: 'Up to 10 acres', multiplier: 1 },
-  { id: 'medium', label: 'Medium', area: '10-50 acres', multiplier: 2 },
+  { id: 'small', label: 'Small', area: 'Up to 5 acres', multiplier: 1 },
+  { id: 'medium', label: 'Medium', area: '5-50 acres', multiplier: 2 },
   { id: 'large', label: 'Large', area: '50-200 acres', multiplier: 3.5 },
   { id: 'xlarge', label: 'Extra Large', area: '200+ acres', multiplier: 5 },
 ];
@@ -33,7 +32,7 @@ const sizeOptions = [
 const complexityOptions = [
   { id: 'basic', label: 'Basic', desc: 'Standard deliverables', multiplier: 1 },
   { id: 'standard', label: 'Standard', desc: 'Enhanced processing & analysis', multiplier: 1.5 },
-  { id: 'advanced', label: 'Advanced', desc: 'Custom outputs & integrations', multiplier: 2 },
+  { id: 'advanced', label: 'Advanced', desc: 'Custom outputs & formats', multiplier: 2 },
 ];
 
 // Base pricing (adjust these to match your actual rates)
@@ -44,12 +43,6 @@ const basePricing: Record<ServiceType, { min: number; max: number; features: str
     features: ['Orthomosaic map', 'Elevation model', 'GeoTIFF exports', '2D measurements'],
     timeframe: '3-5 days',
   },
-  'lidar-scanning': {
-    min: 1500,
-    max: 4000,
-    features: ['Point cloud data', 'Classified LAS files', 'CAD-ready exports', 'Sub-inch accuracy'],
-    timeframe: '5-7 days',
-  },
   'photogrammetry': {
     min: 800,
     max: 2500,
@@ -59,7 +52,7 @@ const basePricing: Record<ServiceType, { min: number; max: number; features: str
   'full-package': {
     min: 2500,
     max: 8000,
-    features: ['All drone services', 'LiDAR + Photogrammetry', 'Integrated deliverables', 'Priority support'],
+    features: ['All three services', 'Orthomosaic + 3D model', 'Aerial photos & video', 'Priority support'],
     timeframe: '1-2 weeks',
   },
 };
