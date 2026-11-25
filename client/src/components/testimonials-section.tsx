@@ -21,8 +21,8 @@ const trustSignals = [
   },
   {
     icon: Star,
-    title: "MTSU Certified",
-    description: "Construction Management degree"
+    title: "Construction Management",
+    description: "Coursework at MTSU"
   }
 ];
 
